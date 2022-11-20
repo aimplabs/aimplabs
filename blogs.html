@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making AI research more mainstream in and around Kolkata.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/aimp_navfoot.css">
+    <link rel="stylesheet" href="css/aimp_mainpgs.css">
+    <title>AIMP labs: The AI blog collection</title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/aimp_tech_styles_v01.css">
+</head>
+<body>
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="training.html" class="jv-navlink">Training</a></li>
+                <li><a href="archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="blogs.html" class="jv-navlink jv-active">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<div class="jv-general-container" style="height: 25vh;">
+    <div class="jv-text-container">
+        <div class="jv-article-headline">2022</div>
+        <div class="jv-brand-emphasis">
+            <div class="jv-bar-upper"></div>
+            <div class="jv-bar-lower"></div>
+        </div>
+        <div class="jv-list-container">
+            <ul class="jv-list">
+                <li class="jv-list-item">
+                    <a href="versionbygit.html"> Version control by Git and Github </a> 
+                    <span class="jv-blog-tag">Git</span> 
+                    <span class="jv-blog-tag">Tutorial</span>
+                 </li>
+                 
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="jv-general-container" style="height: 38vh;">
+    <div class="jv-text-container">
+        <div class="jv-article-headline">2021</div>
+        <div class="jv-brand-emphasis">
+            <div class="jv-bar-upper"></div>
+            <div class="jv-bar-lower"></div>
+        </div>
+        <div class="jv-list-container">
+            <ul class="jv-list">
+                <li class="jv-list-item">
+                    <a href="helloworldcpp.html"> Building Large Scale C/C++ Projects</a> 
+                    <span class="jv-blog-tag">C/C++</span> 
+                    <span class="jv-blog-tag">Tutorial</span>
+                 </li>
+                 
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - 2022</div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+
+function setsidenav() {
+    let menu = document.querySelector(".menu-icon");
+
+    if (menu.childNodes[1].textContent == 'menu') {
+        menu.childNodes[1].textContent = 'close';
+        document.querySelector('.jv-navlinks').style.display = 'flex';
+    } else if (menu.childNodes[1].textContent == 'close') {
+        menu.childNodes[1].textContent = 'menu';
+        document.querySelector('.jv-navlinks').style.display = 'none';
+    }
+
+}
+  var x = window.matchMedia("(max-width: 500px)")
+  removeNavRt(x) // Call listener function at run time
+
+
+</script>
+
+</body>
+</html>

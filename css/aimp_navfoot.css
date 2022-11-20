@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+*, 
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+/*** Breadcrumb pattern ***/
+
+.jv-breadcrumb-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    background-color: #f5f5f5;
+    border-radius: 10px;
+
+    max-width: 1200px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.jv-breadcrumb-active a {
+    text-decoration: none;
+    color: #CF494B;
+}
+
+.jv-breadcrumb-active a:hover {
+    font-weight: 500;
+}
+
+.jv-breadcrumb {
+    color: #CF494B;
+}
+
+.jv-breadcrumb-container span {
+    font-size: 13px;
+}
+
+/*** Navbar ***/ 
+.jv-navbar-container {
+    box-shadow: 0px 2px 8px #0000000D;
+}
+
+.jv-navbar-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.jv-brand-logo {
+    object-fit: contain;
+    width: 16%;
+    padding-top: 10px;
+}
+
+.jv-logo-container {
+    display: flex;
+}
+
+.jv-brand-statements {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.jv-brand-statements a {
+    text-decoration: none;
+}
+
+.jv-brand-name a {
+    text-decoration: none;
+    color: #4E4E4E;
+    font-family: 'Spectral', serif;
+    letter-spacing: 13px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.jv-brand-desc a {
+    text-decoration: none;
+    color: #4E4E4E;
+    font-family: 'Spectral', serif;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.jv-navlinks {
+    display: flex;
+}
+
+.jv-navlinks li {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.jv-navlinks li a {
+    font-family: 'Spectral', serif;
+    color: #4E4E4E;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.menu-icon {
+    opacity: 0;
+    padding-bottom: 5px;
+}
+
+.jv-navlinks li a.jv-active {
+    text-decoration: underline;
+    text-decoration-color: #CF494B;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+}
+
+.jv-footer-brand-desc .jv-active {
+    text-decoration: underline;
+    text-decoration-color: #CF494B;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+}
+
+/***    Navbar Media Queries   ***/
+
+@media screen and (max-width: 800px) {
+
+    .jv-navbar-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .jv-brand-logo {
+        object-fit: contain;
+        width: 15%;
+        padding-top: 10px;
+    }
+
+    .jv-logo-container {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .jv-brand-statements {
+        text-align: center;
+    }
+
+    .jv-navbar-flex {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .jv-brand-name a {
+        letter-spacing: 5px;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    
+    .jv-brand-desc a {
+        text-decoration: none;
+        color: #4E4E4E;
+        font-family: 'Spectral', serif;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .jv-container-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+
+    .jv-brand-logo {
+        object-fit: contain;
+        width: 15%;
+        padding-top: 10px;
+    }
+
+    .jv-brand-statements {
+        text-align: center;
+    }
+
+    .jv-navbar-flex {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .jv-brand-name a {
+        letter-spacing: 5px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    
+    .jv-brand-desc a {
+        text-decoration: none;
+        color: #4E4E4E;
+        font-family: 'Spectral', serif;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    
+    .jv-navlinks {
+        display: none;
+        flex-direction: column;
+        background-color: #0000000D;
+        width: 100%;
+        align-items: center;
+        border-radius: 5px;
+        height: 100vh;
+    }
+
+    .jv-navlinks li {
+        padding-top: 40px;
+    }
+
+    .menu-icon {
+        opacity: 1;
+        margin-top: 20px;
+    } 
+
+}
+
+/*** Footbar ***/
+
+.jv-footer-container-align {
+    background-color: #f4f4f4f4;
+    box-shadow: 0px -4px 4px #e4e3e3f4;
+}
+
+.jv-footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+.jv-footer-container-left li {
+    list-style: none;
+}
+
+.jv-footer-container-left li a{
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 24px;
+    color: #4E4E4E;
+}
+
+.jv-ftnotes-icontxt {
+    padding-left: 5px;
+}
+.jv-footer-container-middle .jv-footer-brand-statements {
+    text-align: center;
+    font-size: 13px;
+    line-height: 24px;
+    color: #4E4E4E;
+}
+
+.jv-footer-container-right .jv-footer-brand-statements {
+    text-align: left;
+    font-size: 13px;
+    line-height: 24px;
+    text-decoration: none;
+    color: #4E4E4E;
+}
+
+.jv-footer-brand-desc a {
+    text-decoration: none;
+    color: #4E4E4E;
+}
+
+/***    Footbar Media Queries   ***/
+
+@media screen and (max-width: 800px) {
+    .jv-footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .jv-footer-container-middle {
+        order: 0;
+    }
+
+    .jv-footer-container-left {
+        order: 1;
+    }
+
+    .jv-footer-container-right .jv-footer-brand-statements {
+        text-align: center;
+    }
+
+}

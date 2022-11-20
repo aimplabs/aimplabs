@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making AI research more mainstream in and around Kolkata. As a research based organization, AIMP has a long term vision of conducting high-impact research, promoting future researchers, and creating technologies of the future.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/aimp_navfoot.css">
+    <link rel="stylesheet" href="css/aimp_blogs.css">
+    <title>Hands on C++ </title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+    type="text/javascript"></script>
+    <link rel="stylesheet" href="css/default.min.css">
+    <script src="js/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+</head>
+<body>
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="training.html" class="jv-navlink">Training</a></li>
+                <li><a href="archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="blogs.html" class="jv-navlink">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<section class="jv-general-container jv-general-top-gap jv-general-bottom-gap">
+    <div class="jv-breadcrumb-container">
+        <span class="jv-breadcrumb-active"><a href="blogs.html">Blogs</a></span> 
+        <span class="jv-breadcrumb-active"><a href="blogs.html">>> 2021</a></span> 
+        <span class="jv-breadcrumb"> >> Building Large Scale C/C++ Projects </span> 
+    </div>
+</section>
+
+<section class="jv-general-container jv-general-top-gap-large">
+<div class="jv-section-title sz-h1">
+    Building Large Scale C/C++ Projects
+</div>
+<div class="jv-brand-emphasis">
+    <div class="jv-bar-upper"></div>
+    <div class="jv-bar-lower"></div>
+</div>
+</section>
+
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        1. General building process
+    </div>
+    <div class="jv-section-body jv-section-text">
+        The general building process can be divided into two tasks: compilation and linking. On 
+        Linux, the translation from source file to object files is handled by compiler. Linking multiple
+        object files to build the executable is called as linking and is done by the linker. The following 
+        figure depicts the whole principle. 
+    </div>
+    <figure class="jv-full-width-figure">
+        <img src="assets/blogs/cpp_compilation/gencom.png" alt="Building Process" class="jv-fig">
+        <figcaption> <b>Fig. 1 &nbsp;</b> Compilation of object modules and linking the objects to build the 
+        executable of a source code <span class="jv-inline-code">hw.c or hw.cpp</span>. The name hw is a short form of the legendary <i>hello 
+            world</i> terminology. (image modified from 
+            <span class="jv-inline-emphasis">Computer Systems: A Programmer's Perspective by Randal E. Bryant, David R. O' 
+                Hallaron</span>)</figcaption>
+    </figure>
+    <div class="jv-section-body jv-section-text">
+        Compilation compand of a simple source file:      
+<div class="jv-incell-code">
+<pre><code class="language-cpp">$ gcc -o code code.c
+$ ./code
+</code></pre>
+</div>
+
+The binary executable is <span class="jv-inline-code">hello.out</span>. Execute it as <span class="jv-inline-code">
+$./hw.out</span>. The elements of the compilation pipeline has the following roles:
+    
+<ol class="jv-section-body jv-section-text jv-secondary-list">
+    <li><span class="jv-inline-emphasis">Preprocessor</span> : modifies the original C program according to directives that begin with the ‘#’ character.</li>    
+    <li><span class="jv-inline-emphasis">Compile</span>: converts to assembly language</li>     
+    <li><span class="jv-inline-emphasis">Assembler</span>: converts to a binary</li> 
+    <li><span class="jv-inline-emphasis">Linker</span>: merges or links with precompiled object files like `print.o`</li> 
+</ol>
+</div> 
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h3">
+    2. Handling the header files 
+</div>
+<div class="jv-section-body jv-section-text">
+<p>So what's the difference between header-files and source-files? 
+Basically, header-files are #included and not compiled, whereas 
+source files are compiled and not #included. One should never 
+<span class="jv-inline-code">#include</span> source files.</p>
+
+<p>C/C++ programs are built in a two stage process. First, each source 
+file is compiled on its own. The compiler generates intermediate 
+files for each compiled source file. These intermediate files are 
+often called object files -- but they are not to be confused with 
+objects in your code. Once all the files have been individually 
+compiled, the system then links all the object files together, 
+which generates the final binary (the program).</p>
+
+<p>This means that each source file is compiled separately from other 
+source files.</p>
+
+Inputs: plusvec.h, plusvec.c, minusvec.h, minusvec.c, lalg.cpp. 
+</div>
+    
+<div class="three-col-code-display">
+<div class="jv-incell-code-card">
+<pre><code class="language-cpp">/* algebra.c */
+#include &lt;iostream&gt;
+#include "addvec.h"
+#include "deductvec.h"
+using namespace std;
+int main() 
+{
+    int u[2] = {100, 200};
+    int v[2] = {10, 20};
+    int res[2] = {0, 0};
+
+    plusvec(u, v, res, 2);
+    cout &lt&lt res[0] &lt&lt "\n";
+    cout &lt&lt res[1] &lt&lt "\n";
+
+    minusvec(u, v, res, 2);
+    cout &lt&lt res[0] &lt&lt "\n";
+    cout &lt&lt res[1] &lt&lt "\n";
+}</code></pre>
+</div>
+    
+<div class="jv-tree-cards-one-col">
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* addvec.h */
+
+void addvec(int* x, int* y, 
+            int* res, int d);
+
+</code></pre>
+</div>
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* addvec.c */
+
+#include "addvec.h"
+
+void plusvec(int* x, int* y, 
+            int* res, int d) 
+{
+    for(int i = 0; i < d; i++) 
+        res[i] = x[i] + y[i];
+}
+</code></pre>
+</div>
+</div>
+
+<div class="jv-tree-cards-one-col">
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* deductvec.h */
+
+void deductvec(int* x, int* y, 
+            int* res, int d);
+
+</code></pre>
+</div>
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* deductvec.c */
+
+#include "deductvec.h"
+
+void deductvec(int* x, int* y, 
+            int* res, int d) 
+{
+    for(int i = 0; i < d; i++) 
+        res[i] = x[i] - y[i];
+}
+</code></pre>
+</div>
+</div>
+</div>
+
+<div class="jv-section-body jv-section-text">
+<p>However, this approach above is not recommended since this is not a scalable approach. A much better 
+    and scallable solution is to compile the project code in parts. For example, it is advisble to create the 
+    object files, .obj or .o, separately, and finally, to link all the .obj files to create 
+    the final executable. The set of commands that follows next demonstrates this fact. 
+</p>
+
+<div class="jv-cell-text">
+<pre><code class="language-cpp"># Not preferred approach
+$ gcc algebra.c plusvec.c minusvec.c -o code
+$./code
+</code></pre>
+</div>
+
+However the preferred approach is domented below: 
+
+<div class="jv-cell-text">
+<pre><code class="language-cpp"># Preferred approach
+gcc -c plusvec.c
+gcc -c minusvec.c
+gcc -c algebra.c   
+gcc -o code plusvec.o minusvec.o algebra.o 
+./code 
+</code></pre>
+</div>
+
+Note, each of the three commands like <code class="inline-code">gcc -c filename.c</code> creates the corresponding
+.obj file <code class="inline-code">filename.o</code>. The last command that performs the 
+<code class="inline-code">linking</code>, essentially links all the .o files in order to create the executable 
+<code class="inline-code">code</code>. 
+</div>
+
+<div class="jv-section-text jv-section-body-2">
+Why this is a better approach? Because say you need to edit/modify the file minusvec.c for 
+some reason. Now, There is no point in compiling all of the sources. Sure, in this case we just have 
+three small .c files but in real life projects the files may be numbered in hundreds while the contents 
+of the files may be huge. Compilation every now and then will take long. Hence compilation in parts will 
+be conveninet for large scale projects. 
+</div>
+
+</div>
+
+</section>
+
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        3. Include-guard: Including the header files in right way
+    </div>
+    <div class="jv-section-body jv-section-text">
+        Suppose we have the following sources available as .c and .h header files. 
+    </div>
+    
+<div class="three-col-code-display">
+
+<div class="jv-tree-cards-one-col" style="justify-content: space-between;">
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* getvec.h */
+
+#include &ltiostream&gt
+int* getvec(int d, int v);
+
+</code></pre>
+</div>
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* plusvec.h */
+
+#include "getvec.h"
+int* plusvec(int* x, int* y, int d);
+
+</code></pre>
+</div>
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* minusvec.h */
+    
+#include "getvec.h"
+int* minusvec(int* x, int* y, int d);
+
+</code></pre>
+</div>
+</div>
+            
+        
+<div class="jv-tree-cards-one-col" style="gap: 20px;">
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* getvec.c */
+#include "getvec.h"
+int* getvec(int d, int initval) {
+    int *v = (int *) calloc(d, sizeof(int));
+    for(int i = 0; i &lt;d; ++i) v[i] = initval;
+    return v;
+} </code></pre>
+</div>
+
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* plusvec.c */
+#include "plusvec.h"
+int* plusvec(int* x, int* y, int d) 
+{
+    int* res = getvec(3, 0);
+    for(int i = 0; i &lt d; i++) 
+        res[i] = x[i] + y[i];
+    return res;
+}
+</code></pre>
+</div>
+    
+<div class="jv-tree-cards-leaf">
+<pre><code class="language-cpp">/* minusvec.c */   
+#include "minusvec.h"
+int* minusvec(int* x, int* y, int d) 
+{
+    int* res = getvec(3, 0);
+    for(int i = 0; i &lt d; i++) 
+        res[i] = x[i] - y[i];
+    return res;
+}
+</code></pre>
+</div>
+</div>
+            
+<div class="jv-incell-code-card">
+<pre><code class="language-cpp">/* algebra.c */
+
+#include <stdio.h>
+#include "plusvec.h"
+#include "minusvec.h"
+
+using namespace std;
+
+int main() {
+    int* res;
+
+    int u[2] = {100, 200};
+    int v[2] = {10, 20};
+
+    res = plusvec(u, v, 2);
+    cout &lt&lt res[0] &lt&lt "\n";
+    cout &lt&lt res[1] &lt&lt "\n";
+    cout &lt&lt res[2] &lt&lt "\n";
+
+    res = minusvec(u, v, 2);
+    cout &lt&lt res[0] &lt&lt "\n";
+    cout &lt&lt res[1] &lt&lt "\n";
+    cout &lt&lt res[2] &lt&lt "\n";
+
+}
+</code></pre>
+</div>        
+</div>
+
+<div class="jv-section-text jv-section-body">
+    <p>Note, the getvec.h is included twice in algebra.c, i.e., once via plusvec.h and another via minusvec.h. 
+    Since multiple inclusion often results in hard-to-debug errors, we shall stop multiple inlcusion 
+    by eploying a technique that is called the include-guard.</p>
+    
+    <p>Also note, the three other files, namely, <code class="inline-code">getvec.h</code>, 
+    <code class="inline-code">getvec.c</code>, and <code class="inline-code">algebra.c</code> 
+        are kept unchanged.</p>
+</div>
+
+
+<div class="three-col-code-display">
+
+
+    <div class="jv-incell-code-card">
+    <pre><code class="language-cpp">/* plusvec.h */
+    
+    #ifndef GETVEC_H
+    #define GETVEC_H
+    #include "getvec.h"
+    #endif
+    int* plusvec(int* x, int* y, int d);
+    </code></pre>
+    </div>
+    
+    <div class="jv-incell-code-card">
+    <pre><code class="language-cpp">/* plusvec.c */
+    
+    #include "addvec.h"
+    int* plusvec(int* x, int* y, int d) {
+        int* res = getvec(3, 0);
+        for(int i = 0; i &lt; d; i++) 
+            res[i] = x[i] + y[i];
+        return res;
+    }
+    </code></pre>
+    </div>
+    
+    <div class="jv-incell-code-card">
+    <pre><code class="language-cpp">/* minusvec.h */
+    
+    #define GETVEC_H
+    #include "getvec.h"
+    #endif
+    int* minusvec(int* x, int* y, int d);
+    </code></pre>
+    </div>
+    
+    <div class="jv-incell-code-card">
+        <pre><code class="language-cpp">/* minusvec.c */
+    
+    #include "minusvec.h"
+    int* minusvec(int* x, int* y, int d) {
+        int* res = getvec(3, 0);
+        for(int i = 0; i < d; i++) 
+            res[i] = x[i] - y[i];
+        return res;
+    }
+    </code></pre>
+    </div>
+</div>
+
+<div class="jv-section-text jv-section-body">
+<p>Note, the <span class="inline-code">getvec.h</span> is included twice in 
+<span class="inline-code">algebra.c</span>, once via <span class="inline-code">plusvec.h</span> 
+and another via <span class="inline-code">minusvec.h</span>. Sicne multiple inclusion 
+often results in hard-to-debug errors, we have stopped multiple inlcusion by writing the 
+include-guard. </p>
+<div class="jv-incell-code">
+<pre><code class="language-cpp">#ifndef GETVEC_H
+#define GETVEC_H
+#include "getvec.h"
+#endif
+</code></pre>
+</div>
+<p>Once we include <code class="inline-code">plusvec.h</code>, the <code class="inline-code">GETVEC_H</code> gets 
+defined and <code class="inline-code">getvec.h</code> gets included. Next time when <code class="inline-code">minusvec.h</code>
+notices <code class="inline-code">GETVEC_H</code> already defined and skips further inclusion of <code class="inline-code">getvec.h</code>. 
+</p>
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h3">
+    4. Automating builds with Makefile
+</div>
+<div class="jv-section-text jv-section-body">
+    <p>Compilation of big projects involving multiple source-files and their headers is a tedious job. Compiling 
+    them repeatedly especially during debugging is an extra headache. Automation tools help. Makefile is such 
+    a tool that can take much of the load off your head.</p>
+    <p>Consider one of the previous examples where we compiled the sources into the executable like this:</p>
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-cpp">$ gcc plusvec.c minusvec.c getvec.c algebra.c -o compute 
+</code></pre>
+</div>
+     
+<div class="jv-section-text jv-section-body">
+Let's see how we can use Makefile to build the executable compute. A simple makefile 
+consists of “rules” with the following shape: 
+</div>
+    
+<div class="jv-incell-code">
+<pre><code class="language-makefile">target: prerequisites
+        recipe
+</code></pre>
+</div>
+     
+<div class="jv-section-text jv-section-body">
+A <i>target</i> is usually (i) the name of a file that is generated by a program (executable or object files), 
+(ii) name of an action to carry out, such as ‘clean’.
+
+A <i>prerequisite</i> is a file (or several files) that is (are) used as input(s) 
+to create the target.
+
+A <i>recipe</i> is an action (command or multiple commands) that make carries out. 
+Commands may be on the same line or on different lines each on its own line. Remember 
+to put a tab character at the beginning of every recipe line!
+
+The following simple makefile illustrates one of our build processes mentioned above. 
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-makefile">
+all: compute
+compute: plusvec.c minusvec.c getvec.c algebra.c
+         gcc plusvec.c minusvec.c getvec.c algebra.c -o compute
+clean:
+         rm compute
+</code></pre></div>
+
+<div class="jv-section-text jv-section-body">
+Our Makefile has a target "all" with a prerequisite but no rule/recipe. Makefile has target 
+'compute' with prerequisites and rule. Makefile has target 'clean' with rule but no prerequisite. 
+But how does the Makefile work? Read the passage below for details.
+</div>
+<!-- </section> -->
+
+<!-- <section class="jv-general-container jv-section-container"> -->
+<div class="jv-section-title medium-headline">
+4.i. How make Processes a Makefile?
+</div>
+
+<div class="jv-section-text jv-section-body">
+When you execute the command: <code class="inline-code">$ make</code>, make reads the makefile in 
+the current directory and proceeds by processing the first target (default target). In the example, 
+the first target is 'all' which has prerequisite 'compute' as the next target. So the next target 
+'compute' has prerequisites that are just the source files and hence are available in the current 
+directory. Then 'compute' starts with the rule that is essentially creating the executable 'compute'. 
+</div>
+
+<div class="jv-section-text jv-section-body">
+When you type <code class="inline-code">make clean</code> the 'clean' target is executed. 
+
+How Makefile can be written to include the relinking?
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-makefile">all: compute
+
+compute: algebra.o plusvec.o minusvec.o getvec.o
+    gcc algebra.o plusvec.o minusvec.o getvec.o -o compute
+
+algebra.o: algebra.c
+    gcc -c algebra.cpp
+
+plusvec.o: plusvec.c
+    gcc -c plusvec.c
+
+minusvec.o: minusvec.c
+    g++ -c minusvec.c
+    
+getvec.o: getvec.c
+    g++ -c getvec.c
+
+clean:
+    rm *o compute
+</code></pre>
+</div>
+
+<div class="jv-section-text jv-section-body">
+This kind of Makefile has an important usage. There are multiple targets that can be useful at times. This is because if any source is modifies 
+in the project, you don’t have to recompile everything, only what you modified. 
+</div>
+
+<div class="jv-section-title medium-headline">
+4.ii. Variables Make Makefiles Simpler
+</div>
+
+<div class="jv-section-text jv-section-body">
+One can also use variables when writing Makefiles. It comes in handy in situations where you want 
+to change the compiler, or the compiler options.
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-makefile"># variable CC will be the compiler to use.
+CC=gcc
+    
+#  CFLAGS will be the options to pass to the compiler.
+CFLAGS=-c -Wall
+
+all: compute
+    
+compute: algebra.o plusvec.o minusvec.o getvec.o
+    $(CC) algebra.o plusvec.o minusvec.o getvec.o -o compute
+
+algebra.o: algebra.c
+    $(CC) $(CFLAGS) algebra.cpp
+
+plusvec.o: plusvec.c
+    $(CC) $(CFLAGS) plusvec.c
+
+minusvec.o: minusvec.c
+    $(CC) $(CFLAGS) minusvec.c
+    
+getvec.o: getvec.c
+    $(CC) $(CFLAGS) getvec.c
+
+clean:
+    rm *o compute
+</code></pre>
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h3">
+    5. Conclusion
+</div>
+<div class="jv-section-text jv-section-body">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolor 
+        explicabo repellendus, natus impedit, eaque itaque reprehenderit alias 
+        iure autem, officia aliquid cumque eligendi. Quis doloribus voluptates 
+        animi impedit accusantium.</p>
+    <p>Consider one of the previous examples where we compiled the sources into 
+        the executable like this:</p>
+</div>
+</section>
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - 2022</div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+function setsidenav() {
+    let menu = document.querySelector(".menu-icon");
+
+    if (menu.childNodes[1].textContent == 'menu') {
+        menu.childNodes[1].textContent = 'close';
+        document.querySelector('.jv-navlinks').style.display = 'flex';
+    } else if (menu.childNodes[1].textContent == 'close') {
+        menu.childNodes[1].textContent = 'menu';
+        document.querySelector('.jv-navlinks').style.display = 'none';
+    }
+
+}
+  var x = window.matchMedia("(max-width: 500px)")
+  removeNavRt(x) // Call listener function at run time
+
+
+</script>
+
+</body>
+</html>

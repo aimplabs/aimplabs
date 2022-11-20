@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making AI research more mainstream in and around Kolkata. This is a coursepage accompanying the hands-on training session on signal and image processing at ISI, Kolkata.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/aimp_navfoot.css">
+    <link rel="stylesheet" href="css/aimp_mainpgs.css">
+    <link rel="stylesheet" href="css/aimp_blogs.css">
+    <link rel="stylesheet" href="css/aimp_course_progs.css">
+    <title>Hands-on Session on Image Processing</title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+    type="text/javascript"></script>
+    <link rel="stylesheet" href="css/default.min.css">
+    <script src="js/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+</head>
+<body>
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="training.html" class="jv-navlink">Training</a></li>
+                <li><a href="archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="blogs.html" class="jv-navlink">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<section class="jv-general-container jv-general-top-gap jv-general-bottom-gap">
+    <div class="jv-breadcrumb-container">
+        <span class="jv-breadcrumb-active"><a href="archives.html">Archives</a></span> 
+        <span class="jv-breadcrumb"> >> Image as Signal (2021)</span> 
+    </div>
+</section>
+
+<section class="jv-general-container">
+    <div class="jv-text-container">
+        <div class="jv-vw-image-container">
+            <a href="#">
+                <img src="assets/brand_imgs/im_as_sig_hero.png" alt="RKM Institute">
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="jv-general-container">
+    <div class="jv-general-vw-align">
+        <div class="jv-course-content">
+            <div class="jv-course-content-title"> Acknowledgement</div>
+            <div class="jv-course-content-desc" style="margin-top: 20px; line-height: 24px;">
+                AIMP LABS wholeheartedly thanks <span class="jv-link-active"><a href="https://www.isical.ac.in/~dipti/">Professor Dipti Prasad Mukherjee</a></span>,
+                <span class="jv-link-active"><a href="hhttps://www.isical.ac.in/~ecsu">ECSU, ISI Kolkata</a></span> for this hands-on tutorial as part of the <i>advanced 
+                image processing elective</i>. The course is conducted for the Computer Science students of M.Tech. (CS) in their final year.<br>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h2">
+I. Image as Multidimensional Signal
+</div>
+<div class="jv-section-body jv-section-text">
+    A signal, or wave, is characterized by its frequency. 
+    The frequncy acts like the identity of the signal. 
+    Analysis of signal often invloves finding out its frequency. 
+    Let us start with importing libraries.
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="python"># Import libraries
+import numpy as np
+from numpy import pi, cos, log10
+from numpy import fft
+import matplotlib.pyplot as plt
+</code></pre>
+</div>
+
+<div class="jv-section-body jv-section-text">
+    A simple sinusoidal signal that repeats itself once per 4 units of time (e.g., 4 seconds), is said to have a frequency 
+    of \(\frac{1}{4}\) (i.e., 0.25 Hz). One can generate such signal by following the code snippet below. 
+</div>
+
+
+<div class="jv-incell-code in-cell-two-col">
+<div class="jv-cell-left-text">
+<pre><code class="python"># Samping paramaters
+N = 64              # Total number of samples
+T = 1               # Sampling rate 
+# Signal's inherent parameters
+A = 1               # Amplitude of the sinusoid
+phi = 0             # Phase of the sinusoid
+f = 0.25            # Frequency of the sinusoid
+# Signal generation
+n = np.arange(N)    # Discrete time axis
+x = A*cos(2*pi*n*f*T+phi) # Sampled the sinusoid at discrete interval
+# Computing frequency spectrum with DFT 
+F = fft.fft(x)      # Frequency spectrum
+... 
+# Plot the spectral graph
+modF = abs(F)       # DFT contains complex numbers, take |F|
+f_axis = np.arange(0, 1, 1/N)
+plt.subplot(2,1,2)
+plt.stem(f_axis,modF,'r', markerfmt=" ", basefmt="-r")
+</code></pre>
+</div>
+<figure class="jv-cell-right-fig" style="flex-basis: 40%;">
+    <img src="assets/results/imsig/fig01.png" alt="Sinusoidal Wave" class="jv-fig">
+    <figcaption> <b>Fig. 1 &nbsp;</b> (a) Sinusoid and (b) its frequency.  The frequency computed by Fourier transform is symmetric about 0.5 and hence we get two peaks: 0.5 \(\pm\)0.25.</figcaption>
+</figure> 
+    
+</div>
+
+<div class="jv-section-body jv-section-text">
+    The underlying Fourier transform of the signal \(x(n)\)is this: 
+    <span class="math-inline">\(F(k) = \sum_{n=0}^{N-1}x(n)e^{-j\frac{2\pi}{N}nk}\).</span> 
+    As expected we get a vertical line at frequency 0.25 in in Fig. 1(b). Note, the spectrum in Fig. 1(b) is symmetric 
+    about 0.5, and hence we get two lines, i.e., at 0.5 ± 0.25. While Fig. 1(a) shows the signal in temporal view, 
+    Fig. 1(b) reveals the underlying frequency of the signal in frequency (or spectral) view. <br>
+
+    Extending the idea in 2D is straightforward. The diagram below shows a series of vertical stripes in sinusoidal fashion. 
+    The direction of the sinusoid is horizontal, i.e., the wave propagates in a direction making zero angle <code class="inline-code">angle = 0</code> with the x-axis. 
+    How to generate such 2D image? <br>
+    
+    The following code generates the 2D image in Fig 2(a). What we see in Fig. 2(b) is its 2D DFT. 
+    The 2D DFT is obtained by first applying <code class="inline-code">np.fft2</code> on the grayscale image of the sinusoid and then centering the DFT with 
+    <code class="inline-code">np.fftshift</code>. Since the DFT contains complex terms one has to be careful to display the magnitude of each term by 
+    computing the absolute value <code class="inline-code">abs()</code>.
+</div>
+
+<div class="jv-incell-code in-cell-two-col">
+<div class="jv-cell-left-text">
+<pre><code class="python">x = np.arange(-500, 501, 1)
+X, Y = np.meshgrid(x, x)
+L = 200     # wavelength
+theta = 0   # angle
+sinusoid2d = np.sin(2*np.pi*(X*np.cos(theta) + Y*np.sin(theta)) / L)
+</code></pre>
+<div class="jv-assignment-container">
+    <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+    <div class="jv-assignment-emphasis">
+        Compute the 2D DFT, center it with <code class="inline-code">np.fftshift</code>,
+        take the absolute value, and reproduce the figure on right by plotting the 
+        log of the absolute value. 
+    </div>
+</div>
+</div>
+
+<figure class="jv-cell-right-fig">
+    <img src="assets/results/imsig/fig02.png" alt="Sinusoidal grating" class="jv-fig">
+    <figcaption> <b>Fig. 2 &nbsp;</b> The idea of 1D-sinusoid is extended here. A 2D-sinusoidal grating in (a) is generated 
+        as a grayscale image and its 2D spectral image in (b) illustrates the spatial frequency of the grating (occurs as symmetric coefficients, hence two dots).
+        Origin lies at teh center of the spectral image in (b). 
+    </figcaption>
+</figure> 
+</div>
+
+<div class="jv-section-body jv-section-text">
+    Couple of points to note here. Each pixel in Fig. 2(b) denotes a frequency. Unlike the frequency in time that we saw in 
+    Fig. 1(a), each frequency in Fig. 2(b) denotes a spatial frequency. The spatial frequency has two components: horizontal 
+    spatial frequency and the vertical spatial frequency. The origin of the 2D spectrum is placed at the center. <br>
+
+    Since the frequencies computed by DFT are symmetric to the origin (why?) we can see two dots in the Fig. 2(b). 
+    Therefore, they mean the same thing, and each of them correspond to the "spatial frequency" of the sinusoidal pattern in Fig. 2(a). 
+    Spatial frequency denotes how the 2D signal is repeating in 2D, or in space (spatial comes from the word space). 
+    Whereas, the temporal frequency in Fig. 1(b) corresponds to the temporal repetition of the 1D time-signal. <br>
+
+</div>
+
+<div class="jv-section-body jv-section-text">
+What will happen if we increase the repetition of the 2d sinusoidal waves in Fig. 2(a)? In that case we can execute the same code 
+with L = 100 (since wavelength is inversely proportional to frequency, decreasing the wavelength will resul in increased repetition 
+of the wave) to get the desired wave in Fig. 3(a). Since the spatial frequency has increased, the increased value will appear further 
+from the origin in the spectral diagram. That is what we see in Fig. 3(b). The bigger frequency means the dots are further from the 
+origin (center of the image). Hence the gap between the two dots has increased in Fig. 3(b) compared to Fig. 2(b).
+</div>
+
+<div class="jv-section-text jv-section-body in-cell-three-col">
+    <figure class="jv-cell-right-fig">
+        <img src="assets/results/imsig/fig03.png" alt="Sinusoidal grating horizontal" class="jv-fig">
+        <figcaption> <b>Fig. 3 &nbsp;</b> (a) A sinusoidal grating with higher spatial frequency (compared to Fig. 2.) 
+            (b) Higher spatial frequency means the (symmetric) frequency pair move further away from origin (i.e., image center)
+            in x-direction. 
+        </figcaption>
+    </figure> 
+
+    <figure class="jv-cell-right-fig">
+        <img src="assets/results/imsig/fig04.png" alt="Sinusoidal grating vertical" class="jv-fig">
+        <figcaption> <b>Fig. 4 &nbsp;</b> (a) The sinusoid propagates in vertical direction. (b) As a result the (symmetric) frequency
+            pair will appear in the Y-axis now. 
+        </figcaption>
+    </figure> 
+    <figure class="jv-cell-right-fig">
+        <img src="assets/results/imsig/fig05.png" alt="Sinusoidal grating oblique" class="jv-fig">
+        <figcaption> <b>Fig. 5 &nbsp;</b> (a) A slanted sinusoid (b) The frequency pair appears with non-zero 
+            x and y-components. Note, how the direction of frquency axis matches with direction of propagation of 
+            the slanted sinusoid. 
+        </figcaption>
+    </figure> 
+</div>
+
+    <div class="jv-section-body jv-section-text">
+    What will happen if we rotate the horizontal sinusoid in vertical direction as shown in Fig. 4(a)? In such case the 
+    sinusoid will repeat itself in vertical direction. So, we can expect the corresponding spatial frequency to show up 
+    along the vertical axis. This is exactly the case with Fig. 4(b)
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+    Any location in 2D is defined with two components: the x-component or the 
+    horizontal component and the y-component of the vertical compionent. Similar 
+    argument holds for spatial frequencies as well. For example, when the sinusoidal 
+    pattern is neither vertical nor horizontal but tilted at an angle, the spatial 
+    frequency in the 2D spectrum is no more on the vertical/horizontal axis. The 
+    corresponding frequency moves to one of the quadrant as shown below.
+    </div>
+
+</section>
+
+<section class="jv-general-container jv-section-container">
+
+    <div class="jv-section-title sz-h2">
+    II. Signal Superimposition for Images
+    </div>
+    <div class="jv-section-body jv-section-text">
+        In reality, we don't see signals or patterns with one component. The patterns 
+        come as linear combination of many "basic" signals and also noise. Identifying 
+        the constituent signals from the mixture is an important part of the image/signal 
+        analysis. For example, consider this 1D composite signal:
+    </div>
+<div class="jv-incell-code in-cell-two-col">
+<div class="jv-cell-left-text">
+<pre><code class="python">freq = 1.
+x_1 = 0.5*np.sin(2*np.pi*freq*t)
+
+freq = 4
+x_2 = 0.35*np.sin(2*np.pi*freq*t)
+
+freq = 9   
+x_3 = 0.15* np.sin(2*np.pi*freq*t)
+
+# composite/superimposed signals
+x = x_1 + x_2 + x_3
+</code></pre>
+</div>
+<figure class="jv-cell-right-fig">
+<img src="assets/results/imsig/fig06.png" alt="Signal superimposition" class="jv-fig">
+<figcaption> <b>Fig. 6 &nbsp;</b> Composite signal as a result of signal superimposition</figcaption>
+</figure> 
+
+</div>
+
+<div class="jv-section-body jv-section-text">
+    If we don't know what frequencies are present, and in what proportion, how do we 
+    retrieve this information from the time domain observation alone? As expected, 
+    Fourier transform comes to the rescue.
+    
+    The folloiwng code shows the DFT plot and we can see the three frequencies. It 
+    is a standard practice to consider only one half of the DFT plot since the 
+    frequencies computed are symmetric in nature.
+</div>
+<div class="jv-section-body jv-section-text">
+    The folloiwng code shows the DFT plot and we can see the three frequencies. It is a standard practice to consider only one half of the DFT plot since the frequencies computed are symmetric in nature. 
+</div>
+
+<div class="jv-incell-code in-cell-two-col">
+<div class="jv-cell-left-text">
+<pre><code class="python"> # Compute DFT
+F = fft.fft(x)                          
+# Calculate the frequency axis for plot
+sr = 100 # assuming a smapling rate 100
+N = len(X)
+n = np.arange(N)
+T = N/sr
+freq = n/T 
+
+# Plot the full spectrum
+# Hint: Use plt.stem(freq, abs(X))
+
+# Get the one-sided specturm
+n_oneside = N//2
+# get one side of the frequency
+f_oneside = freq[:n_oneside]
+
+# normalize the amplitude
+X_oneside = X[:n_oneside]/n_oneside
+X_oneside = abs(X_oneside)
+
+# Plot normalized spectrum
+# Hint: Use plt.stem(f_oneside, X_oneside)
+</code></pre>
+</div>
+<figure class="jv-cell-right-fig" style="flex-basis: 55%;">
+    <img src="assets/results/imsig/fig07.png" alt="Signal superimposition" class="jv-fig">
+    <figcaption> <b>Fig. 7 &nbsp;</b> Composite signal as a result of signal superimposition</figcaption>
+</figure> 
+</div>
+
+<div class="jv-section-body jv-section-text">
+    This idea is easy to extend to 2D as well. Consider two kinds of sinusoidal images, 
+    as shown in Fig. 8, by varying the frequency (or wavelength) and the orientation. One such example
+    is illustrated in the said figure. Following the principle of superposition the two spatial 
+    signals can be added like the one-dimensional case. 
+    
+    For example, if we add the spatial signals (a) and (b) of Fig. 8, we obtain the composite image
+    Fig. 9(a). 
+    
+</div>
+
+<div class="jv-section-body in-cell-two-col">
+<figure class="jv-cell-each-fig-two-cols">
+    <img src="assets/results/imsig/fig08.png" alt="Signal superimposition" class="jv-fig">
+    <figcaption> <b>Fig. 8 &nbsp;</b> (a) and (b) illustrate two base signals which can be 
+    superimposed to produce a composite signal like Fig. 9(a). </figcaption>
+</figure> 
+
+<figure class="jv-cell-each-fig-two-cols">
+    <img src="assets/results/imsig/fig09.png" alt="Signal superimposition" class="jv-fig">
+    <figcaption> <b>Fig. 9 &nbsp;</b> (a) Composite signal (see Fig. 8 for reference). (b) The 
+    two frequencies of the base signals appear as two pairs in the spectral image. </figcaption>
+</figure> 
+
+</div>
+
+<div class="jv-assignment-container">
+    <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+    <div class="jv-assignment-emphasis">
+        <ol class="jv-secondary-list">
+            <li>Generate the two gratings like before by tweaking <span class="inline-code">L</span> 
+                and <span class="inline-code">theta</span>.</li>
+            <li>Superimpose the images by just simply adding them up like the one-dimensional case.</li>
+            <li>Compute DFT of the resultant image Fig. 9(a).</li>
+            <li>Compute absolute value and apply log of the DFT image, both elemenwise. Center it with <span class="inline-code">np.fftshift</span>.</li>
+            <li>Display and reproduce Fig. 9(b)</li>
+        </ol>
+    </div>
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h2">
+    III. How does an edge in image manifest in the 2D spectral diagram?
+</div>
+<div class="jv-section-body jv-section-text">
+    Consider the unit step function in one dimension and its DFT. The figure in Fig. 10 shows the normalized frequency spectrum, i.e., one half of the spectrum. 
+    Note, a sharp change in time domain creates ripples in frequency domain (this can be proved mathematically). We will see next that 
+    something similar can be observed in spatial domain too. 
+</div>
+
+<div class="jv-incell-code in-cell-two-col">
+    <div class="jv-cell-left-text">
+        <div class="jv-assignment-container">
+            <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+            <div class="jv-assignment-emphasis">
+                <ol class="jv-secondary-list">
+                    <li>Create a unit step function</li>
+                    <li>Compute DFT</li>
+                    <li>Get one sided-spectrum</li>
+                    <li>Nomralize the amplitude</li>
+                    <li>Plot the nomralized one-sided spectrum</li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+    <figure class="jv-cell-right-fig" style="flex-basis: 50%;">
+        <img src="assets/results/imsig/fig10.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 10 &nbsp;</b> (a) Unit step function as time-domain signal 
+            (b) The spectral diagram shows a series of frequencies. </figcaption>
+    </figure>   
+</div>
+
+<div class="jv-section-body jv-section-text">
+    From the assignment above it is clear that a step function in time 
+    creates a series of frequencies in the spectral diagram. Now we shall see 
+    how an equivalent edge structure in an image behaves in the similar fashion 
+    in the 2D spectrum. Following assignment will walk you through it. 
+</div>
+
+<div class="jv-incell-code in-cell-two-col">
+    <div class="jv-cell-left-text">
+        <div class="jv-assignment-container">
+            <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+            <div class="jv-assignment-emphasis">
+                <ol class="jv-secondary-list">
+                    <li>Create a 256 \(\times\)256 binary image of an edge like the left subfigure.</li>
+                    <li>Compute the 2D DFT as before by followingthe steps</li>
+                    <li>Zoom in on the central part and ensure that you see the pattern shown in (c)</li>
+                </ol>
+            </div>
+        </div>   
+    </div>
+    <figure class="jv-cell-right-fig" style="flex-basis: 50%;">
+        <img src="assets/results/imsig/fig11.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 11 &nbsp;</b> Vertical edge in (a) is responsible for the horizonal 
+        frequncies in the spectral domain as shown in (b) and (c). </figcaption>
+    </figure>  
+</div>
+<br><br>
+<div class="jv-incell-code in-cell-two-col">
+    <div class="jv-cell-left-text">
+        <div class="jv-assignment-container">
+            <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+            <div class="jv-assignment-emphasis">
+                <ol class="jv-secondary-list">
+                    <li>Create a 256 \(\times\)256 binary image of an horizintal edge like the left subfigure.</li>
+                    <li>Compute the 2D DFT as before by followingthe steps</li>
+                    <li>Zoom in on the central part and ensure that you see the pattern shown in (c)</li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+    <figure class="jv-cell-right-fig" style="flex-basis: 50%;">
+        <img src="assets/results/imsig/fig12.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 12 &nbsp;</b> Horizintal edge in (a) is responsible for the vertical 
+            frequncies in the spectral domain as shown in (b) and (c).</figcaption>
+    </figure> 
+</div> 
+
+<div class="jv-section-body jv-section-text">
+    The last few assignments have shown that a sharp edge in 2D creates ripples in frequency domain. 
+    We shall study this phenomenon a bit further by analyzing the square image as follows. The binary image of a square 
+    has two vertical and two horizontal lines. Each pair of vertical and horizontal lines acts as edges, and produces a 
+    series of frequencies in the spectral diagram. The horizintal pair of edges creates the vertical frequencies, and the vertical edges, horizonal. 
+</div>
+
+<div class="jv-section-body in-cell-two-col">
+    <figure class="jv-cell-each-fig-two-cols">
+        <img src="assets/results/imsig/fig13.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 13 &nbsp;</b> Sharp edges like (a) create frequencies in the spectral pattern (b).</figcaption>
+    </figure> 
+
+    <figure class="jv-cell-each-fig-two-cols">
+        <img src="assets/results/imsig/fig14.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 14 &nbsp;</b> When the edges are rotated the frequencies rotate too. </figcaption>
+    </figure> 
+    </div>
+
+    <div class="jv-assignment-container">
+    <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+    <div class="jv-assignment-emphasis">
+        <ol class="jv-secondary-list">
+            <li>Create a binary square image like Fig. 13(a).</li>
+            <li>Compute the 2D DFT, center it, compute modulus elementwise, 
+                apply log, and finally, display the DFT coefficients like Fig. 13(b). 
+            </li>
+            <li> Rotate the square of Fig. 13 (a) to produce the image Fig. 14(a). 
+            </li>
+            <li> Compute the DFT image of Fig. 14(a). Make sure you notice a similar change in orientation 
+                of the spectral pattern as illustrated in Fig. 14(b).
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="jv-section-body in-cell-two-col">
+<figure class="jv-cell-each-fig-two-cols">
+    <img src="assets/results/imsig/fig15.png" alt="Signal superimposition" class="jv-fig">
+    <figcaption> <b>Fig. 15 &nbsp;</b> Sharp edges when smoothed out help to control the frequencies</figcaption>
+</figure> 
+
+<figure class="jv-cell-each-fig-two-cols">
+    <img src="assets/results/imsig/fig16.png" alt="Signal superimposition" class="jv-fig">
+    <figcaption> <b>Fig. 16 &nbsp;</b> Sharp edges when smoothed out help to control the frequencies</figcaption>
+</figure> 
+</div>
+
+<div class="jv-section-body jv-section-text">
+An interesting fact is, when you smooth the edge with an appropriate image filter, 
+say for example a Gaussian filter, you can control the rippling effect of the frequencies 
+in the spectral pattern. The following assignment illustrates this fact. 
+</div>
+
+<div class="jv-assignment-container">
+<div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+<div class="jv-assignment-emphasis">
+    <ol class="jv-secondary-list">
+        <ol class="jv-secondary-list">
+            <li>Create a binary square image like Fig. 13(a).</li>
+            <li>Smooth the image with <code class="inline-code">ndimage.gaussian_filter()</code> to create Fig. 15(a).</li>
+            <li>Compute the 2D DFT, center it, compute modulus elementwise, 
+                apply log, and finally, display the DFT coefficients like Fig. 15(b). 
+            </li>
+            <li> In a similar manner smooth the rotated of image Fig. 14(a) to produce Fig. 16(a).
+            </li>
+            <li> Compute the DFT image of Fig. 16(a). Make sure you notice a similar change in orientation 
+                of the spectral pattern as illustrated in Fig. 16(b).
+            </li>
+        </ol>
+    </ol>
+</div>
+</div>
+
+    <div class="jv-section-body in-cell-two-col">
+    <figure class="jv-cell-each-fig-two-cols">
+        <img src="assets/results/imsig/fig17.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 17 &nbsp;</b> As expected, the circle with sharp boundary in (a) also creates ripples in the 
+        spectral pattern in (b).</figcaption>
+    </figure> 
+
+    <figure class="jv-cell-each-fig-two-cols">
+        <img src="assets/results/imsig/fig18.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 18 &nbsp;</b> The ripples in spectral pattern (b) are nicely attenuated by using 
+        a smoothing filter that smoothens out the sharp boundary of (a).  </figcaption>
+    </figure> 
+    
+    </div>
+
+    <div class="jv-assignment-container">
+    <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+    <div class="jv-assignment-emphasis">
+        <ol class="jv-secondary-list">
+            <li>Create a binary circular image like Fig. 17(a).</li>
+            <li>Compute the 2D DFT, center it, compute modulus elementwise, 
+                apply log, and finally, display the DFT coefficients like Fig. 17(b). 
+            </li>
+            <li>Smooth the image Fig. 17(a) with <code class="inline-code">ndimage.gaussian_filter()</code> to create Fig. 18(a).</li>
+            <li> Compute the DFT image of Fig. 18(a). Make sure you notice a similar change in spectral pattern as illustrated in Fig. 18(b).
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="jv-section-body jv-section-text">
+    Question is why am I putting this amount of emphasis on this apparently simple observation. This is 
+    going to be clear in the folloiwng application. In brief, you can do some clever image engineering
+    in the spectral domain. However, doing that requires good design of image filter. The low-pass image filtering 
+    puts some of the ideas we have played so far into practice. 
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h2">
+        IV. Low-Pass Image Filtering
+    </div>
+    <div class="jv-section-body jv-section-text">
+        In an image the lower spatial frequencies model the overall shape of the
+        visual content whereas the higher spatial frequencies are responsible for 
+        the sharp edges like boundaries. If you have any means to "remove" the higher spatial 
+        frequencies while keeping the lower ones, that method will be known as low-pass filtering. That 
+        is because you are filtering-in the lower frequencies and filtering-out the higher 
+        frequencies. If you apply inverse Fourier transform to the resultant filtered spectrum, 
+        the image obtained will be a smoothed image where sharp edges will be blurred. The reason is that 
+        you have filtered-out the higher spatial frequencies which lie resposnible for the 
+        sharp edge/bar liek structures in the image. 
+        
+        In the following part, we shall pay our attention to a low-pass filtering method in 
+        frquency domain using the idea above. 
+    </div>
+
+    <figure>
+        <img src="assets/results/imsig/fig19.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 19 &nbsp;</b> (a) A grayscale image downloaded from the nice collection of CITE. (b) The 2D DFT of the image; note the frequenclies 
+        close to the center of the image (i.e., the origin) are called lower frequencies. The ones far away 
+        from the center are called higher frequencies. The job of a low-pass filter is to 
+        zero out the higher frequencies of this 2D matrix while leaving the lower frequencies
+        intact. This low-pass filtering is done in next figure. 
+    </figcaption>
+    </figure>
+
+    <div class="jv-assignment-container" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+        <div class="jv-assignment-emphasis">
+            <ol class="jv-secondary-list">
+                <li>Convert this color image into a grayscale image like Fig. 19(a)</li>
+                <li>Compute the 2D DFT, center it, compute modulus elementwise, 
+                    apply log, and finally, display the DFT coefficients like Fig. 19(b). 
+                </li>
+                <li> Read the figure title well to make sure you understand the lower and higher spatial frequencies. 
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <figure>
+        <img src="assets/results/imsig/fig20.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 20 &nbsp;</b> (a) We create a binary circular mask to do point-by-point multiplication 
+        with the Spectral matrix of Fig. 19(b). The idea is to zero out the higher frequencies while 
+        allowing the lower frequencies. The resultant matrix of frequencies when subjected to inverse Fourier
+        transform will yeild the image on the right side (b). Don't miss the "ringing artifatcs" present
+        in the reconstructed figure. Why do you think they are there?
+        </figcaption>
+    </figure>
+
+    <div class="jv-assignment-container">
+        <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+        <div class="jv-assignment-emphasis">
+            <ol class="jv-secondary-list">
+                <li>Create a binary circular image like Fig. 20(a).</li>
+                <li> Compute the 2D DFT of Fig. 20(a). Do point by point multiplication of this (raw) DFT matrix with 
+                    the mask. I said "raw" because you should not compute absolute value of the 2D DFT. 
+                </li>
+                <li> After point-by-point multiplication apply inverse DFT to the resultant 2D matrix</li>
+                <li> Compare your reconstructed image with Fig. 20(b).
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <figure>
+        <img src="assets/results/imsig/fig21.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 21 &nbsp;</b> (a) The ringing artifacts in the previous figure comes from the fact 
+        that we did not smoothen out the boundary of the circular mask. Here our low-pass image filter will 
+        contain the smoothened out version of the circular mask. (b) The reconstructed figure does not have the 
+        ringing artifacts present in the earlier reconstruction. 
+    </figcaption>
+    </figure>
+
+    <div class="jv-assignment-container" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+        <div class="jv-assignment-emphasis">
+            <ol class="jv-secondary-list">
+                <li>Smooth the binary circular image of Fig. 20(a).</li>
+                <li> Repeat the all subsequent steps of the previous assignment.
+                </li>
+                <li> With the smooth circular mask the ringing artifacts should go away and you should get Fig. 21(b). 
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h2">
+        V. High-Pass Image Filtering
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        Opposite to low-pass filtering is high-pass filtering; in this case lower spatial frequencies 
+        are zeroed out and higher spatial frequencies are kept intact. Creating a mask to do this operation 
+        is very similar to what we have done in low-pass filtering. The difference is the mask in this case 
+        is just the invert of the low-pass filter. <br>
+
+        In the following part, we shall pay our attention to a high-pass filtering method in 
+        frquency domain. 
+    </div>
+    <figure>
+        <img src="assets/results/imsig/fig22.png" alt="Signal superimposition" class="jv-fig">
+        <figcaption> <b>Fig. 22 &nbsp;</b> (a) A bianry mask designed to zero out the lower frequencies while 
+        maintaining the higher frequencies intact. The dark circle at the center denote zero values whereas the white 
+        pixels denote otherwise.
+        (b) After restoring the image by applying inverse Fourier transform 
+to the masked DFT. 
+        </figcaption>
+    </figure>
+
+    <div class="jv-assignment-container">
+        <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
+        <div class="jv-assignment-emphasis">
+            <ol class="jv-secondary-list">
+                <li>Create a binary circular image like Fig. 17(a).</li>
+                <li>Compute the 2D DFT, center it, compute modulus elementwise, 
+                    apply log, and finally, display the DFT coefficients like Fig. 17(b). 
+                </li>
+                <li>Smooth the image Fig. 17(a) with <span class="inline-code">ndimage.gaussian_filter()</span> to create Fig. 18(a).</li>
+                <li> Compute the DFT image of Fig. 18(a). Make sure you notice a similar change in spectral pattern as illustrated in Fig. 18(b).
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</article>
+
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h2">
+    VI. Conclusion and further scope
+    </div>
+    <div class="jv-section-body jv-section-text">
+        The introductory concepts of signal processing techniques that are applicable to 
+        image data find a number of important use cases. One for example is image restoration and the other 
+        being object detection by pattern matching.  
+    </div>
+    <div class="jv-section-title medium-headline">
+            a) Image reconstruction
+    </div>
+    <div class="jv-section-body jv-section-text">
+        The frequency domain ideas are used extensively to restore already deraded images. Such 
+        degradation can result from various processes like noisy acquisition or 
+        poor resolution and many others. A concept popularly used in such tasks is <b>convolution</b> 
+        which bears a direct connection with the frequency domain. The ideas of dicrete Fourier transform 
+        helps in understanding the operations in convolution. 
+    </div>
+    <div class="jv-section-title medium-headline">
+            b) Pattern matching
+    </div>
+    <div class="jv-section-body jv-section-text">
+        Pattern matching relates to finding objects in images having visual similarity. As concolution 
+        is used in image restoration tasks, we have a different technique widely used in pattern recognition called
+        as <b>correlation</b>. Like convolution we compute many of our filters for identifying visually 
+        simialr objects in images using concepts already discussed here. In recent research, such ideas are extended 
+        to benefit from deep learning theories. 
+    </div>
+ </section>
+
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h2">
+    VII. References
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+
+        <ol>
+            <li>Digital Image Processing by Rafael C. Gonzalez and Richard E. Woods </li>
+            <li>Python Programming and Numerical Methods - A Guide for Engineers and Scientists (1st Edition - November 27, 2020), 
+                Qingkai Kong, Timmy Siauw, Alexandre Bayen</li> 
+        </ol>
+
+    </div>
+</section>
+
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - 2022</div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+function setsidenav() {
+    let menu = document.querySelector(".menu-icon");
+
+    if (menu.childNodes[1].textContent == 'menu') {
+        menu.childNodes[1].textContent = 'close';
+        document.querySelector('.jv-navlinks').style.display = 'flex';
+    } else if (menu.childNodes[1].textContent == 'close') {
+        menu.childNodes[1].textContent = 'menu';
+        document.querySelector('.jv-navlinks').style.display = 'none';
+    }
+
+}
+  var x = window.matchMedia("(max-width: 500px)")
+  removeNavRt(x) // Call listener function at run time
+
+
+</script>
+
+</body>
+</html>
