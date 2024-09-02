@@ -127,7 +127,6 @@ $ ls /docs | grep budget
 </section>
 
 <section class="jv-general-container jv-section-container">
-
     <div class="jv-section-title sz-h3">
         4. Building the Custom Chatbot
     </div>
@@ -184,7 +183,6 @@ print(budget_doc[0]['data'][:100])
 </code>
 </pre>
 </div>
-
     </div>
 
     <div class="jv-section-title medium-headline">
@@ -243,14 +241,12 @@ print(chunks)
 </code>
 </pre>
 </div>
-
     </div>
 
     <div class="jv-section-title medium-headline">
         4.3. &nbsp; Create Embeddings and save in a Vector Store
     </div>
 
-    <span class="jv-inline-emphasis"></span>
     <div class="jv-section-body jv-section-text">
         <p>Embedding is the numerical representation of the data which makes it easier for algorithms to understand and analyze the relationships between different pieces of information. 
             It converts the data into fixed-size of vectors. After that we can use various search algorithm like <span class="jv-inline-emphasis">cosine similarity</span> to find the relevant data.
@@ -325,12 +321,13 @@ budget_index.load('path/to/your/embeddings/directory', index_name='budget_embedd
 </code>
 </pre>
 </div>
-
     </div>
 
     <div class="jv-section-title medium-headline">
         4.4. &nbsp; Similarity Search
     </div>
+
+    <div class="jv-section-body jv-section-text">
 
 <div class="jv-incell-code">
 <pre><code class="language-python"># Query the Budget Index for similar documents
@@ -342,6 +339,44 @@ print(context_chunks)
 </code>
 </pre>
 </div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.5. &nbsp; Prompt Engineering
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Before we proceed to do chat, we need to specify the model with an <span class="jv-inline-emphasis">instruction</span> about how the bot will behave. 
+            This is very important part because we have seen that the quality of the response heavily depends on this prompt.
+        </p>
+
+        <p>Our prompt will have 3 parts:- Instruction, Context and the Query.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">prompt = """You are an expert in the analysis of Government Budgets.
+The following comtexts will be from India's Budget 2024.
+The user will ask questions about the Budget 2024 and you have to provide the answers based on the context.
+Answer in a professional tone and use bullets and paragraphs to make the answer more readable.
+If you can't find the answer in the context, reply with "I am sorry, I couldn't find the answer to your question.".
+Don't put any external information in the answer.
+
+Context: {context}
+
+Question: {question}
+
+Answer: Your answer goes here.
+"""
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Construct the prompt
+prompt = prompt.format(context=context_chunks, question=query)
+</code>
+</pre>
+</div>
+    </div>
 
     
     
