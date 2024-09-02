@@ -63,13 +63,54 @@
 
 <section class="jv-general-container jv-section-container">
     <div class="jv-section-title sz-h3">
-        1. Fundamental concepts
+        Introduction
     </div>
+    
     <div class="jv-section-body jv-section-text">
-        In plain words, git is a version control system. Github is an online
-        code repository built around the idea of git. Github is primarily designed to 
-        facilitate collaboration aided by git's version control technology. 
+        Chatbot is a programme designed to simulate humanlike coversations. 
+        It is capable of answering questions, getting external information, even solving complex coding problems. 
+        In this tutorial we will build a Custom Chatbot to chat with our own document. 
+        The document we will use is India's Budget 2024 Speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024[1]. 
+        The Budget Speech is very long and descriptive. Thus it is difficult for a common person to study the entirety. 
+        But if we use a Custom Chatbot, we will be able to absorb most of it.
     </div>
+
+    <div class="jv-section-title sz-h3">
+        Overview: A Langchain-free approach
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Developing a custom chatbot has become easier after the introduction of various open-source frameworks like Langchain. 
+            These frameworks are great for prototype development, but they lack customization and suffers from niche documentation[2]. 
+            So what's the alternative? Can we make a custom chatbot using only raw python and less lines of code? 
+            Absolutely! This tutorial consists of <span class="jv-inline-emphasis">zero framework</span> and minimal dependencies.
+        </p>
+
+        <p>
+            But wait, there's more. We also need an inference model. Using the best model of the world needs an API key which is behind a paywall[3]. 
+            And if you wish to use an open-source model like Llama[4] or application like Ollama[5] you need a GPU. 
+            On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their surprise bills[6]. 
+            Do we have any way forward from this muddle?
+        </p>
+
+        <p>
+            Voila! Here's the good news for you. This tutorial relieves you from all of this extreme capitalism. 
+            We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how you can use your 7 years old i5-4670s to chat with your data[7]. 
+            Haven't you heard about LLamafile? Well, Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which collapse all the complexity of a full-stack Large Language Model (LLM) chatbot down to a single file that would run anywhere[8,9,10]. 
+            It democratizes the use of LLMs in your local environment without GPU. Let's see how we can utilize their remarkable initiative.
+        </p>
+
+        <p>The overall structure of this tutorial is as follows:</p>
+
+        <figure class="jv-full-width-figure">
+            <img src="assets/chatbot_overview_fig.png" alt="Chatbot Overview" class="jv-fig">
+        </figure>
+    </div>
+
+
+
+
+    
     <div class="jv-section-title medium-headline">
         1.1. &nbsp; What is version control?
     </div>
