@@ -253,7 +253,7 @@ print(chunks)
         </p>
 
         <p>In this tutorial, we use <span class="jv-inline-emphasis">TF-IDF</span> embeddings from scikit-learn library and 
-            <span class="jv-inline-emphasis">FAISS</span> a cpu intesive vector storage from Facebook Research for storing the vectors. Finally, we search through the embeddings using faiss's in-built similarity search function.
+            <span class="jv-inline-emphasis">FAISS</span> a cpu intesive vector storage from Facebook Research for storing the vectors.
         </p>
 
         <p><span class="jv-inline-emphasis">Note:</span> You can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. We used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
@@ -328,6 +328,7 @@ budget_index.load('path/to/your/embeddings/directory', index_name='budget_embedd
     </div>
 
     <div class="jv-section-body jv-section-text">
+        <p>We searches through the embeddings using faiss's in-built <span class="jv-inline-emphasis">similarity search</span> function.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python"># Query the Budget Index for similar documents
@@ -383,20 +384,79 @@ prompt = prompt.format(context=context_chunks, question=query)
     </div>
 
     <div class="jv-section-body jv-section-text">
+        <p>We have to start the Llamafile as a <span class="jv-inline-emphasis">server</span> through terminal.</p>
 <div class="jv-incell-code">
 <pre><code class="language-shell"># Make the downloaded Llamafile executable
 $ chmod +x tiny.llamafile
 # Launch Llamafile as a server
 $ ./tiny.llamafile  --nobrowser --server --port 8080 -c 4096
-# This will load the model and start the server in the terminal. 
+# This will load the model and start the server in the terminal 
 <samp>$ llama server listening at http://127.0.0.1:8080</samp>
 </code>
 </pre>
 </div>
     </div>
 
+    <div class="jv-section-title medium-headline">
+        4.7. &nbsp; Chat with the Budget Bot
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Now we can chat with our Custom Budget Bot using the prompt we have created.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">import requests
+
+class ChatLlamaFile(object):
+    def __init__(self, host="localhost", port=8080):
+        self.host = host
+        self.port = port
+        self.base_url = f"http://{host}:{port}"
+        self.chat_url = f"{self.base_url}/v1/chat/completions"
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer no-key'
+        }
     
-    
+    def chat(self, prompt, query):
+        data = {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": prompt
+                },
+                {
+                    "role": "user",
+                    "content": query
+                }
+            ]
+        }
+        response = requests.post(self.chat_url, headers=self.headers, json=data)
+        return response.json()
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-python"># Let's Chat
+response = ChatLlamaFile().chat(prompt, query)
+answer = response.get('choices')[0].get('message').get('content')
+
+print("Query:", query)
+print("Answer:", answer)
+</code>
+</pre>
+</div>
+
+<p>Example response:</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-shell">Query: Who represented the Budget 2024?  
+Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s>
+</code>
+</pre>
+</div>
+    </div>
 
 </section>
 
