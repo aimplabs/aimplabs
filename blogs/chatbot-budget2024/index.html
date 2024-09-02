@@ -107,6 +107,27 @@
         </figure>
     </div>
 
+    <div class="jv-section-title sz-h3">
+        Prerequisites
+    </div>
+
+<div class="jv-section-body jv-section-text">
+<div class="jv-incell-code">
+<pre><code class="language-shell"># Download a Llamafile
+$ wget +o tiny.llamafile https://huggingface.co/Mozilla/TinyLlama-1.1B-Chat-v1.0-llamafile/resolve/main/TinyLlama-1.1B-Chat-v1.0.F16.llamafile
+# Install the required packages
+$ pip install -q docx2txt faiss-cpu requests scikit-learn
+# Make sure the document is available
+$ ls /docs | grep budget
+<samp>$ budget_2024.docx</samp>
+</code>
+</pre>
+</div>
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+
 
 
 
@@ -188,6 +209,7 @@
             &nbsp; Serial commits are tied together to build a branch. New developments (e.g., feature-01 and feature-02, or even critical bugfixing) 
             are tried in isolation in their respective branches before merging them with the master branch (the default main branch). </figcaption>
     </figure>
+
 </section>
 
 <section class="jv-general-container jv-section-container">
@@ -200,39 +222,40 @@
 <div class="jv-section-title medium-headline">
     2.1. Installation and setting up
 </div>
+
 <div class="jv-section-text jv-section-body">
-<div class="jv-incell-code">
-<pre><code class="language-shell">$ sudo apt update
-# Install git
-$ sudo apt install git
-# Is git installed? Check version
-$ git --version
-# git requires two bits of information
-$ git config --global user.name "Your Name"
-$ git config --global user.email "youremail@example.com"
-$ git config --global --list
-# git should get back with list and names
-</code></pre>
-</div>
-<p>Once the git has been set up locally the next part is to set up a Github account on 
-    Github. After registering an account with Github the next step is to 
-    <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" 
-    class="jv-inline-link">generate a token (classic)</a>; Github has deprecated the password based authentication and recommends now the token based 
-    authentication. There are primarily two ways to manage repos on Github: either with 
-    tokens or with SSH keys. In this tutorial we shall follow the token based approach. Remember, while pushing your code to Github you will need to present
-    the token string in terminal for authentication; hence preserve it safely, you need to use 
-    the token string just like your password.  
-</p>
-<p>In summary, 
-    <div class="jv-section-text jv-section-body">
-        <ul class="jv-secondary-list">
-            <li>Create an account on Github.</li>
-            <li>Click on settings > Developers setting > create a new token > copy the token</li>
-            <li>Preseve the token somewhere in a safe place. You need to use this as your password. 
-            </li>
-        </ul>
+    <div class="jv-incell-code">
+        <pre><code class="language-shell">$ sudo apt update
+        # Install git
+        $ sudo apt install git
+        # Is git installed? Check version
+        $ git --version
+        # git requires two bits of information
+        $ git config --global user.name "Your Name"
+        $ git config --global user.email "youremail@example.com"
+        $ git config --global --list
+        # git should get back with list and names
+        </code></pre>
     </div>
-</p>
+    <p>Once the git has been set up locally the next part is to set up a Github account on 
+        Github. After registering an account with Github the next step is to 
+        <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" 
+        class="jv-inline-link">generate a token (classic)</a>; Github has deprecated the password based authentication and recommends now the token based 
+        authentication. There are primarily two ways to manage repos on Github: either with 
+        tokens or with SSH keys. In this tutorial we shall follow the token based approach. Remember, while pushing your code to Github you will need to present
+        the token string in terminal for authentication; hence preserve it safely, you need to use 
+        the token string just like your password.  
+    </p>
+    <p>In summary, 
+        <div class="jv-section-text jv-section-body">
+            <ul class="jv-secondary-list">
+                <li>Create an account on Github.</li>
+                <li>Click on settings > Developers setting > create a new token > copy the token</li>
+                <li>Preseve the token somewhere in a safe place. You need to use this as your password. 
+                </li>
+            </ul>
+        </div>
+    </p>
 </div>
 
 <div class="jv-section-text jv-section-body">
