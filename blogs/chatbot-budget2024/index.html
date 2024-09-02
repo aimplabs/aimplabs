@@ -47,13 +47,13 @@
     <div class="jv-breadcrumb-container">
         <span class="jv-breadcrumb-active"><a href="../../blogs.html">Blogs</a></span> 
         <span class="jv-breadcrumb-active"><a href="../../blogs.html">>> 2024</a></span> 
-        <span class="jv-breadcrumb"> >> Chat with India's Budget 2024 using your Local CPU chatbot</span> 
+        <span class="jv-breadcrumb"> >> Chat with India's Budget 2024 using your local CPU chatbot</span> 
     </div>
 </section>
 
 <section class="jv-general-container jv-general-top-gap-large">
     <div class="jv-section-title sz-h1">
-        Chat with India's Budget 2024 using your Local CPU chatbot
+        Chat with India's Budget 2024 using your local CPU chatbot
     </div>
     <div class="jv-brand-emphasis">
         <div class="jv-bar-upper"></div>
@@ -67,12 +67,12 @@
     </div>
     
     <div class="jv-section-body jv-section-text">
-        Chatbot is a programme designed to simulate humanlike coversations. 
+        Chatbot is a software application designed to simulate humanlike coversations. 
         It is capable of answering questions, getting external information, even solving complex coding problems. 
-        In this tutorial we will build a Custom Chatbot to chat with our own document. 
-        The document we will use is India's Budget 2024 Speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024[1]. 
-        The Budget Speech is very long and descriptive. Thus it is difficult for a common person to study the entirety. 
-        But if we use a Custom Chatbot, we will be able to absorb most of it.
+        In this tutorial we will build a custom chatbot to chat with our own document. 
+        The document we will use is India's Budget 2024 speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024 [1]. 
+        The budget speech is very long and descriptive. Thus it is difficult for a common person to study and understand the 
+        the content in its entirety. But if we use a custom chatbot, we will be able to absorb most of it.
     </div>
 
     <div class="jv-section-title sz-h3">
@@ -81,22 +81,23 @@
 
     <div class="jv-section-body jv-section-text">
         <p>Developing a custom chatbot has become easier after the introduction of various open-source frameworks like Langchain. 
-            These frameworks are great for prototype development, but they lack customization and suffers from niche documentation[2]. 
+            These frameworks are great for prototype development, but they lack customization and suffer from niche documentation [2]. 
             So what's the alternative? Can we make a custom chatbot using only raw python and less lines of code? 
             Absolutely! This tutorial consists of <span class="jv-inline-emphasis">zero framework</span> and minimal dependencies.
         </p>
 
         <p>
-            But wait, there's more. We also need an inference model. Using the best model of the world needs an API key which is behind a paywall[3]. 
-            And if you wish to use an open-source model like Llama[4] or application like Ollama[5] you need a GPU. 
-            On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their surprise bills[6]. 
+            But wait, there's more. We also need an inference model. Using a well tarined AI model often requires an API key which is behind a paywall [3]. 
+            And if you wish to use an open-source model like Llama [4] or application like Ollama[5] you need a GPU. 
+            On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their recent surprise bills [6]. 
             Do we have any way forward from this muddle?
         </p>
 
         <p>
-            Voila! Here's the good news for you. This tutorial relieves you from all of this extreme capitalism. 
-            We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how you can use your 7 years old i5-4670s to chat with your data[7]. 
-            Haven't you heard about LLamafile? Well, Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which collapse all the complexity of a full-stack Large Language Model (LLM) chatbot down to a single file that would run anywhere[8,9,10]. 
+            Our study shows that there are ways to bypass such constrains. The objective of this tutorial is to discuss those alternatives.  
+            We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how one can use a consumer grade laptop (7 years old i5-4670s in my case) to chat with one's personal data [7]. 
+            For the uninitiated, LLamafile is an amazing blessing for the developers community. Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which 
+            removes all the complexity of a full-stack Large Language Model (LLM) chatbot my converting an AI model to an executable that would would run anywhere [8,9,10]. 
             It democratizes the use of LLMs in your local environment without GPU. Let's see how we can utilize their remarkable initiative.
         </p>
 
@@ -136,8 +137,8 @@ $ ls /docs | grep budget
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>At first create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
-            The following loader is not necessary for this tutorial but it is a comprehensive approach on how one can load multiple documents at once.</p>
+        <p>First create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
+            The following loader is not necessary for this tutorial but it is worthwhile to see how one can load multiple documents at once.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python">import os
@@ -191,12 +192,12 @@ print(budget_doc[0]['data'][:100])
 
     <div class="jv-section-body jv-section-text">
         <p>A document can contain hundreds of pages each having thousands of words. 
-            If we feed the bot with all of our document at once then it will fail to provide any response because most of the Large Language Models (LLM) have their maximum input context length. 
-            Hence we need to create a list of smaller chunks from the document. 
+            If we feed the bot with all of our document contents in one shot, we are definitely going to 
+            hit the maximum input context length. Hence we need to create a list of smaller chunks from the document. 
             We create a chunk class to implement chunks by fixing total number of words in a chunk along with overlap.
         </p>
 
-        <p><span class="jv-inline-emphasis">Note:</span> Overlapping is not neccessary but sufficient to provide relevant chunks when the context splits between more than one chunk.</p>
+        <p><span class="jv-inline-emphasis">Note:</span> Overlapping is not neccessary but sufficient to provide relevant chunks when the context gets split between more than one chunk.</p>
         
 <div class="jv-incell-code">
 <pre><code class="language-python">import re
@@ -252,11 +253,12 @@ print(chunks)
             It converts the data into fixed-size of vectors. After that we can use various search algorithm like <span class="jv-inline-emphasis">cosine similarity</span> to find the relevant data.
         </p>
 
-        <p>In this tutorial, we use <span class="jv-inline-emphasis">TF-IDF</span> embeddings from scikit-learn library and 
-            <span class="jv-inline-emphasis">FAISS</span> a cpu intesive vector storage from Facebook Research for storing the vectors.
+        <p>In this tutorial, we use <span class="jv-inline-emphasis">TF-IDF</span> embeddings from scikit-learn library, and 
+            <span class="jv-inline-emphasis">FAISS</span>, a cpu intesive vector storage from Facebook Research, for storing the vectors.
         </p>
 
-        <p><span class="jv-inline-emphasis">Note:</span> You can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. We used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
+        <p><span class="jv-inline-emphasis">Note:</span> you can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. 
+            We have used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python">import os
@@ -328,7 +330,7 @@ budget_index.load('path/to/your/embeddings/directory', index_name='budget_embedd
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>We searches through the embeddings using faiss's in-built <span class="jv-inline-emphasis">similarity search</span> function.</p>
+        <p>We search through the embeddings using FAISS' in-built <span class="jv-inline-emphasis">similarity search</span> function.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python"># Query the Budget Index for similar documents
@@ -347,11 +349,11 @@ print(context_chunks)
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>Before we proceed to do chat, we need to specify the model with an <span class="jv-inline-emphasis">instruction</span> about how the bot will behave. 
-            This is very important part because we have seen that the quality of the response heavily depends on this prompt.
+        <p>Before we proceed to the chatting part, we need to specify the model with an <span class="jv-inline-emphasis">instruction</span> on how the bot will behave. 
+            This is very important because we have seen that the quality of the response heavily depends on the framing of this prompt.
         </p>
 
-        <p>Our prompt will have 3 parts:- Instruction, Context and the Query.</p>
+        <p>Essentially, our prompt will have 3 parts: Instruction, Context and the Query.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python">prompt = """You are an expert in the analysis of Government Budgets.
@@ -402,7 +404,7 @@ $ ./tiny.llamafile  --nobrowser --server --port 8080 -c 4096
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>Now we can chat with our Custom Budget Bot using the prompt we have created.</p>
+        <p>Now we can chat with our custom budget bot using the prompt we have created.</p>
 
 <div class="jv-incell-code">
 <pre><code class="language-python">import requests
@@ -466,8 +468,9 @@ Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s
     </div>
     
     <div class="jv-section-body jv-section-text">
-        Congratulations! You have successfully built a Custom Chatbot to chat with India's Budget 2024 using your local CPU. 
-        You have learned how to load a document, make chunks, create embeddings, then save them in a vector store, search for similar documents, construct a prompt and chat with the Budget Bot.
+        Congratulations! You have successfully built a custom chatbot to chat with India's Budget 2024 using your local CPU machine. 
+        You have learned how to load a document, make chunks, create embeddings, and then save them in a vector store. This allows 
+        subsequent operations like searching for similar documents, constructing a prompt and chatting with the budget bot.
     </div>
 
     <div class="jv-section-title medium-headline">
