@@ -139,7 +139,8 @@ $ ls /docs | grep budget
     <div class="jv-section-body jv-section-text">
         <p>At first create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
             The following loader is not necessary for this tutorial but it is a comprehensive approach on how one can load multiple documents at once.</p>
-        <div class="jv-incell-code">
+
+<div class="jv-incell-code">
 <pre><code class="language-python">import os
 from docx2txt import docx2txt
 
@@ -168,7 +169,12 @@ class SimpleDirectoryLoader(object):
         text = docx2txt.process(os.path.join(self.directory, filename))
         self.data.append({'filename': filename, 'extension': '.docx', 'data': text})
 
-# Usage
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-python"># Usage
 allowed_extensions = ['.docx']
 budget_loader = SimpleDirectoryLoader('path/to/your/docs/directory', allowed_extensions=allowed_extensions)
 budget_doc = budget_loader.load_files()
@@ -177,7 +183,7 @@ budget_doc = budget_loader.load_files()
 print(budget_doc[0]['data'][:100])
 </code>
 </pre>
-        </div>
+</div>
 
     </div>
 
@@ -194,7 +200,7 @@ print(budget_doc[0]['data'][:100])
 
         <p><span class="jv-inline-emphasis">Note:</span> Overlapping is not neccessary but sufficient to provide relevant chunks when the context splits between more than one chunk.</p>
         
-        <div class="jv-incell-code">
+<div class="jv-incell-code">
 <pre><code class="language-python">import re
 from typing import List, Dict
 
@@ -223,7 +229,12 @@ class ChunkManager(object):
             
         return chunks
 
-# Usage
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Usage
 chunk_size = 250
 overlap = 100
 
@@ -231,7 +242,89 @@ chunks = ChunkManager(docs=budget_doc).chunk_by_words_with_overlap(chunk_size, o
 print(chunks)
 </code>
 </pre>
-        </div>
+</div>
+
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.3. &nbsp; Create Embeddings and save in a Vector Store
+    </div>
+
+    <span class="jv-inline-emphasis"></span>
+    <div class="jv-section-body jv-section-text">
+        <p>Embedding is the numerical representation of the data which makes it easier for algorithms to understand and analyze the relationships between different pieces of information. 
+            It converts the data into fixed-size of vectors. After that we can use various search algorithm like <span class="jv-inline-emphasis">cosine similarity</span> to find the relevant data.
+        </p>
+
+        <p>In this tutorial, we use <span class="jv-inline-emphasis">TF-IDF</span> embeddings from scikit-learn library and 
+            <span class="jv-inline-emphasis">FAISS</span> a cpu intesive vector storage from Facebook Research for storing the vectors. Finally, we search through the embeddings using faiss's in-built similarity search function.
+        </p>
+
+        <p><span class="jv-inline-emphasis">Note:</span> You can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. We used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">import os
+import faiss
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+class FAISS(object):
+    def __init__(self, max_features=768):
+        self.vectorizer = TfidfVectorizer(max_features=max_features)
+        self.index = None
+        self.texts = []
+
+    # Create Embeddings
+    def fit(self, texts):
+        self.texts = texts
+        embeddings = self.vectorizer.fit_transform(texts).toarray().astype('float32')
+        dimension = embeddings.shape[1]
+        self.index = faiss.IndexFlatL2(dimension)
+        self.index.add(embeddings)
+        return embeddings
+
+    # Function for Similarity Search through Context and Query
+    # Futher we fetch top k similar documents based on the query
+    def search(self, query, k=10):
+        query_embedding = self.vectorizer.transform([query]).toarray().astype('float32')
+        distances, indices = self.index.search(query_embedding, k)
+        similar_texts = [self.texts[idx] for idx in indices[0]]
+        return similar_texts
+
+    def save(self, dir_path, index_name='faiss'):
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(os.path.join(dir_path, f'{index_name}.pkl'), 'wb') as f:
+            pickle.dump({'vectorizer': self.vectorizer, 'texts': self.texts}, f)
+        
+        faiss.write_index(self.index, os.path.join(dir_path, f'{index_name}.index'))
+
+    def load(self, dir_path, index_name='faiss'):
+        with open(os.path.join(dir_path, f'{index_name}.pkl'), 'rb') as f:
+            data = pickle.load(f)
+            self.vectorizer = data['vectorizer']
+            self.texts = data['texts']
+        
+        self.index = faiss.read_index(os.path.join(dir_path, f'{index_name}.index'))
+
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Usage
+faiss_index = FAISS()
+faiss_index.fit(chunks)
+
+# Save the embeddings for future use
+faiss_index.save('path/to/your/embeddings/directory', index_name='budget_embeddings')
+
+# Load the Budget Index
+budget_index = FAISS()
+budget_index.load('path/to/your/embeddings/directory', index_name='budget_embeddings')
+</code>
+</pre>
+</div>
 
     </div>
 
