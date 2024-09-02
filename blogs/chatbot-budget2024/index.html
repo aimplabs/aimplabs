@@ -460,7 +460,35 @@ Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s
 
 </section>
 
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        5. Summary and Conclusion
+    </div>
+    
+    <div class="jv-section-body jv-section-text">
+        Congratulations! You have successfully built a Custom Chatbot to chat with India's Budget 2024 using your local CPU. 
+        You have learned how to load a document, make chunks, create embeddings and then save them in a vector store, search for similar documents, construct a prompt and chat with the Budget Bot.
+    </div>
 
+    <div class="jv-section-title medium-headline">
+        5.1. &nbsp; References
+    </div>
+
+    <div class="jv-section-text jv-section-body">
+        <ol class="jv-secondary-list">
+            <li>https://www.indiabudget.gov.in/doc/Budget_Speech.pdf?ref=static.internetfreedom.in</li>
+            <li>https://github.com/langchain-ai/langchain/issues</li>
+            <li>https://stephenwalther.com/how-much-does-it-cost-to-call-openai-apis/</li>
+            <li>https://ai.meta.com/blog/large-language-model-llama-meta-ai/</li>
+            <li>https://dev.to/berk/running-ollama-and-open-webui-self-hosted-4ih5</li>
+            <li>https://www.digitalocean.com/resources/articles/avoid-aws-bill-shock</li>
+            <li>https://www.intel.com/content/www/us/en/products/sku/75049/intel-core-i54670s-processor-6m-cache-up-to-3-80-ghz/specifications.html</li>
+            <li>https://future.mozilla.org/builders/news_insights/introducing-llamafile/</li>
+            <li>https://github.com/Mozilla-Ocho/llamafile?tab=readme-ov-file#quickstart</li>
+            <li>https://youtu.be/-mRi-B3t6fA?si=hkbEMw545tHJXIIn</li>
+        </ol>
+    </div>
+</section>
 
 <footer class="jv-footer-container-align">
     <div class="jv-footer-container">
@@ -497,23 +525,21 @@ Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s
 </footer>
 
 <script>
+    function setsidenav() {
+        let menu = document.querySelector(".menu-icon");
 
-function setsidenav() {
-    let menu = document.querySelector(".menu-icon");
+        if (menu.childNodes[1].textContent == 'menu') {
+            menu.childNodes[1].textContent = 'close';
+            document.querySelector('.jv-navlinks').style.display = 'flex';
+        } else if (menu.childNodes[1].textContent == 'close') {
+            menu.childNodes[1].textContent = 'menu';
+            document.querySelector('.jv-navlinks').style.display = 'none';
+        }
 
-    if (menu.childNodes[1].textContent == 'menu') {
-        menu.childNodes[1].textContent = 'close';
-        document.querySelector('.jv-navlinks').style.display = 'flex';
-    } else if (menu.childNodes[1].textContent == 'close') {
-        menu.childNodes[1].textContent = 'menu';
-        document.querySelector('.jv-navlinks').style.display = 'none';
     }
-
-}
-  var x = window.matchMedia("(max-width: 500px)")
-  removeNavRt(x) // Call listener function at run time
-
-
+    
+    var x = window.matchMedia("(max-width: 500px)")
+    removeNavRt(x) // Call listener function at run time
 </script>
 
 </body>
