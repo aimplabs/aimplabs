@@ -63,7 +63,7 @@
 
 <section class="jv-general-container jv-section-container">
     <div class="jv-section-title sz-h3">
-        Introduction
+        1. Introduction
     </div>
     
     <div class="jv-section-body jv-section-text">
@@ -76,7 +76,7 @@
     </div>
 
     <div class="jv-section-title sz-h3">
-        Overview: A Langchain-free approach
+        2. Overview: A Langchain-free approach
     </div>
 
     <div class="jv-section-body jv-section-text">
@@ -108,7 +108,7 @@
     </div>
 
     <div class="jv-section-title sz-h3">
-        Prerequisites
+        3. Prerequisites
     </div>
 
 <div class="jv-section-body jv-section-text">
@@ -128,7 +128,58 @@ $ ls /docs | grep budget
 
 <section class="jv-general-container jv-section-container">
 
+    <div class="jv-section-title sz-h3">
+        4. Building the Custom Chatbot
+    </div>
 
+    <div class="jv-section-title medium-headline">
+        4.1. &nbsp; Load the Document
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Let's create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
+            The following loader is not necessary for this tutorial but it is a comprehensive approach on how one can load multiple documents at once.</p>
+<div class="jv-incell-code">
+<pre><code class="language-python">import os
+from docx2txt import docx2txt
+
+class SimpleDirectoryLoader(object):
+    def __init__(self, directory, allowed_extensions=None):
+        self.directory = directory
+        self.allowed_extensions = allowed_extensions
+        self.handlers = {
+            '.docx': self.handle_docx,
+        }
+        self.data = []
+    
+    def load_files(self):
+        for filename in os.listdir(self.directory):
+            ext = os.path.splitext(filename)[-1]
+            if (self.allowed_extensions is None or ext in self.allowed_extensions) and ext in self.handlers:
+                self.handlers[ext](filename)
+            elif self.allowed_extensions is not None and ext not in self.allowed_extensions:
+                # print(f"Skipping {filename} with extension {ext}")
+                pass
+            else:
+                print(f"No handler for {ext} files")
+        return self.data
+
+    def handle_docx(self, filename):
+        text = docx2txt.process(os.path.join(self.directory, filename))
+        self.data.append({'filename': filename, 'extension': '.docx', 'data': text})
+
+# Usage
+allowed_extensions = ['.docx']
+budget_loader = SimpleDirectoryLoader('path/to/your/docs/directory', allowed_extensions=allowed_extensions)
+budget_doc = budget_loader.load_files()
+
+# Print first 100 chars of the document
+print(budget_doc[0]['data'][:100])
+</code>
+</pre>
+</div>
+
+    </div>
 
 
     
