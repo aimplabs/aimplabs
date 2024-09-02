@@ -378,6 +378,23 @@ prompt = prompt.format(context=context_chunks, question=query)
 </div>
     </div>
 
+    <div class="jv-section-title medium-headline">
+        4.6. &nbsp; Run Llamafile on CPU
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+<div class="jv-incell-code">
+<pre><code class="language-shell"># Make the downloaded Llamafile executable
+$ chmod +x tiny.llamafile
+# Launch Llamafile as a server
+$ ./tiny.llamafile  --nobrowser --server --port 8080 -c 4096
+# This will load the model and start the server in the terminal. 
+<samp>$ llama server listening at http://127.0.0.1:8080</samp>
+</code>
+</pre>
+</div>
+    </div>
+
     
     
 
