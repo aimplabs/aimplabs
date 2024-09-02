@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making AI research more mainstream in and around Kolkata. As a research based organization, AIMP has a long term vision of conducting high-impact research, promoting future researchers, and creating technologies of the future.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../../css/aimp_navfoot.css">
+    <link rel="stylesheet" href="../../css/aimp_blogs.css">
+    <title>Hands on Git tutorial</title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+    type="text/javascript"></script>
+    <link rel="stylesheet" href="../../css/default.min.css">
+    <script src="../../js/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+</head>
+<body>
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="../../assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="../../index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="../../index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="../../training.html" class="jv-navlink">Training</a></li>
+                <li><a href="../../archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="../../blogs.html" class="jv-navlink">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<section class="jv-general-container">
+    <div class="jv-breadcrumb-container">
+        <span class="jv-breadcrumb-active"><a href="../../blogs.html">Blogs</a></span> 
+        <span class="jv-breadcrumb-active"><a href="../../blogs.html">>> 2024</a></span> 
+        <span class="jv-breadcrumb"> >> Chat with India's Budget 2024 using your own Local Chatbot </span> 
+    </div>
+</section>
+
+<section class="jv-general-container jv-general-top-gap-large">
+    <div class="jv-section-title sz-h1">
+        Chat with India's Budget 2024 using your own Local Chatbot
+    </div>
+    <div class="jv-brand-emphasis">
+        <div class="jv-bar-upper"></div>
+        <div class="jv-bar-lower"></div>
+    </div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        1. Fundamental concepts
+    </div>
+    <div class="jv-section-body jv-section-text">
+        In plain words, git is a version control system. Github is an online
+        code repository built around the idea of git. Github is primarily designed to 
+        facilitate collaboration aided by git's version control technology. 
+    </div>
+    <div class="jv-section-title medium-headline">
+        1.1. &nbsp; What is version control?
+    </div>
+    <div class="jv-section-body jv-section-text">
+        <p>Development and deployment often involves managing changes to documents, computer programs, large 
+        web sites, and other collection of information. By managing I mean keeping track of changes, undoing 
+        changes and reverting back to previous forms, integrating changes while negotiating conflicts and so on.  
+        Popular source/version control systems widely used are CVS, SVN, git, perforce. </p>
+        <p>Git is a distributed source control system (not required to be decentralised). Massively scalable (because of its 
+        distributed nature) and open sourced, it was developed by Linus Torvulds. Most operations in git are actually 
+        local and very few operations require network connection. Any version control system facilitates
+        collaboration among the developers in large scale projects. </p>
+    </div>
+    
+    <div class="jv-section-title medium-headline">
+        1.2. &nbsp; Characteristics of git
+    </div>
+    <div class="jv-section-body jv-section-text">
+        Git is a decentralized and distributed version control system. However 
+        most people choose a central server to store the project routines 
+        because of its distributed nature. Following Characteristics make git 
+        very popular among the developers. 
+
+        <ol class="jv-secondary-list">
+            <li>Massive scalability</li>
+            <li>Open source</li>
+            <li>Develped originally for linux project requirements (comes free with linux)</li>
+            <li>Most operations are local. Very few comands require internet connection.</li>
+            <li>Very fast (since local)</li>
+            <li>Active community</li>
+        </ol>
+    </div>
+    <div class="jv-section-title medium-headline">
+        1.3. &nbsp; Fundamental working principles
+    </div>
+    <div class="jv-section-text jv-section-body">
+        <p>The two fundamental concepts needed to learn git are the <span class="jv-inline-emphasis">version control stages</span> and the 
+        idea of <span class="jv-inline-emphasis">branching</span>. Fig. 1 illustrates the version control stages of the documents. Four stages of git are 
+        listed below and refer to the figure caption for the explanation.</p>
+        <ol class="jv-secondary-list">
+            <li>LOCAL-1: Working directory</li>
+            <li>LOCAL-2: Staging area (pre-commit holding area)</li>
+            <li>LOCAL-3: Repository on the local machine (Commit)</li>
+            <li>REMOTE: Remote repository as  the 4th and last stage</li>
+            
+        </ol></p>
+
+    </div>
+    <figure class="jv-full-width-figure">
+        <img src="assets/blogs/git/git_stages.png" alt="Git and github" class="jv-fig">
+        <figcaption> <b>Fig. 1 &nbsp;</b> <span class="jv-inline-emphasis">Version control stages</span>
+            &nbsp; Git recognizes four stages in a version control pipeline. <span class="jv-inline-emphasis">Working directory</span> is where one does the 
+            development and makes changes to the project files. The accrued changes are then stored temporarily, using the command 
+            <span class="jv-inline-code">$ git add</span>, in an intermediate zone called <span class="jv-inline-emphasis">staging area</span>. At some point all the 
+            stored chenges are finally submitted to the <span class="jv-inline-emphasis">local repository</span> by applying the command <span class="jv-inline-code">
+            $ git commit </span>. To be able to work in a collaborative fashion one can <span class="jv-inline-code">push</span> the local repository to a 
+            cloud-based central and <span class="jv-inline-emphasis">remote</span> repository, <a href="https://github.com" class="jv-inline-link">Github</a> in this case, 
+            for other collaborators to see and access such changes. Note the bidirectional arrows in this phase which means the developer can also 
+            <span class="jv-inline-code">pull</span> other's work/changes from the Github cloud to integrate in his/her own 
+            project files. </figcaption>
+    </figure>
+    <div class="jv-section-text jv-section-body">
+        <p>We have introduced the idea of <span class="jv-inline-code">$ git commit</span> in Fig. 1. The second fundamental concept for understanding 
+        git is how "commits" are tied together serially, one after another, to constitute a <span class="jv-inline-emphasis">branch</span>. Essentially,
+        the <span class="jv-inline-code">commits</span> compose the branches as shown in Fig. 2. When the project is created 
+        the branch one starts with is called the <span class="jv-inline-code">master</span> branch, this is the naming 
+        convention of main or default branch. During development new branches are created to carry out the <i>development-isolated-from-the-master-branch</i> 
+        and merge them later with the master when the objective is achieved. Fig. 2 shows such branches, namely <span class="jv-inline-code">feature-01</span> and 
+        <span class="jv-inline-code">feature-02</span>. A branch that fixes some database bug is shown too 
+        (<span class="jv-inline-code">bugfix-database-01</span>).</p>
+    </div>
+    <figure class="jv-full-width-figure">
+        <img src="assets/blogs/git/git_branches.png" alt="Git and github" class="jv-fig">
+        <figcaption> <b>Fig. 2 &nbsp;</b> <span class="jv-inline-emphasis">The idea of branching</span>
+            &nbsp; Serial commits are tied together to build a branch. New developments (e.g., feature-01 and feature-02, or even critical bugfixing) 
+            are tried in isolation in their respective branches before merging them with the master branch (the default main branch). </figcaption>
+    </figure>
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h3">
+    2. Git: Getting started
+</div>
+<div class="jv-section-text jv-section-body">
+    We shalll start with the installation on Ubuntu platform. 
+</div>
+<div class="jv-section-title medium-headline">
+    2.1. Installation and setting up
+</div>
+<div class="jv-section-text jv-section-body">
+<div class="jv-incell-code">
+<pre><code class="language-shell">$ sudo apt update
+# Install git
+$ sudo apt install git
+# Is git installed? Check version
+$ git --version
+# git requires two bits of information
+$ git config --global user.name "Your Name"
+$ git config --global user.email "youremail@example.com"
+$ git config --global --list
+# git should get back with list and names
+</code></pre>
+</div>
+<p>Once the git has been set up locally the next part is to set up a Github account on 
+    Github. After registering an account with Github the next step is to 
+    <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" 
+    class="jv-inline-link">generate a token (classic)</a>; Github has deprecated the password based authentication and recommends now the token based 
+    authentication. There are primarily two ways to manage repos on Github: either with 
+    tokens or with SSH keys. In this tutorial we shall follow the token based approach. Remember, while pushing your code to Github you will need to present
+    the token string in terminal for authentication; hence preserve it safely, you need to use 
+    the token string just like your password.  
+</p>
+<p>In summary, 
+    <div class="jv-section-text jv-section-body">
+        <ul class="jv-secondary-list">
+            <li>Create an account on Github.</li>
+            <li>Click on settings > Developers setting > create a new token > copy the token</li>
+            <li>Preseve the token somewhere in a safe place. You need to use this as your password. 
+            </li>
+        </ul>
+    </div>
+</p>
+</div>
+
+<div class="jv-section-text jv-section-body">
+Two important cases are presented next for getting started: (i) cloning from Github followed by local development 
+and (ii) native project pushing to github. </div>
+
+<div class="jv-section-title medium-headline">
+    2.2. Cloning &rarr; local development &rarr; remote    
+</div>
+<div class="jv-section-text jv-section-body">
+<p>You can create a remote repo on Github, add a README.md, and then clone it to your 
+    local machine as follows.</p>
+<div class="jv-incell-code common all">
+<pre><code class="language-shell">$ git clone https://github.com/&lt;username&gt;/&lt;repo-name&gt;.git
+$ cd repo-name 
+# you will notice the hidden .git folder inside 
+$ git status      # check git status 
+                  # nothing untracked at this point
+$ echo "Hello World" > file.txt
+$ git status      # what do you see?
+# Add the changes to staging area
+$ git add file.txt # alternative commands: git add -A or git add --all
+# Commit the changes to local repo
+$ git commit -m "Created file.txt" -m "Some description"
+$ git push 
+# At this point the system will ask you 
+# username -> provide your github username
+# password -> provide the token string</code></pre></div>
+
+<p>While writing this tutorial it is observed that cloning private repo is also possible with 
+    tokens. One needs to enter username and password (i.e., token string) for authentication. Authentication 
+    will also be necessary for pushing any changes from local to github cloud.
+</p>
+
+<p> <b>Remark #1.</b> If push fails, or cloning of private repo faces issues, make sure your password keychain 
+    is not preserving any old login credentials. In such case you may want to delete such credentials if you don't need them anymore.</p>
+<p> <b>Remark #2.</b> Always note the github config details with <span class="jv-inline-code">$ git config --list</span>. The 
+    <span class="jv-inline-code">user.name</span> and <span class="jv-inline-code">user.email</span> will decide which github 
+    account is pushing the changes to the cloud, not the account credentials you used to login (important in case you use
+    multiple github accounts on the same machine). 
+</div>
+
+<div class="jv-section-title medium-headline">
+    2.3. Native project  &rarr; remote
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-bash"># Make a project directory and place yourself inside it
+$ mkdir repo-demo && cd repo-demo
+# Add some files if it is an empty project
+$ echo "# demo repo" >> README.md
+# Start version control with git
+# Initialize the .git folder inside repo-demo
+$ git init   
+$ git status # all the untracked changes will be visible
+$ git add README.md # commands: git add -A or git add --all
+$ git commit -m "Created README.md" -m "Some description"
+$ git push origin master
+# You will get error!!! The remote is not setup. 
+$ git remote -v # Nothing will show up
+
+</code></pre></div>
+<div class="jv-section-text jv-section-body">
+<p>That means, you need to create an empty project on Github with the same name as that of your current 
+    project directory on our local machine, i.e., repo-demo in our case. Once created we can 
+    set up the remote first. Next, we shoudl be ready to push the local files to Github cloud. Check the codes below.
+</p>
+</div>
+<div class="jv-incell-code">
+<pre><code class="language-bash"># Create a repo on github with the same repo name, i.e., "repo-demo". 
+# Add this remote repo as follows. 
+$ git remote add origin https://github.com/&lt;username&gt;/&lt;repo-name&gt;.git
+$ git remote -v  # You can view remote origin
+
+# On your machine the default git branch is "master"
+# Github has decided to call default git branch as "main"
+# Hence, it helps if we locally rename "master" to "main" 
+$ git branch -a # check all branches first
+$ git branch -M main # rename now
+
+# Next, let us push the local files 
+# You need to authenticate with username and token-as-password in the following command.
+$ git push -u origin master 
+
+</code></pre></div>
+<div class="jv-section-text jv-section-body">    
+    <p>Note that <span class="jv-inline-code">$ git push -u -f origin main</span> also works
+    where -f is forced push (overwrite anything).<p>
+     <p> What does -u flag do? It sets the remote upstream. That means, if you need to push 
+    any further changes, just typing <span class="jv-inline-code">$ git push </span>
+    will be enough in the subsequent commands. No need to type out the full command <span class="jv-inline-code">$ git push origin master</span>. </p>
+    </div>
+
+
+<div class="jv-section-title medium-headline">2.4. &nbsp; Push an existing repo</div>
+<div class="jv-section-text jv-section-body"> 
+<p>Same workflow like before. </p>
+<div class="jv-incell-code">
+<pre><code class="language-bash">$ cd existing-repo
+# Set an empty project on Github with the exact name "existing-repo"
+$ git remote add origin https://github.com/&lt;username&gt;/existing-repo.git
+$ git push -u origin master
+</code></pre></div>
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+<div class="jv-section-title sz-h3">3. Basics of git branching</div>
+
+<div class="jv-section-text jv-section-body">
+<p>We shall start with branch creation and switching branches. Next, we shall
+discuss how to merge the branches. The following hands on examples demonstrate the 
+concepts.
+</p>
+<div class="jv-incell-code">
+
+<pre><code class="language-bash"># Create the project
+$ mkdir demo-branching && cd demo-branching
+$ echo "# demo repo" >> README.md
+
+# Default branch is master. 
+$ git branch # The current branch is highlighted with star
+# Create a new branch (-b flag) and move onto it 
+$ git checkout -b feature-01
+# Alternatively, if you are on master, the following will do - 
+# $ git branch feature-01
+
+# Switching branches
+$ git checkout master # back to master
+$ git checkout fea* # hit tab and autocompletion works
+
+# Merging branches 
+# Stay on feature-01, edit the README.md adding a few lines.
+$ git status
+$ git add README.md
+$ git commit -m "Updated Readme"
+# Switch onto master
+$ git checkout master
+# Check the difference between master and feature-01
+$ git diff feature-01
+# Merge master with feature-01
+$ git merge feature-01
+# Check the status
+$ git status
+</code></pre></div>
+</div>
+
+<div class="jv-section-text jv-section-body">
+<p>The next exmaple demonstrates how to handle pull request using Github. Managing 
+    pull request is essential if you intend to collaborate on software development. In such 
+    case multiple group of developers build separate parts of the codebase, generate pull 
+    request and finally merge them. The small example below introduces you to teh 
+    essential idea. 
+</p>
+<div class="jv-incell-code">
+
+<pre><code class="language-bash">
+# How to handle pull request on Github?  
+$ git checkout -b feature-02 # create a new branch
+# Make some new changes. 
+$ echo "## Some new changes " >> README.md
+Try to push new changes.
+$ git push # you will receive an error! Why?
+
+# Set the remote upstream on Github (add the origin).
+# ... (Hint: refer to Section 2.3 or 2.4)
+# Then push
+$ git push -u origin feature-02 # creates a PR
+# Move to github website to handle the merging of the pull request
+# Click on pull request and you will be able to see the following option
+# Merge "base branch <- feature branch"
+# Choose: Create a pull request
+
+# The feature-02 is merged with the main branch on Github. 
+# How to update the changes on your local machine? 
+# Do the following locally. 
+$ git checkout master
+# Now, pull the changes from Guthub. 
+# If upstream is not already set up ...
+$ git pull -u origin master
+#  ... if the upstream is already setup 
+$ git pull 
+
+# We are done with the feature branch.
+# But it will still be there though you do not use it.
+# You can delete the branch if you wish.
+$ git branch -d feature* # tab and autocompletion
+# Confirm the deletion ...
+$ git branch # check the final staatus
+</code></pre></div>
+</div>
+</section>
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        4. Summary & conclusion
+    </div>
+    <div class="jv-section-body jv-section-text">
+        In summary, git is a version control system. Github is an online
+        code repository primarily designed to facilitate collaboration aided by git's version control technology. 
+    </div>
+    <div class="jv-section-title medium-headline">
+        4.1. &nbsp; Review of basic commands 
+    </div>
+    <div class="jv-section-text jv-section-body">
+        <ul class="jv-secondary-list">
+            <li><span class="jv-inline-code">clone</span> -> download a repo down from the internet (remote repository like Github) to your local machine
+            </li>
+            <li> <span class="jv-inline-code">init</span> -> apply this command inside of your project directory to turn the project into a Git repository and start using Git with that codebase
+            </li>
+            <li><span class="jv-inline-code">add</span> -> track your files and changes (move changes from wordking directory to staging area)</li>
+            <li><span class="jv-inline-code">commit</span>  -> save your changes into Git (staging area to local repository) </li>
+            <li><span class="jv-inline-code">push</span> -> push your changes from local repository to your remote repo on Github (or another website)
+            </li>
+            <li><span class="jv-inline-code">pull</span> -> pull changes down from the remote repo to your local repo</li>
+            <li><span class="jv-inline-code">status</span> -> check to see which files are being tracked or need to be commited</li>
+            <li><span class="jv-inline-code">checkout</span> -> switching onto (new, if used with <i>-b</i> flag,) branches</li>
+            <li><span class="jv-inline-code">branch</span> -> get branch information</li>
+            <li><span class="jv-inline-code">diff</span> -> get difference between two branches</li>
+        </ul>
+    </div>
+    <div class="jv-section-title medium-headline">
+        4.2. &nbsp; References
+    </div>
+    <div class="jv-section-text jv-section-body">
+        <ol class="jv-secondary-list">
+            <li> https://git-scm.com/book/en/v2</li>
+            <li> https://docs.github.com/en/get-started</li>
+        </ol>
+    </div>
+</section>
+
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - 2022</div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="../../rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="../../about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+function setsidenav() {
+    let menu = document.querySelector(".menu-icon");
+
+    if (menu.childNodes[1].textContent == 'menu') {
+        menu.childNodes[1].textContent = 'close';
+        document.querySelector('.jv-navlinks').style.display = 'flex';
+    } else if (menu.childNodes[1].textContent == 'close') {
+        menu.childNodes[1].textContent = 'menu';
+        document.querySelector('.jv-navlinks').style.display = 'none';
+    }
+
+}
+  var x = window.matchMedia("(max-width: 500px)")
+  removeNavRt(x) // Call listener function at run time
+
+
+</script>
+
+</body>
+</html>
