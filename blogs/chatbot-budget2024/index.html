@@ -137,9 +137,9 @@ $ ls /docs | grep budget
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>Let's create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
+        <p>At first create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
             The following loader is not necessary for this tutorial but it is a comprehensive approach on how one can load multiple documents at once.</p>
-<div class="jv-incell-code">
+        <div class="jv-incell-code">
 <pre><code class="language-python">import os
 from docx2txt import docx2txt
 
@@ -177,12 +177,72 @@ budget_doc = budget_loader.load_files()
 print(budget_doc[0]['data'][:100])
 </code>
 </pre>
-</div>
+        </div>
+
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.2. &nbsp; Chunk the Docs
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>A document can contain hundreds of pages each having thousands of words. 
+            If we feed the bot with all of our document at once then it will fail to provide any response because most of the Large Language Models (LLM) have their maximum input context length. 
+            Hence we need to create a list of smaller chunks from the document. 
+            We create a chunk class to implement chunks by fixing total number of words in a chunk along with overlap.
+        </p>
+
+        <p><span class="jv-inline-emphasis">Note:</span> Overlapping is not neccessary but sufficient to provide relevant chunks when the context splits between more than one chunk.</p>
+        
+        <div class="jv-incell-code">
+<pre><code class="language-python">import re
+from typing import List, Dict
+
+class ChunkManager(object):
+    def __init__(self, docs: List[Dict[str, str]]):
+        self.combined_text = self._combine_texts(docs)
+    
+    def _combine_texts(self, docs: List[Dict[str, str]]) -> str:
+        combined_text = ' '.join(doc['data'] for doc in docs)
+        return re.sub(r'\n+', ' ', combined_text)
+
+    def chunk_by_words_with_overlap(self, chunk_size: int, overlap: int) -> List[str]:
+        words = self.combined_text.split()
+        chunks = []
+        step = chunk_size - overlap
+
+        if overlap < 0:
+            raise ValueError("Overlap must be a non-negative integer.")
+        
+        if step <= 0:
+            raise ValueError("Overlap must be smaller than chunk size.")
+
+        for i in range(0, len(words), step):
+            chunk = ' '.join(words[i:i + chunk_size])
+            chunks.append(chunk)
+            
+        return chunks
+
+# Usage
+chunk_size = 250
+overlap = 100
+
+chunks = ChunkManager(docs=budget_doc).chunk_by_words_with_overlap(chunk_size, overlap)
+print(chunks)
+</code>
+</pre>
+        </div>
 
     </div>
 
 
     
+    
+
+</section>
+
+<section class="jv-general-container jv-section-container">
+
     <div class="jv-section-title medium-headline">
         1.1. &nbsp; What is version control?
     </div>
@@ -260,10 +320,6 @@ print(budget_doc[0]['data'][:100])
             &nbsp; Serial commits are tied together to build a branch. New developments (e.g., feature-01 and feature-02, or even critical bugfixing) 
             are tried in isolation in their respective branches before merging them with the master branch (the default main branch). </figcaption>
     </figure>
-
-</section>
-
-<section class="jv-general-container jv-section-container">
 <div class="jv-section-title sz-h3">
     2. Git: Getting started
 </div>
