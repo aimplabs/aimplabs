@@ -97,8 +97,8 @@
         </p>
 
         <p>
-            But wait, there's more. We also need an inference model. Using a well tarined AI model often requires an API key which is behind a paywall [3]. 
-            And if you wish to use an open-source model like Llama [4] or application like Ollama[5] you need a GPU. 
+            But wait, there's more. We also need an inference model. Using a well trained AI model often requires an API key which is behind a paywall [3]. 
+            And if you wish to use an open-source model like Llama [4] or application like Ollama [5] you need a GPU. 
             On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their recent surprise bills [6]. 
             Do we have any way forward from this muddle?
         </p>
@@ -107,14 +107,20 @@
             Our study shows that there are ways to bypass such constrains. The objective of this tutorial is to discuss those alternatives.  
             We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how one can use a consumer grade laptop (7 years old i5-4670s in my case) to chat with one's personal data [7]. 
             For the uninitiated, LLamafile is an amazing blessing for the developers community. Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which 
-            removes all the complexity of a full-stack Large Language Model (LLM) chatbot my converting an AI model to an executable that would would run anywhere [8,9,10]. 
+            removes all the complexity of a full-stack Large Language Model (LLM) chatbot by converting an AI model to an executable that would run anywhere [8,9,10]. 
             It democratizes the use of LLMs in your local environment without GPU. Let's see how we can utilize their remarkable initiative.
         </p>
 
         <p>The overall structure of this tutorial is as follows:</p>
 
         <figure class="jv-full-width-figure">
-            <img src="assets/chatbot_overview_fig.png" alt="Chatbot Overview" class="jv-fig">
+            <img src="assets/chatbot_overview_v2.jpg" alt="Chatbot Overview" class="jv-fig">
+            <figcaption> <b>Fig. 1 &nbsp;</b> <span class="jv-inline-emphasis">Chatbot overview</span> 
+            The budget speech is split into <span class="jv-inline-emphasis">smaller chunks</span>. The chunks are <span class="jv-inline-emphasis">embedded</span> and saved in a <span class="jv-inline-emphasis">vector store</span>.
+            When a user provides a <span class="jv-inline-emphasis">query,</span> it is embedded and passed into the vector store.
+            A <span class="jv-inline-emphasis">similarity search</span> is executed, <span class="jv-inline-emphasis">retrieving</span> the relevant chunks.
+            The context and query are then merged with a qna <span class="jv-inline-emphasis">instruction</span> and passed into the <span class="jv-inline-emphasis">llamafile</span>.
+            The llamafile executes the AI model on the <span class="jv-inline-emphasis">CPU</span> and returns the answer.</figcaption>
         </figure>
     </div>
 
@@ -125,11 +131,11 @@
 <div class="jv-section-body jv-section-text">
 <div class="jv-incell-code">
 <pre><code class="language-shell"># Download a Llamafile
-$ wget +o tiny.llamafile https://huggingface.co/Mozilla/TinyLlama-1.1B-Chat-v1.0-llamafile/resolve/main/TinyLlama-1.1B-Chat-v1.0.F16.llamafile
+$ wget +o TinyLlama-1.1B-Chat-v1.0.F16.llamafile https://huggingface.co/Mozilla/TinyLlama-1.1B-Chat-v1.0-llamafile/resolve/main/TinyLlama-1.1B-Chat-v1.0.F16.llamafile
 # Install the required packages
 $ pip install -q docx2txt faiss-cpu requests scikit-learn
 # Make sure the document is available
-$ ls /docs | grep budget
+$ ls docs | grep budget
 <samp>$ budget_2024.docx</samp>
 </code>
 </pre>
@@ -267,7 +273,7 @@ print(chunks)
             <span class="jv-inline-emphasis">FAISS</span>, a cpu intesive vector storage from Facebook Research, for storing the vectors.
         </p>
 
-        <p><span class="jv-inline-emphasis">Note:</span> you can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. 
+        <p><span class="jv-inline-emphasis">Note:</span> One can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. 
             We have used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
 
 <div class="jv-incell-code">
