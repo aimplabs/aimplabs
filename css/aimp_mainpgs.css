@@ -105,7 +105,7 @@
 .jv-news-box .jv-news-item {
     font-family: 'Rubik', sans-serif;
     color: #515151;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 24px;
     text-align: justify;
 }
@@ -113,6 +113,15 @@
 .jv-news-item {
     margin-top: 0;
     margin-bottom: 20px;
+}
+
+.hero-brand-img-text {
+    font-family: 'Rubik', sans-serif;
+    text-align: justify;
+    line-height: 24px;
+    letter-spacing: 0.75px; 
+    color: #515151;
+    font-size: 16px;
 }
 
 .jv-bold-emphasis {
