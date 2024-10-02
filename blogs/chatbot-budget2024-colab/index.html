@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../../css/aimp_navfoot.css">
     <link rel="stylesheet" href="../../css/aimp_blogs.css">
-    <title>Local CPU Chatbot for India Budget 2024</title>
+    <title>Google Colab GPU Chatbot for India Budget 2024</title>
     <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
     <script
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
@@ -77,44 +77,49 @@
     </div>
     
     <div class="jv-section-body jv-section-text">
-        Chatbot is a software application designed to simulate humanlike coversations. 
-        It is capable of answering questions, getting external information, even solving complex coding problems. 
-        In this tutorial we will build a custom chatbot to chat with our own document. 
-        The document we will use is India's Budget 2024 speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024 [1]. 
-        The budget speech is very long and descriptive. Thus it is difficult for a common person to study and understand the 
-        the content in its entirety. But if we use a custom chatbot, we will be able to absorb most of it.
+        <p>
+            Chatbot is a cutting edge technology that has revolutionized the way we interact with computers. It is capable of answering questions, getting external information, even solving complex coding problems.
+            In the era of AI, chatbots have become an integral part of our daily lives. They are used in various industries like healthcare, finance, and customer service.
+            In each industry, chatbots are used to provide instant support to customers, answer their queries, and help them make informed decisions.
+        </p>
+
+        <p>
+            In this tutorial, we will build a custom chatbot to chat with our own document. The document we will use is India's Budget 2024 speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024 [1].
+            The budget speech is very long and descriptive. Thus it is difficult for a common person to study and understand the 
+            the content in its entirety. But if we use a custom chatbot, we will be able to absorb most of it.
+        </p>
     </div>
 
     <div class="jv-section-title sz-h3">
-        2. Overview: A Langchain-free approach
+        2. Overview: A framework free RAG chatbot
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>Developing a custom chatbot has become easier after the introduction of various open-source frameworks like Langchain. 
-            These frameworks are great for prototype development, but they lack customization and suffer from niche documentation [2]. 
-            So what's the alternative? Can we make a custom chatbot using only raw python and less lines of code? 
-            Absolutely! This tutorial consists of <span class="jv-inline-emphasis">zero framework</span> and minimal dependencies.
+        <p>
+            Retrieval Augmented Generation (RAG) is a new paradigm in chatbot development [2]. It combines the best of both worlds:
+            the retrieval-based chatbot and the generative chatbot. The retrieval-based chatbot is good at finding relevant information from a large corpus of text.
+            The generative chatbot is good at generating human-like responses. RAG combines these two approaches to create a chatbot that can find relevant information and generate human-like responses.
         </p>
 
         <p>
-            But wait, there's more. We also need an inference model. Using a well trained AI model often requires an API key which is behind a paywall [3]. 
-            And if you wish to use an open-source model like Llama [4] or application like Ollama [5] you need a GPU. 
-            On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their recent surprise bills [6]. 
-            Do we have any way forward from this muddle?
+            Developing a custom chatbot has become easier after the introduction of various open-source frameworks like Langchain, Haystack, LlamaIndex etc. 
+            These frameworks are great for prototype development, but they lack customization and suffer from niche documentation [3]. 
+            Also they require a lot of dependencies and often the issues regarding the conflicts of the dependencies are not addressed properly [4]. 
+            Thus it is better to avoid these frameworks and use raw python code to build a custom chatbot with <span class="jv-inline-emphasis">minimal</span> dependencies.          
         </p>
 
         <p>
-            Our study shows that there are ways to bypass such constrains. The objective of this tutorial is to discuss those alternatives.  
-            We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how one can use a consumer grade laptop (7 years old i5-4670s in my case) to chat with one's personal data [7]. 
-            For the uninitiated, LLamafile is an amazing blessing for the developers community. Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which 
+            On the other hand, using a well trained AI model often requires an API key which is behind a paywall with incremental costs [5].
+            However this problem has been addressed by our lovely open-source community. Introduction of Llama, Llava, Phi, Mistral, Mixtral has democratizes the use of LLMs in your local environment [6].
+            But the problem is that these models require a GPU to run. Again, hosting such applications on workhorse servers like AWS has become pretty scary due to their recent surprise bills [7].
+            So in this tutorial, we will show you how you can run any open-source model using <span class="jv-inline-emphasis">Llamafile</span> on Google Colab's free GPU.
+        </p>
+
+        <p>           
+            For the uninitiated, LLamafile is an amazing blessing for the developers community. Mozilla launched an open-source project called <span class="jv-inline-emphasis">Llamafile</span> which 
             removes all the complexity of a full-stack Large Language Model (LLM) chatbot by converting an AI model to an executable that would run anywhere [8,9,10]. 
-            It democratizes the use of LLMs in your local environment without GPU. Let's see how we can utilize their remarkable initiative.
-        </p>
-
-        <p>
-            We know the local capabilities of Llamafile. We have already discussed how you can run this chatbot using your local CPU in our previous <span class="jv-breadcrumb-active"><a href="index.html">tutorial.</a></span>
-            But what if we want to use a GPU? Google Colab provides free GPU for a limited time. We can use this free GPU to run our Llamafile.
-            In this tutorial, we will show you how you can run the same chatbot using Google Colab's free GPU.
+            It democratizes the use of LLMs in your local environment without GPU. We have already implemented that in our previous <span class="jv-breadcrumb-active"><a href="../chatbot-budget2024/">tutorial.</a></span>
+            Google Colab provides free GPU for a limited time. In this tutorial, we will show you how you can run the same chatbot using Google Colab's free GPU.
         </p>
 
         <p>The overall structure of this tutorial is as follows:</p>
@@ -137,7 +142,7 @@
     <div class="jv-section-body jv-section-text">
         <p>
             We need to download the required model in <span class="jv-inline-emphasis">GGUF</span> format along with the Llamafile executable.
-            GGUF is specially designed to store inference models and perform well on consumer-grade computer hardware. [11]
+            GGUF is specially designed to store inference models and perform well on consumer-grade computer hardware [11]. 
         </p>
     </div>
 
@@ -456,47 +461,18 @@ def run_llamafile_subprocess(llamafile_name, model_path, context_length, num_gpu
     </div>
 
     <div class="jv-section-body jv-section-text">
-        <p>Now we can chat with our custom budget bot using the prompt we have created.</p>
+        <p>Now we can chat with our custom budget bot we have created.</p>
 
 <div class="jv-incell-code">
-<pre><code class="language-python">import requests
+<pre><code class="language-python"># Example usage:
+llamafile_name = "llamafile"
+model_path = "mistral-7b-instruct-q5.gguf"
+num_gpus = 9999
+context_length = 4096
 
-class ChatLlamaFile(object):
-    def __init__(self, host="localhost", port=8080):
-        self.host = host
-        self.port = port
-        self.base_url = f"http://{host}:{port}"
-        self.chat_url = f"{self.base_url}/v1/chat/completions"
-        self.headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer no-key'
-        }
-    
-    def chat(self, prompt, query):
-        data = {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": prompt
-                },
-                {
-                    "role": "user",
-                    "content": query
-                }
-            ]
-        }
-        response = requests.post(self.chat_url, headers=self.headers, json=data)
-        return response.json()
-</code>
-</pre>
-</div>
+extracted_content, answer = run_llamafile_subprocess(llamafile_name, model_path, context_length, num_gpus, prompt)
 
-<div class="jv-incell-code">
-<pre><code class="language-python"># Let's Chat
-response = ChatLlamaFile().chat(prompt, query)
-answer = response.get('choices')[0].get('message').get('content')
-
-print("Query:", query)
+print("Question:", query)
 print("Answer:", answer)
 </code>
 </pre>
@@ -532,12 +508,12 @@ Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s
     <div class="jv-section-text jv-section-body">
         <ol class="jv-secondary-list">
             <li>https://www.indiabudget.gov.in/doc/Budget_Speech.pdf?ref=static.internetfreedom.in</li>
-            <li>https://github.com/langchain-ai/langchain/issues</li>
+            <li>https://arxiv.org/abs/2005.11401</li>
+            <li>https://www.octomind.dev/blog/why-we-no-longer-use-langchain-for-building-our-ai-agents</li>
+            <li>https://github.com/langchain-ai/langchain/issues/24713</li>
             <li>https://stephenwalther.com/how-much-does-it-cost-to-call-openai-apis/</li>
-            <li>https://ai.meta.com/blog/large-language-model-llama-meta-ai/</li>
-            <li>https://dev.to/berk/running-ollama-and-open-webui-self-hosted-4ih5</li>
+            <li>https://huggingface.co/blog/os-llms</li>
             <li>https://www.digitalocean.com/resources/articles/avoid-aws-bill-shock</li>
-            <li>https://www.intel.com/content/www/us/en/products/sku/75049/intel-core-i54670s-processor-6m-cache-up-to-3-80-ghz/specifications.html</li>
             <li>https://future.mozilla.org/builders/news_insights/introducing-llamafile/</li>
             <li>https://github.com/Mozilla-Ocho/llamafile?tab=readme-ov-file#quickstart</li>
             <li>https://youtu.be/-mRi-B3t6fA?si=hkbEMw545tHJXIIn</li>
