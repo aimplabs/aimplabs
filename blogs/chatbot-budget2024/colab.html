@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making AI research more mainstream in and around Kolkata. As a research based organization, AIMP has a long term vision of conducting high-impact research, promoting future researchers, and creating technologies of the future.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../../css/aimp_navfoot.css">
+    <link rel="stylesheet" href="../../css/aimp_blogs.css">
+    <title>Local CPU Chatbot for India Budget 2024</title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+    type="text/javascript"></script>
+    <link rel="stylesheet" href="../../css/default.min.css">
+    <script src="../../js/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+</head>
+<body>
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="../../assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="../../index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="../../index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="../../training.html" class="jv-navlink">Training</a></li>
+                <li><a href="../../archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="../../blogs.html" class="jv-navlink">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<section class="jv-general-container">
+    <div class="jv-breadcrumb-container">
+        <span class="jv-breadcrumb-active"><a href="../../blogs.html">Blogs</a></span> 
+        <span class="jv-breadcrumb-active"><a href="../../blogs.html">>> 2024</a></span> 
+        <span class="jv-breadcrumb"> >> Chat with India's Budget 2024 using free Google Colab GPU (RAG) chatbot</span> 
+    </div>
+</section>
+
+<section class="jv-general-container jv-general-top-gap-large">
+    <div class="jv-section-title sz-h1">
+        Chat with India's Budget 2024 using free Google Colab GPU (RAG) chatbot
+    </div>
+    <div class="jv-authors">
+        <br>
+        <div class="jv-each-author" style="padding-left: 10px; font: 'Rubik', sans-serif; font-size: 18px; color: #5B5B66;">Abhishek Acharya 
+        <a href="https://github.com/aimplabs/chatbot-budget2024"><i class="fa-brands fa-github" style="color: gray;"></i></a>
+        <a href="https://www.linkedin.com/in/abhishek-acharya-624b892a5/"><i class="fa-brands fa-linkedin" style="color: #0000ff ;"></i></a>
+        <div class="jv-publishing-date" style="margin-top: 10px; font: 'Rubik', sans-serif; font-size: 13px; color: #5B5B66;">Published on: 02-Oct-2024</div>
+        <div class="jv-publishing-date" style="margin-top: 2px; font: 'Rubik', sans-serif; font-size: 13px; color: #5B5B66;">Last Updated on: 02-Oct-2024</div>
+     </div>
+        <br>
+    </div>
+    <div class="jv-brand-emphasis">
+        <div class="jv-bar-upper"></div>
+        <div class="jv-bar-lower"></div>
+    </div>
+</section>   
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        1. Introduction
+    </div>
+    
+    <div class="jv-section-body jv-section-text">
+        Chatbot is a software application designed to simulate humanlike coversations. 
+        It is capable of answering questions, getting external information, even solving complex coding problems. 
+        In this tutorial we will build a custom chatbot to chat with our own document. 
+        The document we will use is India's Budget 2024 speech presented by Hon’ble Finance Minister Smt. Nirmala Sitharaman on July 23, 2024 [1]. 
+        The budget speech is very long and descriptive. Thus it is difficult for a common person to study and understand the 
+        the content in its entirety. But if we use a custom chatbot, we will be able to absorb most of it.
+    </div>
+
+    <div class="jv-section-title sz-h3">
+        2. Overview: A Langchain-free approach
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Developing a custom chatbot has become easier after the introduction of various open-source frameworks like Langchain. 
+            These frameworks are great for prototype development, but they lack customization and suffer from niche documentation [2]. 
+            So what's the alternative? Can we make a custom chatbot using only raw python and less lines of code? 
+            Absolutely! This tutorial consists of <span class="jv-inline-emphasis">zero framework</span> and minimal dependencies.
+        </p>
+
+        <p>
+            But wait, there's more. We also need an inference model. Using a well trained AI model often requires an API key which is behind a paywall [3]. 
+            And if you wish to use an open-source model like Llama [4] or application like Ollama [5] you need a GPU. 
+            On the other hand, hosting such applications on workhorse servers like AWS has become pretty scary due to their recent surprise bills [6]. 
+            Do we have any way forward from this muddle?
+        </p>
+
+        <p>
+            Our study shows that there are ways to bypass such constrains. The objective of this tutorial is to discuss those alternatives.  
+            We have used <span class="jv-inline-emphasis">Llamafile</span> to demonstrate how one can use a consumer grade laptop (7 years old i5-4670s in my case) to chat with one's personal data [7]. 
+            For the uninitiated, LLamafile is an amazing blessing for the developers community. Mozilla launched an open source project called <span class="jv-inline-emphasis">Llamafile</span> which 
+            removes all the complexity of a full-stack Large Language Model (LLM) chatbot by converting an AI model to an executable that would run anywhere [8,9,10]. 
+            It democratizes the use of LLMs in your local environment without GPU. Let's see how we can utilize their remarkable initiative.
+        </p>
+
+        <p>
+            We know the local capabilities of Llamafile. We have already discussed how you can run this chatbot using your local CPU in our previous <span class="jv-breadcrumb-active"><a href="index.html">tutorial.</a></span>
+            But what if we want to use a GPU? Google Colab provides free GPU for a limited time. We can use this free GPU to run our Llamafile.
+            In this tutorial, we will show you how you can run the same chatbot using Google Colab's free GPU.
+        </p>
+
+        <p>The overall structure of this tutorial is as follows:</p>
+
+        <figure class="jv-full-width-figure">
+            <img src="assets/chatbot_overview_v2.jpg" alt="Chatbot Overview" class="jv-fig">
+            <figcaption> <b>Fig. 1 &nbsp;</b> <span class="jv-inline-emphasis">Chatbot overview</span> 
+            The budget speech is split into <span class="jv-inline-emphasis">smaller chunks</span>. The chunks are <span class="jv-inline-emphasis">embedded</span> and saved in a <span class="jv-inline-emphasis">vector store</span>.
+            When a user provides a <span class="jv-inline-emphasis">query,</span> it is embedded and passed into the vector store.
+            A <span class="jv-inline-emphasis">similarity search</span> is executed, <span class="jv-inline-emphasis">retrieving</span> the relevant chunks.
+            The context and query are then merged with a qna <span class="jv-inline-emphasis">instruction</span> and passed into the <span class="jv-inline-emphasis">llamafile</span>.
+            The llamafile executes the AI model on the <span class="jv-inline-emphasis">CPU</span> and returns the answer.</figcaption>
+        </figure>
+    </div>
+
+    <div class="jv-section-title sz-h3">
+        3. Prerequisites
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>
+            We need to download the required model in <span class="jv-inline-emphasis">GGUF</span> format along with the Llamafile executable.
+            GGUF is specially designed to store inference models and perform well on consumer-grade computer hardware. [11]
+        </p>
+    </div>
+
+<div class="jv-section-body jv-section-text">
+<div class="jv-incell-code">
+<pre><code class="language-shell"># Download Llamafile executable and the model
+$ wget -O llamafile https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.12/llamafile-0.8.12
+$ wget -O mistral-7b-instruct-q5.gguf https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF/resolve/main/mistral-7b-instruct-v0.1.Q5_0.gguf
+$ chmod +x llamafile
+# Install the required packages
+$ pip install -q docx2txt faiss-cpu requests scikit-learn
+# Make sure the document is available
+$ ls docs | grep budget
+<samp>$ budget_2024.docx</samp>
+</code>
+</pre>
+</div>
+</div>
+</section>
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        4. Building the Custom Chatbot
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.1. &nbsp; Load the Document
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>First create a <span class="jv-inline-emphasis">document loader</span> to load documents from a folder. 
+            The following loader is not necessary for this tutorial but it is worthwhile to see how one can load multiple documents at once.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">import os
+from docx2txt import docx2txt
+
+class SimpleDirectoryLoader(object):
+    def __init__(self, directory, allowed_extensions=None):
+        self.directory = directory
+        self.allowed_extensions = allowed_extensions
+        self.handlers = {
+            '.docx': self.handle_docx,
+        }
+        self.data = []
+    
+    def load_files(self):
+        for filename in os.listdir(self.directory):
+            ext = os.path.splitext(filename)[-1]
+            if (self.allowed_extensions is None or ext in self.allowed_extensions) and ext in self.handlers:
+                self.handlers[ext](filename)
+            elif self.allowed_extensions is not None and ext not in self.allowed_extensions:
+                # print(f"Skipping {filename} with extension {ext}")
+                pass
+            else:
+                print(f"No handler for {ext} files")
+        return self.data
+
+    def handle_docx(self, filename):
+        text = docx2txt.process(os.path.join(self.directory, filename))
+        self.data.append({'filename': filename, 'extension': '.docx', 'data': text})
+
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-python"># Usage
+allowed_extensions = ['.docx']
+budget_loader = SimpleDirectoryLoader('path/to/your/docs/directory', allowed_extensions=allowed_extensions)
+budget_doc = budget_loader.load_files()
+
+# Print first 100 chars of the document
+print(budget_doc[0]['data'][:100])
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.2. &nbsp; Chunk the Docs
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>A document can contain hundreds of pages each having thousands of words. 
+            If we feed the bot with all of our document contents in one shot, we are definitely going to 
+            hit the maximum input context length. Hence we need to create a list of smaller chunks from the document. 
+            We create a chunk class to implement chunks by fixing total number of words in a chunk along with overlap.
+        </p>
+
+        <p><span class="jv-inline-emphasis">Note:</span> Overlapping is not neccessary but sufficient to provide relevant chunks when the context gets split between more than one chunk.</p>
+        
+<div class="jv-incell-code">
+<pre><code class="language-python">import re
+from typing import List, Dict
+
+class ChunkManager(object):
+    def __init__(self, docs: List[Dict[str, str]]):
+        self.combined_text = self._combine_texts(docs)
+    
+    def _combine_texts(self, docs: List[Dict[str, str]]) -> str:
+        combined_text = ' '.join(doc['data'] for doc in docs)
+        return re.sub(r'\n+', ' ', combined_text)
+
+    def chunk_by_words_with_overlap(self, chunk_size: int, overlap: int) -> List[str]:
+        words = self.combined_text.split()
+        chunks = []
+        step = chunk_size - overlap
+
+        if overlap < 0:
+            raise ValueError("Overlap must be a non-negative integer.")
+        
+        if step <= 0:
+            raise ValueError("Overlap must be smaller than chunk size.")
+
+        for i in range(0, len(words), step):
+            chunk = ' '.join(words[i:i + chunk_size])
+            chunks.append(chunk)
+            
+        return chunks
+
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Usage
+chunk_size = 250
+overlap = 100
+
+chunks = ChunkManager(docs=budget_doc).chunk_by_words_with_overlap(chunk_size, overlap)
+print(chunks)
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.3. &nbsp; Create Embeddings and save in a Vector Store
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Embedding is the numerical representation of the data which makes it easier for algorithms to understand and analyze the relationships between different pieces of information. 
+            It converts the data into fixed-size of vectors. After that we can use various search algorithm like <span class="jv-inline-emphasis">cosine similarity</span> to find the relevant data.
+        </p>
+
+        <p>In this tutorial, we use <span class="jv-inline-emphasis">TF-IDF</span> embeddings from scikit-learn library, and 
+            <span class="jv-inline-emphasis">FAISS</span>, a cpu intesive vector storage from Facebook Research, for storing the vectors.
+        </p>
+
+        <p><span class="jv-inline-emphasis">Note:</span> One can use any open source embedding models (from Hugging Face) or API (Gemini, OpenAI etc.) which are <span class="jv-inline-emphasis">dense</span> embedding models. 
+            We have used <span class="jv-inline-emphasis">sparse</span> embedding from TF-IDF.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">import os
+import faiss
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+class FAISS(object):
+    def __init__(self, max_features=768):
+        self.vectorizer = TfidfVectorizer(max_features=max_features)
+        self.index = None
+        self.texts = []
+
+    # Create Embeddings
+    def fit(self, texts):
+        self.texts = texts
+        embeddings = self.vectorizer.fit_transform(texts).toarray().astype('float32')
+        dimension = embeddings.shape[1]
+        self.index = faiss.IndexFlatL2(dimension)
+        self.index.add(embeddings)
+        return embeddings
+
+    # Function for Similarity Search through Context and Query
+    # Futher we fetch top k similar documents based on the query
+    def search(self, query, k=10):
+        query_embedding = self.vectorizer.transform([query]).toarray().astype('float32')
+        distances, indices = self.index.search(query_embedding, k)
+        similar_texts = [self.texts[idx] for idx in indices[0]]
+        return similar_texts
+
+    def save(self, dir_path, index_name='faiss'):
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(os.path.join(dir_path, f'{index_name}.pkl'), 'wb') as f:
+            pickle.dump({'vectorizer': self.vectorizer, 'texts': self.texts}, f)
+        
+        faiss.write_index(self.index, os.path.join(dir_path, f'{index_name}.index'))
+
+    def load(self, dir_path, index_name='faiss'):
+        with open(os.path.join(dir_path, f'{index_name}.pkl'), 'rb') as f:
+            data = pickle.load(f)
+            self.vectorizer = data['vectorizer']
+            self.texts = data['texts']
+        
+        self.index = faiss.read_index(os.path.join(dir_path, f'{index_name}.index'))
+
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Usage
+faiss_index = FAISS()
+faiss_index.fit(chunks)
+
+# Save the embeddings for future use
+faiss_index.save('path/to/your/embeddings/directory', index_name='budget_embeddings')
+
+# Load the Budget Index
+budget_index = FAISS()
+budget_index.load('path/to/your/embeddings/directory', index_name='budget_embeddings')
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.4. &nbsp; Similarity Search
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>We search through the embeddings using FAISS' in-built <span class="jv-inline-emphasis">similarity search</span> function.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python"># Query the Budget Index for similar documents
+query = "Who represented the Budget 2024?"
+
+no_of_docs_to_fetch = 10    # Get top 10 similar documents
+context_chunks = budget_index.search(query, k=no_of_docs_to_fetch)
+print(context_chunks)
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.5. &nbsp; Prompt Engineering
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Before we proceed to the chatting part, we need to specify the model with an <span class="jv-inline-emphasis">instruction</span> on how the bot will behave. 
+            This is very important because we have seen that the quality of the response heavily depends on the framing of this prompt.
+        </p>
+
+        <p>Essentially, our prompt will have 3 parts: Instruction, Context and the Query.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">prompt = """You are an expert in the analysis of Government Budgets.
+The following comtexts will be from India's Budget 2024.
+The user will ask questions about the Budget 2024 and you have to provide the answers based on the context.
+Answer in a professional tone and use bullets and paragraphs to make the answer more readable.
+If you can't find the answer in the context, reply with "I am sorry, I couldn't find the answer to your question.".
+Don't put any external information in the answer.
+
+Context: {context}
+
+Question: {question}
+
+Answer: Your answer goes here.
+"""
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+    <pre><code class="language-python"># Construct the prompt
+prompt = prompt.format(context=context_chunks, question=query)
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.6. &nbsp; Run Llamafile on Google Colab
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>
+            We have to start the Llamafile as a <span class="jv-inline-emphasis">server</span> through terminal.
+            But Google Colab generally does not allow to open server port. So we have to run the Llamafile during only inference time.
+            We will use <span class="jv-inline-emphasis">subprocess</span> to run the Llamafile in the terminal directly.
+        </p>
+<div class="jv-incell-code">
+<pre><code class="language-python">import re
+import subprocess
+
+# This is due to the backticks in the prompt
+def remove_backticks(input_string):
+    return input_string.replace('`', '')
+
+def extract_answer(output):
+    match = re.search(r'\[INST\](.*?)\[/INST\](.*)', output, re.DOTALL)
+    if match:
+        extracted_content = match.group(1).strip()
+        answer = match.group(2).strip()
+        return extracted_content, answer
+    else:
+        return output, "Error in Prompt!"
+
+def run_llamafile_subprocess(llamafile_name, model_path, context_length, num_gpus, prompt):
+    re_prompt = remove_backticks(prompt)
+    command = f"./{llamafile_name} -m {model_path} -c {context_length} -ngl {num_gpus} -p \"[INST]{re_prompt}[/INST]\""
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    extracted_content, answer = extract_answer(str(result.stdout))
+
+    return extracted_content, answer
+</code>
+</pre>
+</div>
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        4.7. &nbsp; Chat with the Budget Bot
+    </div>
+
+    <div class="jv-section-body jv-section-text">
+        <p>Now we can chat with our custom budget bot using the prompt we have created.</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-python">import requests
+
+class ChatLlamaFile(object):
+    def __init__(self, host="localhost", port=8080):
+        self.host = host
+        self.port = port
+        self.base_url = f"http://{host}:{port}"
+        self.chat_url = f"{self.base_url}/v1/chat/completions"
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer no-key'
+        }
+    
+    def chat(self, prompt, query):
+        data = {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": prompt
+                },
+                {
+                    "role": "user",
+                    "content": query
+                }
+            ]
+        }
+        response = requests.post(self.chat_url, headers=self.headers, json=data)
+        return response.json()
+</code>
+</pre>
+</div>
+
+<div class="jv-incell-code">
+<pre><code class="language-python"># Let's Chat
+response = ChatLlamaFile().chat(prompt, query)
+answer = response.get('choices')[0].get('message').get('content')
+
+print("Query:", query)
+print("Answer:", answer)
+</code>
+</pre>
+</div>
+
+<p>Example response:</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-shell">Query: Who represented the Budget 2024?  
+Answer: The Budget 2024 was presented by Finance Minister Nirmala Sitharaman.</s>
+</code>
+</pre>
+</div>
+    </div>
+
+</section>
+
+<section class="jv-general-container jv-section-container">
+    <div class="jv-section-title sz-h3">
+        5. Summary and Conclusion
+    </div>
+    
+    <div class="jv-section-body jv-section-text">
+        Congratulations! You have successfully built a custom chatbot to chat with India's Budget 2024 using your local CPU machine. 
+        You have learned how to load a document, make chunks, create embeddings, and then save them in a vector store. This allows 
+        subsequent operations like searching for similar documents, constructing a prompt and chatting with the budget bot.
+    </div>
+
+    <div class="jv-section-title medium-headline">
+        5.1. &nbsp; References
+    </div>
+
+    <div class="jv-section-text jv-section-body">
+        <ol class="jv-secondary-list">
+            <li>https://www.indiabudget.gov.in/doc/Budget_Speech.pdf?ref=static.internetfreedom.in</li>
+            <li>https://github.com/langchain-ai/langchain/issues</li>
+            <li>https://stephenwalther.com/how-much-does-it-cost-to-call-openai-apis/</li>
+            <li>https://ai.meta.com/blog/large-language-model-llama-meta-ai/</li>
+            <li>https://dev.to/berk/running-ollama-and-open-webui-self-hosted-4ih5</li>
+            <li>https://www.digitalocean.com/resources/articles/avoid-aws-bill-shock</li>
+            <li>https://www.intel.com/content/www/us/en/products/sku/75049/intel-core-i54670s-processor-6m-cache-up-to-3-80-ghz/specifications.html</li>
+            <li>https://future.mozilla.org/builders/news_insights/introducing-llamafile/</li>
+            <li>https://github.com/Mozilla-Ocho/llamafile?tab=readme-ov-file#quickstart</li>
+            <li>https://youtu.be/-mRi-B3t6fA?si=hkbEMw545tHJXIIn</li>
+            <li>https://www.ibm.com/think/topics/gguf-versus-ggml</li>
+        </ol>
+    </div>
+</section>
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - 2022</div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="../../rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="../../about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function setsidenav() {
+        let menu = document.querySelector(".menu-icon");
+
+        if (menu.childNodes[1].textContent == 'menu') {
+            menu.childNodes[1].textContent = 'close';
+            document.querySelector('.jv-navlinks').style.display = 'flex';
+        } else if (menu.childNodes[1].textContent == 'close') {
+            menu.childNodes[1].textContent = 'menu';
+            document.querySelector('.jv-navlinks').style.display = 'none';
+        }
+
+    }
+
+    var x = window.matchMedia("(max-width: 500px)")
+    removeNavRt(x) // Call listener function at run time
+</script>
+
+</body>
+</html>
