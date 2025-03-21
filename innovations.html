@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="css/default.min.css">
     <script src="js/highlight.min.js"></script>
     <script>hljs.highlightAll();</script></head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/10.0.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
 <body>
 
 
@@ -195,7 +197,7 @@ function setsidenav() {
 
         // Create the inner message div
         const innerDiv = document.createElement('div');
-        innerDiv.className = `p-3 ${isUserMessage ? 'me-3 border bg-body-tertiary' : 'ms-3'}`;
+        innerDiv.className = `small p-3 ${isUserMessage ? 'me-3 border bg-body-tertiary' : 'ms-3'}`;
         innerDiv.style.borderRadius = '15px';
 
         if (!isUserMessage) {
@@ -203,12 +205,16 @@ function setsidenav() {
         }
 
         // Create the paragraph for the message text
-        const messageParagraph = document.createElement('p');
-        messageParagraph.className = 'small mb-0';
-        messageParagraph.textContent = message;
+        // const messageParagraph = document.createElement('p');
+        // messageParagraph.className = 'small mb-0';
+        // messageParagraph.textContent = message;
+
+        const htmlContent = marked.parse(message);
+        const sanitizedHtml = DOMPurify.sanitize(htmlContent);
+        innerDiv.innerHTML = sanitizedHtml;
 
         // Append the paragraph to the inner div
-        innerDiv.appendChild(messageParagraph);
+        // innerDiv.appendChild(sanitizedHtml);
 
         // Append the inner div to the new message div
         newMessageDiv.appendChild(innerDiv);
