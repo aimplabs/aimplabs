@@ -113,8 +113,35 @@
                                 </div>
             
                                 <div data-mdb-input-init="" class="form-outline">
-                                    <textarea class="form-control bg-body-tertiary" id="textAreaExample" rows="4"></textarea>
-                                    <label class="form-label" for="textAreaExample">Type your query</label>
+                                    <textarea class="form-control bg-body-tertiary" id="textAreaExample" rows="4" placeholder="Type your query"></textarea>
+                                    <!-- <label class="form-label" for="textAreaExample"></label> -->
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 1</h6>
+                                                <p class="jv-section-text">A vehicle jumped the red light and collided with my car, then fled the scene. This has happened in Patuli, Kolkata. I hope that CCTV cameras installed at the Patuli's E M Bypass crossing may contain the license plate number of the concerned vehicle. I'd like to explore our legal options for pursuing the perpetrator and recovering damages for my vehicle. Could you please advise on the next steps?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 2</h6>
+                                                <p class="jv-section-text">I'm experiencing a noise disturbance issue with my neighbors who are hosting loud parties over the weekend. Despite politely requesting to keep the noise down, they're not adhering to the rules. I'd like to explore our legal options for addressing this issue and finding a resolution.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 3</h6>
+                                                <p class="jv-section-text">I need your assistance with a pressing issue regarding one of my tenants. They've stopped paying rent for the past three months and are still occupying the ground floor unit. I'd like to explore our legal options for eviction. I'd appreciate your guidance on how to proceed.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +206,6 @@ function setsidenav() {
 }
   var x = window.matchMedia("(max-width: 500px)")
   removeNavRt(x) // Call listener function at run time
-
 
 </script>
 
@@ -271,6 +297,23 @@ function setsidenav() {
         }
     });
 
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all cards with the sample-query-card class
+        const sampleCards = document.querySelectorAll('.sample-query-card');
+        // Get the textarea element
+        const textArea = document.getElementById('textAreaExample');
+    
+        // Attach a click event listener to each card
+        sampleCards.forEach(card => {
+            card.addEventListener('click', function () {
+                const queryText = card.querySelector('.jv-section-text').textContent;
+                textArea.value = queryText;
+            });
+        });
+    });
 </script>
 
 </body>
