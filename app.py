@@ -88,7 +88,7 @@ def submit_query(user_message: str) -> None:
         st.markdown(assistant_reply)
 
 
-st.set_page_config(page_title=PAGE_TITLE, page_icon=":scroll:")
+st.set_page_config(page_title=PAGE_TITLE, page_icon=":scroll:", layout="wide")
 init_state()
 
 st.header("Legal AI Chatbot by AIMP LABS")
@@ -112,7 +112,8 @@ st.caption("Sample queries")
 sample_cols = st.columns(3)
 for idx, (label, query) in enumerate(SAMPLE_QUERIES):
     with sample_cols[idx]:
-        if st.button(label, use_container_width=True):
+        # if st.button(label, use_container_width=False, width="content"):
+        if st.button(query, use_container_width=True, width="content"):
             st.session_state.chat_input = query
             st.rerun()
 
