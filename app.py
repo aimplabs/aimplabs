@@ -1,8 +1,9 @@
 import requests
 import streamlit as st
+from datetime import date
 
 
-PAGE_TITLE = "Legal AI Chatbot"
+PAGE_TITLE = "Legal AI Chatbot by AIMP LABS"
 API_URL = "https://abhishekaimp.pythonanywhere.com/api/chat"
 WELCOME_MESSAGE = (
     "Hello! Ask your legal question and I will help using the configured chatbot backend."
@@ -88,7 +89,22 @@ def submit_query(user_message: str) -> None:
 st.set_page_config(page_title=PAGE_TITLE, page_icon=":scroll:")
 init_state()
 
-st.title(PAGE_TITLE)
+st.header("Featured Innovation: Legal AI Chatbot by AIMP LABS")
+st.markdown(
+    "At AIMP LABS, innovation is at the heart of everything we do. "
+    "This chatbot is designed to interact with and interpret three recently "
+    "enacted Indian laws:"
+)
+st.markdown(
+    "- **BNS (Bharatiya Nyaya Sanhita)** - Replacing IPC; governs criminal offenses.\n"
+    "- **BNSS (Bharatiya Nagrik Suraksha Sanhita)** - Replacing CrPC; outlines criminal procedure.\n"
+    "- **BSA (Bharatiya Sakshya Adhiniyam)** - Replacing the Indian Evidence Act; governs evidence rules."
+)
+st.caption(
+    "Ask about sections, clauses, and legal terminology for quick contextual guidance."
+)
+st.divider()
+
 if st.button("Reset Chat"):
     reset_chat()
 
@@ -107,3 +123,17 @@ for message in st.session_state.messages:
 prompt = st.chat_input("Ask your legal question", key="chat_input")
 if prompt:
     submit_query(prompt)
+
+st.divider()
+st.markdown("### AIMP LABS")
+st.caption("Private AI Research & Training Center")
+st.caption("Computer Vision | Machine Learning | Cloud & Edge Computing")
+st.caption("Contact: contact@aimplabs.org")
+# st.markdown("[About us](about.html) • [Student developer/researcher](rudev.html)")
+# st.markdown(
+#     "[GitHub](https://github.com/aimplabs) • "
+#     "[Twitter](https://twitter.com/aimplabs) • "
+#     "[YouTube](https://youtube.com/@aimplabs) • "
+#     "[Facebook](https://www.facebook.com/aimplabs)"
+# )
+st.caption(f"Copyright 2019 - {date.today().year}")
