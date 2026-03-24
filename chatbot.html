@@ -638,11 +638,16 @@ Feel free to ask any questions related to these laws - I'm here to assist you!`;
                 bubble.className = 'chat-bubble';
                 
                 if (msg.role === 'assistant') {
-                    // Parse markdown and sanitize
-                    const htmlContent = marked.parse(msg.content);
-                    const sanitizedHtml = DOMPurify.sanitize(htmlContent);
-                    bubble.innerHTML = sanitizedHtml;
-                    hljs.highlightAll();
+                    // Special handling for thinking message
+                    if (msg.content === 'Thinking...') {
+                        bubble.innerHTML = '<span class="loading-spinner"></span> Thinking';
+                    } else {
+                        // Parse markdown and sanitize
+                        const htmlContent = marked.parse(msg.content);
+                        const sanitizedHtml = DOMPurify.sanitize(htmlContent);
+                        bubble.innerHTML = sanitizedHtml;
+                        hljs.highlightAll();
+                    }
                 } else {
                     bubble.textContent = msg.content;
                 }
