@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AIMP Labs aims at making research more mainstream in and around Kolkata. As a research based organization, AIMP has a long term vision of conducting high-impact research, promoting future researchers, and creating technologies of the future.">
+    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="author" content="AIMP LABS, Kolkata">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="css/aimp_navfoot.css">
+    <link rel="stylesheet" href="css/aimp_mainpgs.css">
+    <link rel="stylesheet" href="css/aimp_gallery.css">
+    <title>AIMP Labs: Innovations</title>
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+    type="text/javascript"></script>
+    <link rel="stylesheet" href="css/default.min.css">
+    <script src="js/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script></head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/10.0.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
+<body>
+
+
+<header class="jv-brand-container-center">
+    <nav class="jv-navbar-flex">
+            <div class="jv-logo-container">
+                <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
+                <div class="jv-brand-statements">
+                    <div class="jv-brand-name"><a href="index.html">AIMP LABS</a></div>
+                    <div class="jv-brand-desc"><a href="index.html">Private AI Research & Training Center</a></div>
+                </div>
+            </div>
+            <div class="menu-icon" onclick="setsidenav()">
+                <span class="material-symbols-outlined">menu</span>
+            </div>    
+            <ul class="jv-navlinks">
+                <li><a href="innovations.html" class="jv-navlink jv-active">Innovations</a></li>
+                <li><a href="training.html" class="jv-navlink">Training</a></li>
+                <li><a href="archives.html" class="jv-navlink">Archives</a></li>
+                <li><a href="blogs.html" class="jv-navlink">Blogs</a></li>
+            </ul>
+    </nav>
+</header>
+
+<section class="jv-general-container">
+    <div class="jv-text-container">
+        <div class="jv-article-headline">Featured Innovation: Legal AI Chatbot</div>
+        <div class="jv-brand-emphasis">
+            <div class="jv-bar-upper"></div>
+            <div class="jv-bar-lower"></div>
+        </div>
+        <div class="jv-section-text" style="padding: 10px 0; color: #4E4E4E;">
+            At AIMP LABS, innovation is at the heart of everything we do.
+            This section showcases the cutting-edge technologies and novel solutions developed by our team.
+            From AI-powered visual systems to large-scale machine learning frameworks, 
+            we continuously push the boundaries of what's possible—delivering practical, impactful applications that drive real-world value.
+            <br><br>
+            
+            Recently We have developed an advanced AI-powered chatbot designed to interact with and interpret the three recently enacted Indian laws:
+            <li class="jv-list-item">
+                <strong>BNS (Bharatiya Nyaya Sanhita)</strong> - Replacing the Indian Penal Code (IPC), it governs criminal offenses.
+            </li>
+            <li class="jv-list-item">
+                <strong>BNSS (Bharatiya Nagrik Suraksha Sanhita)</strong> - Replacing the Criminal Procedure Code (CrPC), it outlines procedures for criminal investigations and trials.
+            </li>
+            <li class="jv-list-item">
+                <strong>BSA (Bharatiya Sakshya Adhiniyam)</strong> - Replacing the Indian Evidence Act, it governs the rules of evidence in legal proceedings.
+            </li>
+            <div class="jv-section-text" style="padding: 5px 0; color: #4E4E4E;">
+                Users can query specific sections, clauses, and legal terminologies for clear and accurate explanations.
+                The chatbot provides contextual insights by referencing relevant sections across the three laws.
+                Designed for legal professionals, law students, and citizens seeking quick and reliable legal information.
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jv-general-container">
+    <div class="jv-text-container">
+        <div class="jv-article-headline">Interactive Demo</div>
+        <div class="jv-brand-emphasis">
+            <div class="jv-bar-upper"></div>
+            <div class="jv-bar-lower"></div>
+        </div>
+        
+        <section>
+            <div class="container py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card" id="chat1" style="border-radius: 15px;">
+                            <div
+                                class="card-header d-flex justify-content-between align-items-center p-3 border-bottom-0"
+                                style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                <i class="fas fa-angle-left"></i>
+                                <p class="mb-0">Chat with <strong>LegalBot</strong></p>
+                                <i class="fas fa-times"></i>
+                            </div>
+                        
+                            <div class="card-body" id="chat-container">
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(153, 153, 153, 0.25);">
+                                        <p class="small mb-0">
+                                            Hello! I'm your AI-powered legal assistant, here to help you navigate the BNS, BNSS, and BSA.
+                                            You can ask me about specific sections, legal procedures, or terminology, and I'll provide clear and accurate information.
+                                            Feel free to ask any questions related to these laws - I'm here to assist you!
+                                        </p>
+                                    </div>
+                                </div>
+            
+                                <div data-mdb-input-init="" class="form-outline">
+                                    <textarea class="form-control bg-body-tertiary" id="textAreaExample" rows="4" placeholder="Type your query and press enter"></textarea>
+                                    <!-- <label class="form-label" for="textAreaExample"></label> -->
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 1</h6>
+                                                <p class="jv-section-text">A vehicle jumped the red light and collided with my car, then fled the scene. This has happened in Patuli, Kolkata. I hope that CCTV cameras installed at the Patuli's E M Bypass crossing may contain the license plate number of the concerned vehicle. I'd like to explore our legal options for pursuing the perpetrator and recovering damages for my vehicle. Could you please advise on the next steps?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 2</h6>
+                                                <p class="jv-section-text">I'm experiencing a noise disturbance issue with my neighbors who are hosting loud parties over the weekend. Despite politely requesting to keep the noise down, they're not adhering to the rules. I'd like to explore our legal options for addressing this issue and finding a resolution.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <h6 class="jv-article-headline">Sample Query 3</h6>
+                                                <p class="jv-section-text">I need your assistance with a pressing issue regarding one of my tenants. They've stopped paying rent for the past three months and are still occupying the ground floor unit. I'd like to explore our legal options for eviction. I'd appreciate your guidance on how to proceed.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body text-center">
+                <a href="innovations.html" class="btn btn-secondary text-center">Reset Chat</a>
+            </div>
+        </section>
+    </div>
+</section>
+
+<footer class="jv-footer-container-align">
+    <div class="jv-footer-container">
+        <ul class="jv-footer-container-left">
+            <li>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+            </li>             
+        </ul>
+        <div class="jv-footer-container-middle">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - <script>document.write(new Date().getFullYear());</script></div>
+            </div>
+        </div>
+        <div class="jv-footer-container-right">
+            <div class="jv-footer-brand-statements">
+                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
+                <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+function setsidenav() {
+    let menu = document.querySelector(".menu-icon");
+
+    if (menu.childNodes[1].textContent == 'menu') {
+        menu.childNodes[1].textContent = 'close';
+        document.querySelector('.jv-navlinks').style.display = 'flex';
+    } else if (menu.childNodes[1].textContent == 'close') {
+        menu.childNodes[1].textContent = 'menu';
+        document.querySelector('.jv-navlinks').style.display = 'none';
+    }
+
+}
+  var x = window.matchMedia("(max-width: 500px)")
+  removeNavRt(x) // Call listener function at run time
+
+</script>
+
+<script>
+    // const chatbox = document.getElementById('chat1');
+    // const chatinterface = chatbox.getElementsByClassName('card-body')[0];
+    // console.log(chatinterface);
+    function appendNewMessage(message, isUserMessage = false) {
+    // Get the chat container
+        const chatContainer = document.getElementById('chat-container');
+
+        // Create a new div for the message
+        const newMessageDiv = document.createElement('div');
+        newMessageDiv.className = `d-flex flex-row justify-content-${isUserMessage ? 'end' : 'start'} mb-4`;
+
+        // Create the inner message div
+        const innerDiv = document.createElement('div');
+        innerDiv.className = `small p-3 ${isUserMessage ? 'me-3 border bg-body-tertiary' : 'ms-3'}`;
+        innerDiv.style.borderRadius = '15px';
+
+        if (!isUserMessage) {
+            innerDiv.style.backgroundColor = 'rgba(153, 153, 153, 0.25)';
+        }
+
+        // Create the paragraph for the message text
+        // const messageParagraph = document.createElement('p');
+        // messageParagraph.className = 'small mb-0';
+        // messageParagraph.textContent = message;
+
+        const htmlContent = marked.parse(message);
+        const sanitizedHtml = DOMPurify.sanitize(htmlContent);
+        innerDiv.innerHTML = sanitizedHtml;
+
+        // Append the paragraph to the inner div
+        // innerDiv.appendChild(sanitizedHtml);
+
+        // Append the inner div to the new message div
+        newMessageDiv.appendChild(innerDiv);
+
+        // Insert the new message div before the form-outline div
+        const formOutlineDiv = chatContainer.querySelector('.form-outline');
+        chatContainer.insertBefore(newMessageDiv, formOutlineDiv);
+    }
+
+    // Function to simulate sending a message and receiving a response using Fetch API
+    async function sendMessage() {
+        // Example URL - replace with your actual server endpoint
+        const url = 'https://abhishekaimp.pythonanywhere.com/api/chat';
+        
+        // Example user message
+        const userMessage = document.getElementById('textAreaExample').value;
+
+        // Append the user's message to the chat
+        appendNewMessage(userMessage, true);
+
+        // Clear the text area
+        document.getElementById('textAreaExample').value = '';
+
+        try {
+            // Send the request to the server using Fetch API
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Parse the JSON response
+            const data = await response.json();
+
+            // Append the server response to the chat
+            appendNewMessage(data.reply);
+        } catch (error) {
+            console.error('Error:', error);
+            appendNewMessage("Apologies, I'm unable to find any server to process your legal query at the moment. Please try again later or contact support if the issue persists.");
+        }
+    }
+
+    // Event listener to send message on button click or Enter key press
+    document.getElementById('textAreaExample').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent the default form submission
+            sendMessage();
+        }
+    });
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all cards with the sample-query-card class
+        const sampleCards = document.querySelectorAll('.sample-query-card');
+        // Get the textarea element
+        const textArea = document.getElementById('textAreaExample');
+    
+        // Attach a click event listener to each card
+        sampleCards.forEach(card => {
+            card.addEventListener('click', function () {
+                const queryText = card.querySelector('.jv-section-text').textContent;
+                textArea.value = queryText;
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

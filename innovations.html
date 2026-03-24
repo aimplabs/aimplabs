@@ -4,30 +4,360 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AIMP Labs aims at making research more mainstream in and around Kolkata. As a research based organization, AIMP has a long term vision of conducting high-impact research, promoting future researchers, and creating technologies of the future.">
-    <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
+    <meta name="description" content="AI-powered legal chatbot for BNS, BNSS, and BSA legal queries">
     <meta name="author" content="AIMP LABS, Kolkata">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Legal AI Chatbot - AIMP LABS</title>
+    
+    <!-- Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
+    
+    <!-- AIMP LABS Custom CSS Theme -->
     <link rel="stylesheet" href="css/aimp_navfoot.css">
     <link rel="stylesheet" href="css/aimp_mainpgs.css">
-    <link rel="stylesheet" href="css/aimp_gallery.css">
-    <title>AIMP Labs: Innovations</title>
-    <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
-    <script
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
-    type="text/javascript"></script>
     <link rel="stylesheet" href="css/default.min.css">
-    <script src="js/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script></head>
+    
+    <!-- Markdown & Sanitization -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/10.0.0/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
+    <!-- Syntax Highlighting -->
+    <script src="js/highlight.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #CF494B;
+            --light-bg: #f5f5f5;
+            --border-color: #e0e0e0;
+            --text-dark: #4E4E4E;
+            --text-light: #888;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        /* Chatbot-specific styles */
+        .chatbot-page-heading {
+            font-family: 'Spectral', serif;
+            color: var(--text-dark);
+            font-size: 28px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .chatbot-intro-section {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .chatbot-intro-section p {
+            font-family: 'Rubik', sans-serif;
+            font-size: 15px;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .chatbot-intro-section ul {
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .chatbot-intro-section li {
+            font-family: 'Rubik', sans-serif;
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 15px;
+            line-height: 24px;
+            text-align: justify;
+            color: var(--text-dark);
+        }
+
+        .chatbot-intro-section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .chatbot-intro-section strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .disclaimer-box {
+            background-color: var(--light-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-family: 'Rubik', sans-serif;
+            line-height: 1.5;
+        }
+
+        .divider-line {
+            border-top: 1px solid var(--border-color);
+            margin: 25px 0;
+        }
+
+        .sample-queries-section {
+            margin: 25px 0;
+        }
+
+        .sample-queries-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .sample-queries-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .sample-query-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            line-height: 1.4;
+            display: -webkit-box;
+            /* -webkit-line-clamp: 2; */
+            /* -webkit-box-orient: vertical; */
+            overflow: hidden;
+            font-family: 'Rubik', sans-serif;
+            min-height: 55px;
+        }
+
+        .sample-query-btn:hover {
+            background-color: var(--light-bg);
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(207, 73, 75, 0.1);
+        }
+
+        .chat-container {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 500px;
+            margin-bottom: 20px;
+            padding: 15px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 15px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message.assistant {
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 90%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            font-family: 'Rubik', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .chat-message.user .chat-bubble {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.assistant .chat-bubble {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.assistant .chat-bubble a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .chat-message.assistant .chat-bubble a:hover {
+            text-decoration: underline;
+        }
+
+        .chat-bubble code {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .chat-bubble pre {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 15px;
+            font-family: 'Rubik', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            max-height: 100px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(207, 73, 75, 0.1);
+        }
+
+        .send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .send-btn:hover {
+            background-color: #b03a3d;
+        }
+
+        .send-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .reset-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .reset-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(207, 73, 75, 0.3);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .controls-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status-message {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-family: 'Rubik', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .sample-queries-container {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-bubble {
+                max-width: 85%;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .send-btn {
+                align-self: auto;
+                width: 100%;
+            }
+
+            .controls-section {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .reset-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
 <body>
-
-
-<header class="jv-brand-container-center">
-    <nav class="jv-navbar-flex">
+    <!-- Header with AIMP LABS navigation -->
+    <header class="jv-brand-container-center">
+        <nav class="jv-navbar-flex">
             <div class="jv-logo-container">
                 <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
                 <div class="jv-brand-statements">
@@ -44,277 +374,319 @@
                 <li><a href="archives.html" class="jv-navlink">Archives</a></li>
                 <li><a href="blogs.html" class="jv-navlink">Blogs</a></li>
             </ul>
-    </nav>
-</header>
+        </nav>
+    </header>
 
-<section class="jv-general-container">
-    <div class="jv-text-container">
-        <div class="jv-article-headline">Featured Innovation: Legal AI Chatbot</div>
-        <div class="jv-brand-emphasis">
-            <div class="jv-bar-upper"></div>
-            <div class="jv-bar-lower"></div>
-        </div>
-        <div class="jv-section-text" style="padding: 10px 0; color: #4E4E4E;">
-            At AIMP LABS, innovation is at the heart of everything we do.
-            This section showcases the cutting-edge technologies and novel solutions developed by our team.
-            From AI-powered visual systems to large-scale machine learning frameworks, 
-            we continuously push the boundaries of what's possible—delivering practical, impactful applications that drive real-world value.
-            <br><br>
-            
-            Recently We have developed an advanced AI-powered chatbot designed to interact with and interpret the three recently enacted Indian laws:
-            <li class="jv-list-item">
-                <strong>BNS (Bharatiya Nyaya Sanhita)</strong> - Replacing the Indian Penal Code (IPC), it governs criminal offenses.
-            </li>
-            <li class="jv-list-item">
-                <strong>BNSS (Bharatiya Nagrik Suraksha Sanhita)</strong> - Replacing the Criminal Procedure Code (CrPC), it outlines procedures for criminal investigations and trials.
-            </li>
-            <li class="jv-list-item">
-                <strong>BSA (Bharatiya Sakshya Adhiniyam)</strong> - Replacing the Indian Evidence Act, it governs the rules of evidence in legal proceedings.
-            </li>
-            <div class="jv-section-text" style="padding: 5px 0; color: #4E4E4E;">
-                Users can query specific sections, clauses, and legal terminologies for clear and accurate explanations.
-                The chatbot provides contextual insights by referencing relevant sections across the three laws.
-                Designed for legal professionals, law students, and citizens seeking quick and reliable legal information.
+    <!-- Main Content Section -->
+    <section class="jv-general-container">
+        <div class="jv-text-container">
+            <!-- Page Heading -->
+            <div class="chatbot-page-heading">Legal AI Chatbot by AIMP LABS</div>
+            <div class="jv-brand-emphasis">
+                <div class="jv-bar-upper"></div>
+                <div class="jv-bar-lower"></div>
             </div>
-        </div>
-    </div>
-</section>
 
-<section class="jv-general-container">
-    <div class="jv-text-container">
-        <div class="jv-article-headline">Interactive Demo</div>
-        <div class="jv-brand-emphasis">
-            <div class="jv-bar-upper"></div>
-            <div class="jv-bar-lower"></div>
-        </div>
-        
-        <section>
-            <div class="container py-5">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-12">
-                        <div class="card" id="chat1" style="border-radius: 15px;">
-                            <div
-                                class="card-header d-flex justify-content-between align-items-center p-3 border-bottom-0"
-                                style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                                <i class="fas fa-angle-left"></i>
-                                <p class="mb-0">Chat with <strong>LegalBot</strong></p>
-                                <i class="fas fa-times"></i>
-                            </div>
-                        
-                            <div class="card-body" id="chat-container">
-                                <div class="d-flex flex-row justify-content-start mb-4">
-                                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(153, 153, 153, 0.25);">
-                                        <p class="small mb-0">
-                                            Hello! I'm your AI-powered legal assistant, here to help you navigate the BNS, BNSS, and BSA.
-                                            You can ask me about specific sections, legal procedures, or terminology, and I'll provide clear and accurate information.
-                                            Feel free to ask any questions related to these laws - I'm here to assist you!
-                                        </p>
-                                    </div>
-                                </div>
-            
-                                <div data-mdb-input-init="" class="form-outline">
-                                    <textarea class="form-control bg-body-tertiary" id="textAreaExample" rows="4" placeholder="Type your query and press enter"></textarea>
-                                    <!-- <label class="form-label" for="textAreaExample"></label> -->
-                                </div>
+            <!-- Intro Section -->
+            <!-- <div class="chatbot-intro-section">
+                <p>
+                    At AIMP LABS, innovation is at the heart of everything we do.
+                    This chatbot is designed to interact with and interpret three recently enacted Indian laws:
+                </p>
+                <ul>
+                    <li><strong>BNS (Bharatiya Nyaya Sanhita)</strong> - Replacing IPC; governs criminal offenses.</li>
+                    <li><strong>BNSS (Bharatiya Nagrik Suraksha Sanhita)</strong> - Replacing CrPC; outlines criminal procedure.</li>
+                    <li><strong>BSA (Bharatiya Sakshya Adhiniyam)</strong> - Replacing the Indian Evidence Act; governs evidence rules.</li>
+                </ul>
+            </div> -->
+            <div class="jv-section-text" style="padding: 10px 0; color: #4E4E4E;">
+                At AIMP LABS, innovation is at the heart of everything we do.
+                This section showcases the cutting-edge technologies and novel solutions developed by our team.
+                From AI-powered visual systems to large-scale machine learning frameworks, 
+                we continuously push the boundaries of what's possible—delivering practical, impactful applications that drive real-world value.
+                <br><br>
+                
+                Recently We have developed an advanced AI-powered chatbot designed to interact with and interpret the three recently enacted Indian laws:
+                <li class="jv-list-item">
+                    <strong>BNS (Bharatiya Nyaya Sanhita)</strong> - Replacing the Indian Penal Code (IPC), it governs criminal offenses.
+                </li>
+                <li class="jv-list-item">
+                    <strong>BNSS (Bharatiya Nagrik Suraksha Sanhita)</strong> - Replacing the Criminal Procedure Code (CrPC), it outlines procedures for criminal investigations and trials.
+                </li>
+                <li class="jv-list-item">
+                    <strong>BSA (Bharatiya Sakshya Adhiniyam)</strong> - Replacing the Indian Evidence Act, it governs the rules of evidence in legal proceedings.
+                </li>
+                <!-- <div class="jv-section-text" style="padding: 5px 0; color: #4E4E4E;">
+                    Users can query specific sections, clauses, and legal terminologies for clear and accurate explanations.
+                    The chatbot provides contextual insights by referencing relevant sections across the three laws.
+                    Designed for legal professionals, law students, and citizens seeking quick and reliable legal information.
+                </div> -->
+            </div>
 
-                                <div class="row mt-3">
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
-                                            <div class="card-body">
-                                                <h6 class="jv-article-headline">Sample Query 1</h6>
-                                                <p class="jv-section-text">A vehicle jumped the red light and collided with my car, then fled the scene. This has happened in Patuli, Kolkata. I hope that CCTV cameras installed at the Patuli's E M Bypass crossing may contain the license plate number of the concerned vehicle. I'd like to explore our legal options for pursuing the perpetrator and recovering damages for my vehicle. Could you please advise on the next steps?</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
-                                            <div class="card-body">
-                                                <h6 class="jv-article-headline">Sample Query 2</h6>
-                                                <p class="jv-section-text">I'm experiencing a noise disturbance issue with my neighbors who are hosting loud parties over the weekend. Despite politely requesting to keep the noise down, they're not adhering to the rules. I'd like to explore our legal options for addressing this issue and finding a resolution.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <div class="card h-100 sample-query-card" style="cursor: pointer;">
-                                            <div class="card-body">
-                                                <h6 class="jv-article-headline">Sample Query 3</h6>
-                                                <p class="jv-section-text">I need your assistance with a pressing issue regarding one of my tenants. They've stopped paying rent for the past three months and are still occupying the ground floor unit. I'd like to explore our legal options for eviction. I'd appreciate your guidance on how to proceed.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="divider-line"></div>
+
+            <!-- Sample Queries Section -->
+            <div class="sample-queries-section">
+                <div class="sample-queries-label">Sample Queries</div>
+                <div class="sample-queries-container" id="sampleQueriesContainer"></div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="sample-queries-label" style="margin-top: 30px;">Live Chat Assistant</div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer"></div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <textarea id="userInput" class="chat-input" placeholder="Ask your legal question..." rows="2"></textarea>
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="controls-section">
+                <button class="reset-btn" onclick="resetChat()">Reset Chat</button>
+                <span id="statusMessage" class="status-message"></span>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="disclaimer-box">
+                <strong>Disclaimer:</strong> This chatbot provides general information and is not a substitute for professional legal advice. 
+                For specific legal issues, please consult a qualified attorney.
+            </div>
+
+            <div class="divider-line"></div>
+        </div>
+    </section>
+
+    <!-- Footer with AIMP LABS information -->
+    <footer class="jv-footer-container-align">
+        <div class="jv-footer-container">
+            <ul class="jv-footer-container-left">
+                <li>
+                    <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+                </li>
+                <li>
+                    <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+                </li>             
+            </ul>
+            <div class="jv-footer-container-middle">
+                <div class="jv-footer-brand-statements">
+                    <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                    <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
+                    <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing</div>
+                    <div class="jv-footer-brand-desc">Copyright 2019 - <span id="footerYear"></span></div>
                 </div>
             </div>
-            
-            <div class="card-body text-center">
-                <a href="innovations.html" class="btn btn-secondary text-center">Reset Chat</a>
-            </div>
-        </section>
-    </div>
-</section>
-
-<footer class="jv-footer-container-align">
-    <div class="jv-footer-container">
-        <ul class="jv-footer-container-left">
-            <li>
-                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
-            </li>
-            <li>
-                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
-            </li>
-            <li>
-                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
-            </li>
-            <li>
-                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
-            </li>             
-        </ul>
-        <div class="jv-footer-container-middle">
-            <div class="jv-footer-brand-statements">
-                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
-                <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
-                <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
-                <div class="jv-footer-brand-desc">Copyright 2019 - <script>document.write(new Date().getFullYear());</script></div>
+            <div class="jv-footer-container-right">
+                <div class="jv-footer-brand-statements">
+                    <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
+                    <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
+                    <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
+                </div>
             </div>
         </div>
-        <div class="jv-footer-container-right">
-            <div class="jv-footer-brand-statements">
-                <div class="jv-footer-brand-name">Contact us at contact@aimplabs.org</div>
-                <div class="jv-footer-brand-desc"><a href="rudev.html">Are you a student developer/researcher?</a></div>
-                <div class="jv-footer-brand-desc"><a href="about.html">About us</a></div>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<script>
+    <script>
+        // Constants
+        // const API_URL = "https://abhishekaimp.pythonanywhere.com/api/chat";
+        const API_URL = "http://127.0.0.1:5000/api/chat";
+        
+        const WELCOME_MESSAGE = `Hello! I'm your AI-powered legal assistant, here to help you navigate the BNS, BNSS, and BSA.
+You can ask me about specific sections, legal procedures, or terminology, and I'll provide clear and accurate information.
+Feel free to ask any questions related to these laws - I'm here to assist you!`;
 
-function setsidenav() {
-    let menu = document.querySelector(".menu-icon");
+        const SAMPLE_QUERIES = [
+            {
+                label: "Sample Query 1",
+                text: "A vehicle jumped the red light and collided with my car, then fled the scene. This has happened in Patuli, Kolkata. I hope that CCTV cameras installed at the Patuli's E M Bypass crossing may contain the license plate number of the concerned vehicle. I'd like to explore our legal options for pursuing the perpetrator and recovering damages for my vehicle. Could you please advise on the next steps?"
+            },
+            {
+                label: "Sample Query 2",
+                text: "I'm experiencing a noise disturbance issue with my neighbors who are hosting loud parties over the weekend. Despite politely requesting to keep the noise down, they're not adhering to the rules. I'd like to explore our legal options for addressing this issue and finding a resolution."
+            },
+            {
+                label: "Sample Query 3",
+                text: "I need your assistance with a pressing issue regarding one of my tenants. They've stopped paying rent for the past three months and are still occupying the ground floor unit. I'd like to explore our legal options for eviction. I'd appreciate your guidance on how to proceed."
+            }
+        ];
 
-    if (menu.childNodes[1].textContent == 'menu') {
-        menu.childNodes[1].textContent = 'close';
-        document.querySelector('.jv-navlinks').style.display = 'flex';
-    } else if (menu.childNodes[1].textContent == 'close') {
-        menu.childNodes[1].textContent = 'menu';
-        document.querySelector('.jv-navlinks').style.display = 'none';
-    }
+        // State
+        let chatHistory = [];
 
-}
-  var x = window.matchMedia("(max-width: 500px)")
-  removeNavRt(x) // Call listener function at run time
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('footerYear').textContent = new Date().getFullYear();
+            initChat();
+            renderSampleQueries();
+            setupEventListeners();
+            hljs.highlightAll();
+        });
 
-</script>
-
-<script>
-    // const chatbox = document.getElementById('chat1');
-    // const chatinterface = chatbox.getElementsByClassName('card-body')[0];
-    // console.log(chatinterface);
-    function appendNewMessage(message, isUserMessage = false) {
-    // Get the chat container
-        const chatContainer = document.getElementById('chat-container');
-
-        // Create a new div for the message
-        const newMessageDiv = document.createElement('div');
-        newMessageDiv.className = `d-flex flex-row justify-content-${isUserMessage ? 'end' : 'start'} mb-4`;
-
-        // Create the inner message div
-        const innerDiv = document.createElement('div');
-        innerDiv.className = `small p-3 ${isUserMessage ? 'me-3 border bg-body-tertiary' : 'ms-3'}`;
-        innerDiv.style.borderRadius = '15px';
-
-        if (!isUserMessage) {
-            innerDiv.style.backgroundColor = 'rgba(153, 153, 153, 0.25)';
+        function initChat() {
+            chatHistory = [];
+            addMessage('assistant', WELCOME_MESSAGE);
         }
 
-        // Create the paragraph for the message text
-        // const messageParagraph = document.createElement('p');
-        // messageParagraph.className = 'small mb-0';
-        // messageParagraph.textContent = message;
+        function renderSampleQueries() {
+            const container = document.getElementById('sampleQueriesContainer');
+            SAMPLE_QUERIES.forEach(query => {
+                const btn = document.createElement('button');
+                btn.className = 'sample-query-btn';
+                btn.textContent = query.text;
+                btn.onclick = () => setInputAndFocus(query.text);
+                container.appendChild(btn);
+            });
+        }
 
-        const htmlContent = marked.parse(message);
-        const sanitizedHtml = DOMPurify.sanitize(htmlContent);
-        innerDiv.innerHTML = sanitizedHtml;
+        function setupEventListeners() {
+            const input = document.getElementById('userInput');
 
-        // Append the paragraph to the inner div
-        // innerDiv.appendChild(sanitizedHtml);
-
-        // Append the inner div to the new message div
-        newMessageDiv.appendChild(innerDiv);
-
-        // Insert the new message div before the form-outline div
-        const formOutlineDiv = chatContainer.querySelector('.form-outline');
-        chatContainer.insertBefore(newMessageDiv, formOutlineDiv);
-    }
-
-    // Function to simulate sending a message and receiving a response using Fetch API
-    async function sendMessage() {
-        // Example URL - replace with your actual server endpoint
-        const url = 'https://abhishekaimp.pythonanywhere.com/api/chat';
-        
-        // Example user message
-        const userMessage = document.getElementById('textAreaExample').value;
-
-        // Append the user's message to the chat
-        appendNewMessage(userMessage, true);
-
-        // Clear the text area
-        document.getElementById('textAreaExample').value = '';
-
-        try {
-            // Send the request to the server using Fetch API
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: userMessage })
+            // Auto-resize textarea
+            input.addEventListener('input', () => {
+                input.style.height = 'auto';
+                input.style.height = Math.min(input.scrollHeight, 100) + 'px';
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            // Send on Enter (Shift+Enter for new line)
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+
+        function setInputAndFocus(text) {
+            const input = document.getElementById('userInput');
+            input.value = text;
+            input.focus();
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Add thinking indicator message
+            const thinkingIndex = chatHistory.length;
+            addMessage('assistant', 'Thinking...');
+
+            // Auto-scroll to bottom
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 100);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const reply = data.reply || "Apologies, I'm unable to process your legal query right now. Please try again in a moment.";
+                
+                // Replace the thinking message with actual response
+                chatHistory[thinkingIndex].content = reply;
+                renderChat();
+            } catch (error) {
+                console.error('Error:', error);
+                // Replace thinking message with error message
+                chatHistory[thinkingIndex].content = "Apologies, I'm unable to process your legal query right now. Please try again in a moment.";
+                renderChat();
             }
 
-            // Parse the JSON response
-            const data = await response.json();
-
-            // Append the server response to the chat
-            appendNewMessage(data.reply);
-        } catch (error) {
-            console.error('Error:', error);
-            appendNewMessage("Apologies, I'm unable to find any server to process your legal query at the moment. Please try again later or contact support if the issue persists.");
+            // Auto-scroll to bottom
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 100);
         }
-    }
 
-    // Event listener to send message on button click or Enter key press
-    document.getElementById('textAreaExample').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent the default form submission
-            sendMessage();
+        function addMessage(role, content) {
+            chatHistory.push({ role, content });
+            renderChat();
         }
-    });
 
-</script>
+        function renderChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '';
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get all cards with the sample-query-card class
-        const sampleCards = document.querySelectorAll('.sample-query-card');
-        // Get the textarea element
-        const textArea = document.getElementById('textAreaExample');
-    
-        // Attach a click event listener to each card
-        sampleCards.forEach(card => {
-            card.addEventListener('click', function () {
-                const queryText = card.querySelector('.jv-section-text').textContent;
-                textArea.value = queryText;
+            chatHistory.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `chat-message ${msg.role}`;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'chat-bubble';
+                
+                if (msg.role === 'assistant') {
+                    // Special handling for thinking message
+                    if (msg.content === 'Thinking...') {
+                        bubble.innerHTML = '<span class="loading-spinner"></span> Thinking';
+                    } else {
+                        // Parse markdown and sanitize
+                        const htmlContent = marked.parse(msg.content);
+                        const sanitizedHtml = DOMPurify.sanitize(htmlContent);
+                        bubble.innerHTML = sanitizedHtml;
+                        hljs.highlightAll();
+                    }
+                } else {
+                    bubble.textContent = msg.content;
+                }
+
+                msgDiv.appendChild(bubble);
+                chatContainer.appendChild(msgDiv);
             });
-        });
-    });
-</script>
 
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function resetChat() {
+            if (confirm('Are you sure you want to reset the chat? All messages will be cleared.')) {
+                initChat();
+                document.getElementById('userInput').value = '';
+                document.getElementById('statusMessage').textContent = '';
+            }
+        }
+
+        // Side nav toggle (from AIMP LABS theme)
+        function setsidenav() {
+            let menu = document.querySelector(".menu-icon");
+            let navlinks = document.querySelector('.jv-navlinks');
+            let menuIcon = menu.querySelector('.material-symbols-outlined');
+
+            if (menuIcon.textContent === 'menu') {
+                menuIcon.textContent = 'close';
+                navlinks.style.display = 'flex';
+            } else {
+                menuIcon.textContent = 'menu';
+                navlinks.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
