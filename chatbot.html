@@ -576,9 +576,15 @@ Feel free to ask any questions related to these laws - I'm here to assist you!`;
             input.value = '';
             input.style.height = 'auto';
 
-            // Show loading
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.innerHTML = '<span class="loading-spinner" style="margin-right: 8px;"></span> Thinking...';
+            // Add thinking indicator message
+            const thinkingIndex = chatHistory.length;
+            addMessage('assistant', 'Thinking...');
+
+            // Auto-scroll to bottom
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 100);
 
             try {
                 const response = await fetch(API_URL, {
@@ -595,19 +601,22 @@ Feel free to ask any questions related to these laws - I'm here to assist you!`;
 
                 const data = await response.json();
                 const reply = data.reply || "Apologies, I'm unable to process your legal query right now. Please try again in a moment.";
-                addMessage('assistant', reply);
+                
+                // Replace the thinking message with actual response
+                chatHistory[thinkingIndex].content = reply;
+                renderChat();
             } catch (error) {
                 console.error('Error:', error);
-                addMessage('assistant', "Apologies, I'm unable to process your legal query right now. Please try again in a moment.");
-            } finally {
-                statusEl.textContent = '';
+                // Replace thinking message with error message
+                chatHistory[thinkingIndex].content = "Apologies, I'm unable to process your legal query right now. Please try again in a moment.";
+                renderChat();
             }
 
             // Auto-scroll to bottom
             setTimeout(() => {
                 const chatContainer = document.getElementById('chatContainer');
                 chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 0);
+            }, 100);
         }
 
         function addMessage(role, content) {
