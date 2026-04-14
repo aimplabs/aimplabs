@@ -26,7 +26,12 @@ const navbarHTML = `
 </header>
 `;
 
-const footerHTML = `
+/**
+ * Generate footer HTML with dynamic year
+ */
+function getFooterHTML() {
+    const currentYear = new Date().getFullYear();
+    return `
 <footer class="jv-footer-container-align">
     <div class="jv-footer-container">
         <ul class="jv-footer-container-left">
@@ -48,7 +53,7 @@ const footerHTML = `
                 <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
                 <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
                 <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
-                <div class="jv-footer-brand-desc">Copyright 2019 - <script>document.write(new Date().getFullYear());</script></div>
+                <div class="jv-footer-brand-desc">Copyright 2019 - ${currentYear}</div>
             </div>
         </div>
         <div class="jv-footer-container-right">
@@ -61,6 +66,7 @@ const footerHTML = `
     </div>
 </footer>
 `;
+}
 
 /**
  * Load navbar and footer into placeholder divs
@@ -80,7 +86,7 @@ function loadNavbar() {
 function loadFooter() {
     const container = document.getElementById('footer-container');
     if (container) {
-        container.innerHTML = footerHTML;
+        container.innerHTML = getFooterHTML();
     }
 }
 
