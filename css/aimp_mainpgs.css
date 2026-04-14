@@ -55,30 +55,6 @@
     flex-basis: 30%;
 }
 
-.jv-brand-emphasis {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.jv-bar-upper {
-    display: block;
-    width: 60px;
-    height: 6px;
-    margin: 5px 0;
-    background-color: #CF494B;
-    border-radius: 5px;
-}
-
-.jv-bar-lower {
-    display: block;
-    width: 35px;
-    height: 5px;
-    background-color: #999999;
-    border-radius: 3px;
-}
-
 .jv-article-headline {
     font-family: 'Spectral', serif;
     color: #4E4E4E;
@@ -346,133 +322,7 @@
     }
 }
 
-/*** Blogs Body ***/
-
-.jv-general-container {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.jv-general-top-gap {
-    margin-top: 20px;
-}
-
-.jv-general-bottom-gap{
-    margin-bottom: 20px;
-}
-
-.jv-general-top-gap-large {
-    margin-top: 30px;
-}
-
-.jv-section-container {
-    margin-top: 20px;
-    padding: 5px;
-}
-
-.jv-gallery-text-container {
-    padding: 20px 10px;
-}
-
-/*** Headlines ***/
-
-.jv-section-title {
-    font-family: 'Spectral', serif;
-    color: #444444;
-}
-
-.jv-section-title.sz-h1 {
-    font-size: 36px;
-    font-weight: 600;
-}
-
-.jv-section-title.sz-h2 {
-    font-size: 28px;
-    font-weight: 600;
-}
-
-.jv-section-title.sz-h3 {
-    font-size: 24px;
-    font-weight: 600;
-}
-
-
-.jv-section-title.medium-headline {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    margin-top: 10px;
-  }
-
-  .jv-section-title.small-headline {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 22px;
-  }
-
-/*** Brand emphasis ***/
-
-.jv-brand-emphasis {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.jv-bar-upper {
-    display: block;
-    width: 60px;
-    height: 6px;
-    margin: 5px 0;
-    background-color: #CF494B;
-    border-radius: 5px;
-}
-
-.jv-bar-lower {
-    display: block;
-    width: 35px;
-    height: 5px;
-    background-color: #999999;
-    border-radius: 3px;
-}
-
-/*** text style ***/
-
-.jv-section-body {
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 100%;
-}
-
-.jv-section-text {
-    font-family: 'Rubik', sans-serif;
-    font-size: 13px;
-    line-height: 24px;
-    text-align: justify;
-}
-
-.jv-section-body-highlight {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    background-color: rgb(150, 150, 150, 0.1);
-    padding: 5px;
-    border-radius: 10px;
-}
-
-.jv-body-highlight-only {
-    background-color: rgb(150, 150, 150, 0.1);
-    border-radius: 10px;
-}
+/*** Blogs Body - Styles now in aimp_common.css ***/
 
 .jv-rudev-custom-highlight{
     background-color: rgb(150, 150, 150, 0.1);
@@ -481,14 +331,7 @@
     margin: 25px auto;
 }
 
-/* <span class="jv-inline-code"></span> */
-.jv-inline-code {
-    font-style: italic;
-    font-size: 12px;
-    background-color: #e3e3e3;
-    padding: 2px;
-    border-radius: 2.5px;
-}
+/* Styles moved to aimp_common.css */
 
 pre, code {
     font-size: 12px;
