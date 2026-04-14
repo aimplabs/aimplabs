@@ -88,3 +88,10 @@ The app will be available at `http://localhost:8501`
 - **[app.py](app.py)** — Streamlit chatbot implementation and session management
 - **[css/aimp_navfoot.css](css/aimp_navfoot.css)** — Navigation and footer styling patterns
 - **[css/aimp_mainpgs.css](css/aimp_mainpgs.css)** — Main content pages and responsive layout
+
+## Further Reading
+
+Comprehensive guides for maintaining and extending the website:
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** — Complete guide to the component extraction system, CSS organization, and how to add new pages. Start here to understand the overall structure.
+- **[CSS.md](CSS.md)** — Detailed responsive design guide with breakpoint strategy, CSS patterns, and maintenance checklist. Reference this when adding or modifying styles.
