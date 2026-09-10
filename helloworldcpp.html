@@ -8,7 +8,6 @@
     <meta name="keywords" content="Artificial intelligence & machine perception, computer vision, deep learning, cloud and edge IOT, Kolkata">
     <meta name="author" content="AIMP LABS, Kolkata">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="css/aimp.css">
     <title>Hands on C++ </title>
     <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
@@ -18,7 +17,6 @@
     <link rel="stylesheet" href="css/default.min.css">
     <script src="js/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
-</head>
 </head>
 <body>
 
@@ -67,10 +65,11 @@
         1. General building process
     </div>
     <div class="jv-section-body jv-section-text">
-        The general building process can be divided into two tasks: compilation and linking. On 
-        Linux, the translation from source file to object files is handled by compiler. Linking multiple
-        object files to build the executable is called as linking and is done by the linker. The following 
-        figure depicts the whole principle. 
+        The general building process can be divided into two tasks: compilation and linking. On
+        Linux, the compiler translates each source file into a relocatable object file, which holds
+        machine code but does not yet know where the functions it calls actually live. The linker
+        then resolves those references across all the object files and the libraries, and writes
+        out a single executable. The following figure depicts the whole principle.
     </div>
     <figure class="jv-full-width-figure">
         <img src="assets/blogs/cpp_compilation/gencom.png" alt="Building Process" class="jv-fig">
@@ -81,21 +80,23 @@
                 Hallaron</span>)</figcaption>
     </figure>
     <div class="jv-section-body jv-section-text">
-        Compilation compand of a simple source file:      
+        Compilation command of a simple source file:
 <div class="jv-incell-code">
-<pre><code class="language-cpp">$ gcc -o code code.c
-$ ./code
+<pre><code class="language-cpp">$ g++ -o hw hw.cpp
+$ ./hw
 </code></pre>
 </div>
 
-The binary executable is <span class="jv-inline-code">hello.out</span>. Execute it as <span class="jv-inline-code">
-$./hw.out</span>. The elements of the compilation pipeline has the following roles:
-    
+The <span class="jv-inline-code">-o</span> flag names the output, so this produces an executable
+called <span class="jv-inline-code">hw</span>, which you then run as
+<span class="jv-inline-code">./hw</span>. The elements of the compilation pipeline have the
+following roles:
+
 <ol class="jv-section-body jv-section-text jv-secondary-list">
-    <li><span class="jv-inline-emphasis">Preprocessor</span> : modifies the original C program according to directives that begin with the ‘#’ character.</li>    
-    <li><span class="jv-inline-emphasis">Compile</span>: converts to assembly language</li>     
-    <li><span class="jv-inline-emphasis">Assembler</span>: converts to a binary</li> 
-    <li><span class="jv-inline-emphasis">Linker</span>: merges or links with precompiled object files like `print.o`</li> 
+    <li><span class="jv-inline-emphasis">Preprocessor</span>: modifies the original program according to directives that begin with the '#' character, such as <span class="jv-inline-code">#include</span> and <span class="jv-inline-code">#define</span>.</li>
+    <li><span class="jv-inline-emphasis">Compiler</span>: translates the preprocessed source into assembly language.</li>
+    <li><span class="jv-inline-emphasis">Assembler</span>: translates the assembly into machine code, producing a relocatable object file. This is not yet a runnable program.</li>
+    <li><span class="jv-inline-emphasis">Linker</span>: merges those object files with the library code they depend on, such as <span class="jv-inline-code">printf.o</span>, and produces the final executable.</li>
 </ol>
 </div> 
 </section>
@@ -105,10 +106,13 @@ $./hw.out</span>. The elements of the compilation pipeline has the following rol
     2. Handling the header files 
 </div>
 <div class="jv-section-body jv-section-text">
-<p>So what's the difference between header-files and source-files? 
-Basically, header-files are #included and not compiled, whereas 
-source files are compiled and not #included. One should never 
-<span class="jv-inline-code">#include</span> source files.</p>
+<p>So what's the difference between header-files and source-files?
+A source file is a translation unit: the compiler is pointed at it directly and
+produces one object file from it. A header file is never compiled on its own — it is
+textually pasted into every source file that <span class="jv-inline-code">#include</span>s
+it, and is compiled as part of each of those. That is why a header should contain
+declarations rather than definitions, and why one should never
+<span class="jv-inline-code">#include</span> a source file.</p>
 
 <p>C/C++ programs are built in a two stage process. First, each source 
 file is compiled on its own. The compiler generates intermediate 
@@ -121,52 +125,60 @@ which generates the final binary (the program).</p>
 <p>This means that each source file is compiled separately from other 
 source files.</p>
 
-Inputs: plusvec.h, plusvec.c, minusvec.h, minusvec.c, lalg.cpp. 
+Inputs: <span class="jv-inline-code">plusvec.h</span>, <span class="jv-inline-code">plusvec.cpp</span>,
+<span class="jv-inline-code">minusvec.h</span>, <span class="jv-inline-code">minusvec.cpp</span>,
+and <span class="jv-inline-code">algebra.cpp</span> which holds <span class="jv-inline-code">main()</span>.
 </div>
     
 <div class="three-col-code-display">
 <div class="jv-incell-code-card">
-<pre><code class="language-cpp">/* algebra.c */
+<pre><code class="language-cpp">/* algebra.cpp */
 #include &lt;iostream&gt;
-#include "addvec.h"
-#include "deductvec.h"
+#include "plusvec.h"
+#include "minusvec.h"
 using namespace std;
-int main() 
+
+int main()
 {
     int u[2] = {100, 200};
     int v[2] = {10, 20};
     int res[2] = {0, 0};
 
     plusvec(u, v, res, 2);
-    cout &lt&lt res[0] &lt&lt "\n";
-    cout &lt&lt res[1] &lt&lt "\n";
+    cout &lt;&lt; res[0] &lt;&lt; "\n";
+    cout &lt;&lt; res[1] &lt;&lt; "\n";
 
     minusvec(u, v, res, 2);
-    cout &lt&lt res[0] &lt&lt "\n";
-    cout &lt&lt res[1] &lt&lt "\n";
+    cout &lt;&lt; res[0] &lt;&lt; "\n";
+    cout &lt;&lt; res[1] &lt;&lt; "\n";
+
+    return 0;
 }</code></pre>
 </div>
     
 <div class="jv-tree-cards-one-col">
 
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* addvec.h */
+<pre><code class="language-cpp">/* plusvec.h */
+#ifndef PLUSVEC_H
+#define PLUSVEC_H
 
-void addvec(int* x, int* y, 
-            int* res, int d);
+void plusvec(int* x, int* y,
+             int* res, int d);
 
+#endif
 </code></pre>
 </div>
 
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* addvec.c */
+<pre><code class="language-cpp">/* plusvec.cpp */
 
-#include "addvec.h"
+#include "plusvec.h"
 
-void plusvec(int* x, int* y, 
-            int* res, int d) 
+void plusvec(int* x, int* y,
+             int* res, int d)
 {
-    for(int i = 0; i < d; i++) 
+    for(int i = 0; i &lt; d; i++)
         res[i] = x[i] + y[i];
 }
 </code></pre>
@@ -175,23 +187,26 @@ void plusvec(int* x, int* y,
 
 <div class="jv-tree-cards-one-col">
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* deductvec.h */
+<pre><code class="language-cpp">/* minusvec.h */
+#ifndef MINUSVEC_H
+#define MINUSVEC_H
 
-void deductvec(int* x, int* y, 
-            int* res, int d);
+void minusvec(int* x, int* y,
+              int* res, int d);
 
+#endif
 </code></pre>
 </div>
 
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* deductvec.c */
+<pre><code class="language-cpp">/* minusvec.cpp */
 
-#include "deductvec.h"
+#include "minusvec.h"
 
-void deductvec(int* x, int* y, 
-            int* res, int d) 
+void minusvec(int* x, int* y,
+              int* res, int d)
 {
-    for(int i = 0; i < d; i++) 
+    for(int i = 0; i &lt; d; i++)
         res[i] = x[i] - y[i];
 }
 </code></pre>
@@ -200,43 +215,47 @@ void deductvec(int* x, int* y,
 </div>
 
 <div class="jv-section-body jv-section-text">
-<p>However, this approach above is not recommended since this is not a scalable approach. A much better 
-    and scallable solution is to compile the project code in parts. For example, it is advisble to create the 
-    object files, .obj or .o, separately, and finally, to link all the .obj files to create 
-    the final executable. The set of commands that follows next demonstrates this fact. 
+<p>The most obvious way to build this is to hand every source file to the compiler at once:
 </p>
 
 <div class="jv-cell-text">
 <pre><code class="language-cpp"># Not preferred approach
-$ gcc algebra.c plusvec.c minusvec.c -o code
-$./code
+$ g++ algebra.cpp plusvec.cpp minusvec.cpp -o compute
+$ ./compute
 </code></pre>
 </div>
 
-However the preferred approach is domented below: 
+<p>This works, but it does not scale. A much better solution is to compile the project in parts:
+create the object files, <span class="jv-inline-code">.o</span>, separately, and only then link
+them together into the final executable. The preferred approach is documented below:
+</p>
 
 <div class="jv-cell-text">
 <pre><code class="language-cpp"># Preferred approach
-gcc -c plusvec.c
-gcc -c minusvec.c
-gcc -c algebra.c   
-gcc -o code plusvec.o minusvec.o algebra.o 
-./code 
+$ g++ -c plusvec.cpp
+$ g++ -c minusvec.cpp
+$ g++ -c algebra.cpp
+$ g++ -o compute plusvec.o minusvec.o algebra.o
+$ ./compute
 </code></pre>
 </div>
 
-Note, each of the three commands like <code class="jv-inline-code">gcc -c filename.c</code> creates the corresponding
-.obj file <code class="jv-inline-code">filename.o</code>. The last command that performs the 
-<code class="jv-inline-code">linking</code>, essentially links all the .o files in order to create the executable 
-<code class="jv-inline-code">code</code>. 
+Note, each of the three commands like <code class="jv-inline-code">g++ -c filename.cpp</code> creates the corresponding
+object file <code class="jv-inline-code">filename.o</code>. The last command performs the
+<code class="jv-inline-code">linking</code>, joining all the .o files to create the executable
+<code class="jv-inline-code">compute</code>.
 </div>
 
-<div class="jv-section-text jv-section-body-2">
-Why this is a better approach? Because say you need to edit/modify the file minusvec.c for 
-some reason. Now, There is no point in compiling all of the sources. Sure, in this case we just have 
-three small .c files but in real life projects the files may be numbered in hundreds while the contents 
-of the files may be huge. Compilation every now and then will take long. Hence compilation in parts will 
-be conveninet for large scale projects. 
+<div class="jv-section-text jv-section-body">
+Why is this a better approach? Because say you need to edit the file minusvec.cpp for
+some reason. There is then no point in recompiling all of the sources — only
+<code class="jv-inline-code">minusvec.cpp</code> has to be turned into a new
+<code class="jv-inline-code">minusvec.o</code>, and the existing
+<code class="jv-inline-code">plusvec.o</code> and <code class="jv-inline-code">algebra.o</code>
+can be reused at the linking step. In this case we just have
+three small files, but in real projects the files may number in the hundreds while the contents
+of the files may be huge. Recompiling everything every time will take long. Hence compilation in parts is
+convenient for large scale projects.
 </div>
 
 </div>
@@ -246,10 +265,13 @@ be conveninet for large scale projects.
 
 <section class="jv-general-container jv-section-container">
     <div class="jv-section-title sz-h3">
-        3. Include-guard: Including the header files in right way
+        3. Include-guard: including the header files the right way
     </div>
     <div class="jv-section-body jv-section-text">
-        Suppose we have the following sources available as .c and .h header files. 
+        Suppose we have the following sources. Note that <span class="jv-inline-code">plusvec.h</span> 
+        and <span class="jv-inline-code">minusvec.h</span> both include 
+        <span class="jv-inline-code">getvec.h</span>, and that 
+        <span class="jv-inline-code">algebra.cpp</span> includes both of them. 
     </div>
     
 <div class="three-col-code-display">
@@ -259,9 +281,12 @@ be conveninet for large scale projects.
 <div class="jv-tree-cards-leaf">
 <pre><code class="language-cpp">/* getvec.h */
 
-#include &ltiostream&gt
-int* getvec(int d, int v);
+struct Vec {
+    int* data;
+    int  d;
+};
 
+int* getvec(int d, int initval);
 </code></pre>
 </div>
 
@@ -287,22 +312,25 @@ int* minusvec(int* x, int* y, int d);
         
 <div class="jv-tree-cards-one-col" style="gap: 20px;">
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* getvec.c */
+<pre><code class="language-cpp">/* getvec.cpp */
+#include &lt;cstdlib&gt;
 #include "getvec.h"
+
 int* getvec(int d, int initval) {
-    int *v = (int *) calloc(d, sizeof(int));
-    for(int i = 0; i &lt;d; ++i) v[i] = initval;
+    int* v = (int*) calloc(d, sizeof(int));
+    for(int i = 0; i &lt; d; ++i) v[i] = initval;
     return v;
 } </code></pre>
 </div>
 
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* plusvec.c */
+<pre><code class="language-cpp">/* plusvec.cpp */
 #include "plusvec.h"
+
 int* plusvec(int* x, int* y, int d) 
 {
-    int* res = getvec(3, 0);
-    for(int i = 0; i &lt d; i++) 
+    int* res = getvec(d, 0);
+    for(int i = 0; i &lt; d; i++) 
         res[i] = x[i] + y[i];
     return res;
 }
@@ -310,12 +338,13 @@ int* plusvec(int* x, int* y, int d)
 </div>
     
 <div class="jv-tree-cards-leaf">
-<pre><code class="language-cpp">/* minusvec.c */   
+<pre><code class="language-cpp">/* minusvec.cpp */   
 #include "minusvec.h"
+
 int* minusvec(int* x, int* y, int d) 
 {
-    int* res = getvec(3, 0);
-    for(int i = 0; i &lt d; i++) 
+    int* res = getvec(d, 0);
+    for(int i = 0; i &lt; d; i++) 
         res[i] = x[i] - y[i];
     return res;
 }
@@ -324,114 +353,131 @@ int* minusvec(int* x, int* y, int d)
 </div>
             
 <div class="jv-incell-code-card">
-<pre><code class="language-cpp">/* algebra.c */
+<pre><code class="language-cpp">/* algebra.cpp */
 
-#include <stdio.h>
+#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
 #include "plusvec.h"
 #include "minusvec.h"
 
 using namespace std;
 
 int main() {
-    int* res;
-
     int u[2] = {100, 200};
     int v[2] = {10, 20};
 
-    res = plusvec(u, v, 2);
-    cout &lt&lt res[0] &lt&lt "\n";
-    cout &lt&lt res[1] &lt&lt "\n";
-    cout &lt&lt res[2] &lt&lt "\n";
+    int* res = plusvec(u, v, 2);
+    cout &lt;&lt; res[0] &lt;&lt; "\n";
+    cout &lt;&lt; res[1] &lt;&lt; "\n";
+    free(res);
 
     res = minusvec(u, v, 2);
-    cout &lt&lt res[0] &lt&lt "\n";
-    cout &lt&lt res[1] &lt&lt "\n";
-    cout &lt&lt res[2] &lt&lt "\n";
+    cout &lt;&lt; res[0] &lt;&lt; "\n";
+    cout &lt;&lt; res[1] &lt;&lt; "\n";
+    free(res);
 
+    return 0;
 }
 </code></pre>
 </div>        
 </div>
 
 <div class="jv-section-text jv-section-body">
-    <p>Note, the getvec.h is included twice in algebra.c, i.e., once via plusvec.h and another via minusvec.h. 
-    Since multiple inclusion often results in hard-to-debug errors, we shall stop multiple inlcusion 
-    by eploying a technique that is called the include-guard.</p>
-    
-    <p>Also note, the three other files, namely, <code class="jv-inline-code">getvec.h</code>, 
-    <code class="jv-inline-code">getvec.c</code>, and <code class="jv-inline-code">algebra.c</code> 
-        are kept unchanged.</p>
+    <p>Because <span class="jv-inline-code">algebra.cpp</span> includes both 
+    <span class="jv-inline-code">plusvec.h</span> and <span class="jv-inline-code">minusvec.h</span>, 
+    and each of those includes <span class="jv-inline-code">getvec.h</span>, the preprocessor pastes 
+    the contents of <span class="jv-inline-code">getvec.h</span> into 
+    <span class="jv-inline-code">algebra.cpp</span> <i>twice</i>. The compiler therefore sees 
+    <span class="jv-inline-code">struct Vec</span> defined two times and refuses to continue:</p>
+
+<div class="jv-incell-code">
+<pre><code class="language-cpp">$ g++ -c algebra.cpp
+In file included from minusvec.h:3,
+                 from algebra.cpp:6:
+getvec.h:3:8: error: redefinition of &#8216;struct Vec&#8217;
+    3 | struct Vec {
+      |        ^~~
+</code></pre>
+</div>
+
+    <p>It is worth being precise about what does and does not break here. Repeating a function 
+    <i>declaration</i> such as <span class="jv-inline-code">int* getvec(int, int);</span> is 
+    perfectly legal — you can write it a hundred times and the compiler will not complain. What 
+    cannot be repeated is a <i>definition</i>: a struct or class, a typedef, an inline function 
+    with a body, or a variable. Since almost every real header eventually contains one of those, 
+    headers are guarded as a matter of habit rather than only when the error appears.</p>
+
+    <p>The fix is the <b>include-guard</b>, and it goes <i>inside the header being protected</i> — 
+    that is, in <span class="jv-inline-code">getvec.h</span> itself, once:</p>
 </div>
 
 
 <div class="three-col-code-display">
 
-
     <div class="jv-incell-code-card">
-    <pre><code class="language-cpp">/* plusvec.h */
-    
-    #ifndef GETVEC_H
-    #define GETVEC_H
-    #include "getvec.h"
-    #endif
-    int* plusvec(int* x, int* y, int d);
-    </code></pre>
+    <pre><code class="language-cpp">/* getvec.h */
+
+#ifndef GETVEC_H
+#define GETVEC_H
+
+struct Vec {
+    int* data;
+    int  d;
+};
+
+int* getvec(int d, int initval);
+
+#endif
+</code></pre>
     </div>
     
     <div class="jv-incell-code-card">
-    <pre><code class="language-cpp">/* plusvec.c */
-    
-    #include "addvec.h"
-    int* plusvec(int* x, int* y, int d) {
-        int* res = getvec(3, 0);
-        for(int i = 0; i &lt; d; i++) 
-            res[i] = x[i] + y[i];
-        return res;
-    }
-    </code></pre>
+    <pre><code class="language-cpp">/* plusvec.h */
+
+#ifndef PLUSVEC_H
+#define PLUSVEC_H
+
+#include "getvec.h"
+int* plusvec(int* x, int* y, int d);
+
+#endif
+</code></pre>
     </div>
     
     <div class="jv-incell-code-card">
     <pre><code class="language-cpp">/* minusvec.h */
-    
-    #define GETVEC_H
-    #include "getvec.h"
-    #endif
-    int* minusvec(int* x, int* y, int d);
-    </code></pre>
-    </div>
-    
-    <div class="jv-incell-code-card">
-        <pre><code class="language-cpp">/* minusvec.c */
-    
-    #include "minusvec.h"
-    int* minusvec(int* x, int* y, int d) {
-        int* res = getvec(3, 0);
-        for(int i = 0; i < d; i++) 
-            res[i] = x[i] - y[i];
-        return res;
-    }
-    </code></pre>
+
+#ifndef MINUSVEC_H
+#define MINUSVEC_H
+
+#include "getvec.h"
+int* minusvec(int* x, int* y, int d);
+
+#endif
+</code></pre>
     </div>
 </div>
 
 <div class="jv-section-text jv-section-body">
-<p>Note, the <span class="jv-inline-code">getvec.h</span> is included twice in 
-<span class="jv-inline-code">algebra.c</span>, once via <span class="jv-inline-code">plusvec.h</span> 
-and another via <span class="jv-inline-code">minusvec.h</span>. Sicne multiple inclusion 
-often results in hard-to-debug errors, we have stopped multiple inlcusion by writing the 
-include-guard. </p>
-<div class="jv-incell-code">
-<pre><code class="language-cpp">#ifndef GETVEC_H
-#define GETVEC_H
-#include "getvec.h"
-#endif
-</code></pre>
+<p>The first time the preprocessor reaches <span class="jv-inline-code">getvec.h</span>, 
+<code class="jv-inline-code">GETVEC_H</code> is not yet defined, so it defines the macro and keeps 
+the body. The second time — arriving via <span class="jv-inline-code">minusvec.h</span> — 
+<code class="jv-inline-code">GETVEC_H</code> is already defined, so everything up to the matching 
+<code class="jv-inline-code">#endif</code> is skipped. The struct is therefore defined exactly once, 
+and the file compiles.</p>
+
+<p>Note that the guard lives in the header it protects, not at the places that include it. That is 
+what makes it reliable: <span class="jv-inline-code">getvec.h</span> is now safe no matter who 
+includes it or how many times, and nobody who includes it has to remember anything. For the same 
+reason <span class="jv-inline-code">plusvec.h</span> and 
+<span class="jv-inline-code">minusvec.h</span> are given guards of their own above — every header 
+you write should have one. The macro name is conventionally derived from the file name so that it 
+stays unique across the project.</p>
+
+<p>The sources — <code class="jv-inline-code">getvec.cpp</code>, 
+<code class="jv-inline-code">plusvec.cpp</code>, <code class="jv-inline-code">minusvec.cpp</code> 
+and <code class="jv-inline-code">algebra.cpp</code> — need no change at all.</p>
 </div>
-<p>Once we include <code class="jv-inline-code">plusvec.h</code>, the <code class="jv-inline-code">GETVEC_H</code> gets 
-defined and <code class="jv-inline-code">getvec.h</code> gets included. Next time when <code class="jv-inline-code">minusvec.h</code>
-notices <code class="jv-inline-code">GETVEC_H</code> already defined and skips further inclusion of <code class="jv-inline-code">getvec.h</code>. 
-</p>
 </section>
 
 <section class="jv-general-container jv-section-container">
@@ -446,52 +492,59 @@ notices <code class="jv-inline-code">GETVEC_H</code> already defined and skips f
 </div>
 
 <div class="jv-incell-code">
-<pre><code class="language-cpp">$ gcc plusvec.c minusvec.c getvec.c algebra.c -o compute 
+<pre><code class="language-cpp">$ g++ plusvec.cpp minusvec.cpp getvec.cpp algebra.cpp -o compute 
 </code></pre>
 </div>
      
 <div class="jv-section-text jv-section-body">
 Let's see how we can use Makefile to build the executable compute. A simple makefile 
-consists of “rules” with the following shape: 
+consists of "rules" with the following shape: 
 </div>
     
 <div class="jv-incell-code">
 <pre><code class="language-makefile">target: prerequisites
-        recipe
+	recipe
 </code></pre>
 </div>
      
 <div class="jv-section-text jv-section-body">
-A <i>target</i> is usually (i) the name of a file that is generated by a program (executable or object files), 
-(ii) name of an action to carry out, such as ‘clean’.
+<p>A <i>target</i> is usually (i) the name of a file that is generated by a program (executable or object files), 
+or (ii) the name of an action to carry out, such as 'clean'.</p>
 
-A <i>prerequisite</i> is a file (or several files) that is (are) used as input(s) 
-to create the target.
+<p>A <i>prerequisite</i> is a file (or several files) that is (are) used as input(s) 
+to create the target.</p>
 
-A <i>recipe</i> is an action (command or multiple commands) that make carries out. 
-Commands may be on the same line or on different lines each on its own line. Remember 
-to put a tab character at the beginning of every recipe line!
+<p>A <i>recipe</i> is an action that make carries out. A recipe may span several lines, each 
+holding one command. <b>Every recipe line must begin with a tab character, not spaces</b> — this is 
+the single most common cause of the error <span class="jv-inline-code">missing separator</span>.</p>
 
-The following simple makefile illustrates one of our build processes mentioned above. 
+<p>The following simple makefile illustrates one of our build processes mentioned above.</p>
 </div>
 
 <div class="jv-incell-code">
-<pre><code class="language-makefile">
+<pre><code class="language-makefile">.PHONY: all clean
+
 all: compute
-compute: plusvec.c minusvec.c getvec.c algebra.c
-         gcc plusvec.c minusvec.c getvec.c algebra.c -o compute
+
+compute: plusvec.cpp minusvec.cpp getvec.cpp algebra.cpp
+	g++ plusvec.cpp minusvec.cpp getvec.cpp algebra.cpp -o compute
+
 clean:
-         rm compute
+	rm -f compute
 </code></pre></div>
 
 <div class="jv-section-text jv-section-body">
-Our Makefile has a target "all" with a prerequisite but no rule/recipe. Makefile has target 
-'compute' with prerequisites and rule. Makefile has target 'clean' with rule but no prerequisite. 
-But how does the Makefile work? Read the passage below for details.
-</div>
-<!-- </section> -->
+<p>Our Makefile has a target 'all' with a prerequisite but no recipe, a target 
+'compute' with both prerequisites and a recipe, and a target 'clean' with a recipe but no 
+prerequisite. But how does the Makefile work? Read the passage below for details.</p>
 
-<!-- <section class="jv-general-container jv-section-container"> -->
+<p>The <span class="jv-inline-code">.PHONY</span> line declares that 'all' and 'clean' are action 
+names, not files to be built. Without it, creating a file called 
+<span class="jv-inline-code">clean</span> in the directory would make 
+<span class="jv-inline-code">make clean</span> silently stop working, because make would see the 
+target as already up to date.</p>
+</div>
+
 <div class="jv-section-title medium-headline">
 4.i. How make Processes a Makefile?
 </div>
@@ -505,37 +558,50 @@ directory. Then 'compute' starts with the rule that is essentially creating the 
 </div>
 
 <div class="jv-section-text jv-section-body">
-When you type <code class="jv-inline-code">make clean</code> the 'clean' target is executed. 
+<p>When you type <code class="jv-inline-code">make clean</code> the 'clean' target is executed.</p>
 
-How Makefile can be written to include the relinking?
+<p>So far the makefile rebuilds everything whenever anything changes. To get the selective 
+recompilation described in section 2 — where only the file you edited is compiled again — each 
+object file needs its own rule, listing the source <i>and the headers</i> it depends on:</p>
 </div>
 
 <div class="jv-incell-code">
-<pre><code class="language-makefile">all: compute
+<pre><code class="language-makefile">.PHONY: all clean
+
+all: compute
 
 compute: algebra.o plusvec.o minusvec.o getvec.o
-    gcc algebra.o plusvec.o minusvec.o getvec.o -o compute
+	g++ algebra.o plusvec.o minusvec.o getvec.o -o compute
 
-algebra.o: algebra.c
-    gcc -c algebra.cpp
+algebra.o: algebra.cpp plusvec.h minusvec.h getvec.h
+	g++ -c algebra.cpp
 
-plusvec.o: plusvec.c
-    gcc -c plusvec.c
+plusvec.o: plusvec.cpp plusvec.h getvec.h
+	g++ -c plusvec.cpp
 
-minusvec.o: minusvec.c
-    g++ -c minusvec.c
-    
-getvec.o: getvec.c
-    g++ -c getvec.c
+minusvec.o: minusvec.cpp minusvec.h getvec.h
+	g++ -c minusvec.cpp
+
+getvec.o: getvec.cpp getvec.h
+	g++ -c getvec.cpp
 
 clean:
-    rm *o compute
+	rm -f *.o compute
 </code></pre>
 </div>
 
 <div class="jv-section-text jv-section-body">
-This kind of Makefile has an important usage. There are multiple targets that can be useful at times. This is because if any source is modifies 
-in the project, you don’t have to recompile everything, only what you modified. 
+<p>Now if any single source is modified, you don't have to recompile everything — only what you 
+modified. Editing <span class="jv-inline-code">plusvec.cpp</span> and running 
+<span class="jv-inline-code">make</span> recompiles just 
+<span class="jv-inline-code">plusvec.o</span> and relinks.</p>
+
+<p>Listing the headers as prerequisites matters more than it looks. If 
+<span class="jv-inline-code">algebra.o</span> depended only on 
+<span class="jv-inline-code">algebra.cpp</span>, then editing 
+<span class="jv-inline-code">getvec.h</span> would leave make with nothing to do — it would report 
+<span class="jv-inline-code">Nothing to be done for 'all'</span> and quietly leave you with a stale 
+executable built against the old header.</p>
 </div>
 
 <div class="jv-section-title medium-headline">
@@ -544,35 +610,40 @@ in the project, you don’t have to recompile everything, only what you modified
 
 <div class="jv-section-text jv-section-body">
 One can also use variables when writing Makefiles. It comes in handy in situations where you want 
-to change the compiler, or the compiler options.
+to change the compiler, or the compiler options. By convention 
+<span class="jv-inline-code">CXX</span> and <span class="jv-inline-code">CXXFLAGS</span> are used 
+for C++ (<span class="jv-inline-code">CC</span> and <span class="jv-inline-code">CFLAGS</span> are 
+the C equivalents).
 </div>
 
 <div class="jv-incell-code">
-<pre><code class="language-makefile"># variable CC will be the compiler to use.
-CC=gcc
-    
-#  CFLAGS will be the options to pass to the compiler.
-CFLAGS=-c -Wall
+<pre><code class="language-makefile"># CXX is the compiler to use.
+CXX = g++
+
+# CXXFLAGS holds the options passed to the compiler.
+CXXFLAGS = -Wall -Wextra
+
+.PHONY: all clean
 
 all: compute
-    
+
 compute: algebra.o plusvec.o minusvec.o getvec.o
-    $(CC) algebra.o plusvec.o minusvec.o getvec.o -o compute
+	$(CXX) algebra.o plusvec.o minusvec.o getvec.o -o compute
 
-algebra.o: algebra.c
-    $(CC) $(CFLAGS) algebra.cpp
+algebra.o: algebra.cpp plusvec.h minusvec.h getvec.h
+	$(CXX) $(CXXFLAGS) -c algebra.cpp
 
-plusvec.o: plusvec.c
-    $(CC) $(CFLAGS) plusvec.c
+plusvec.o: plusvec.cpp plusvec.h getvec.h
+	$(CXX) $(CXXFLAGS) -c plusvec.cpp
 
-minusvec.o: minusvec.c
-    $(CC) $(CFLAGS) minusvec.c
-    
-getvec.o: getvec.c
-    $(CC) $(CFLAGS) getvec.c
+minusvec.o: minusvec.cpp minusvec.h getvec.h
+	$(CXX) $(CXXFLAGS) -c minusvec.cpp
+
+getvec.o: getvec.cpp getvec.h
+	$(CXX) $(CXXFLAGS) -c getvec.cpp
 
 clean:
-    rm *o compute
+	rm -f *.o compute
 </code></pre>
 </div>
 </section>
@@ -582,12 +653,21 @@ clean:
     5. Conclusion
 </div>
 <div class="jv-section-text jv-section-body">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolor 
-        explicabo repellendus, natus impedit, eaque itaque reprehenderit alias 
-        iure autem, officia aliquid cumque eligendi. Quis doloribus voluptates 
-        animi impedit accusantium.</p>
-    <p>Consider one of the previous examples where we compiled the sources into 
-        the executable like this:</p>
+    <p>Building a C++ project of any size comes down to three habits, each of which
+        we have now seen in turn.</p>
+    <p>First, <b>compile in parts</b>. Turning each source file into its own object file and
+        linking them at the end costs nothing on a three-file example, but it is what keeps a
+        thousand-file project from recompiling in full every time you fix a typo.</p>
+    <p>Second, <b>guard every header</b>. Put the <code class="jv-inline-code">#ifndef</code> /
+        <code class="jv-inline-code">#define</code> / <code class="jv-inline-code">#endif</code>
+        pair inside the header itself, so that it is safe no matter who includes it or how often.
+        A header that protects itself needs nothing from the files that use it.</p>
+    <p>Third, <b>let make do the bookkeeping</b>. Once the dependencies — sources
+        <i>and</i> headers — are written down honestly in a Makefile, a single
+        <code class="jv-inline-code">make</code> rebuilds exactly what changed and nothing else.</p>
+    <p>None of this is specific to the toy vector example used here. The same three ideas scale
+        essentially unchanged to real codebases, which is why they are worth getting into your
+        fingers early.</p>
 </div>
 </section>
 
