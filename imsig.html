@@ -10,10 +10,7 @@
     <meta name="author" content="AIMP LABS, Kolkata">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="css/aimp_navfoot.css">
-    <link rel="stylesheet" href="css/aimp_mainpgs.css">
-    <link rel="stylesheet" href="css/aimp_blogs.css">
-    <link rel="stylesheet" href="css/aimp_course_progs.css">
+    <link rel="stylesheet" href="css/aimp.css">
     <title>Hands-on Session on Image Processing</title>
     <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
     <script
@@ -26,7 +23,7 @@
 </head>
 <body>
 
-<header class="jv-brand-container-center">
+<header class="jv-navbar-container">
     <nav class="jv-navbar-flex">
             <div class="jv-logo-container">
                 <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
@@ -141,13 +138,13 @@ plt.stem(f_axis,modF,'r', markerfmt=" ", basefmt="-r")
     Fig. 1(b) reveals the underlying frequency of the signal in frequency (or spectral) view. <br>
 
     Extending the idea in 2D is straightforward. The diagram below shows a series of vertical stripes in sinusoidal fashion. 
-    The direction of the sinusoid is horizontal, i.e., the wave propagates in a direction making zero angle <code class="inline-code">angle = 0</code> with the x-axis. 
+    The direction of the sinusoid is horizontal, i.e., the wave propagates in a direction making zero angle <code class="jv-inline-code">angle = 0</code> with the x-axis. 
     How to generate such 2D image? <br>
     
     The following code generates the 2D image in Fig 2(a). What we see in Fig. 2(b) is its 2D DFT. 
-    The 2D DFT is obtained by first applying <code class="inline-code">np.fft2</code> on the grayscale image of the sinusoid and then centering the DFT with 
-    <code class="inline-code">np.fftshift</code>. Since the DFT contains complex terms one has to be careful to display the magnitude of each term by 
-    computing the absolute value <code class="inline-code">abs()</code>.
+    The 2D DFT is obtained by first applying <code class="jv-inline-code">np.fft2</code> on the grayscale image of the sinusoid and then centering the DFT with 
+    <code class="jv-inline-code">np.fftshift</code>. Since the DFT contains complex terms one has to be careful to display the magnitude of each term by 
+    computing the absolute value <code class="jv-inline-code">abs()</code>.
 </div>
 
 <div class="jv-incell-code in-cell-two-col">
@@ -161,7 +158,7 @@ sinusoid2d = np.sin(2*np.pi*(X*np.cos(theta) + Y*np.sin(theta)) / L)
 <div class="jv-assignment-container">
     <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
     <div class="jv-assignment-emphasis">
-        Compute the 2D DFT, center it with <code class="inline-code">np.fftshift</code>,
+        Compute the 2D DFT, center it with <code class="jv-inline-code">np.fftshift</code>,
         take the absolute value, and reproduce the figure on right by plotting the 
         log of the absolute value. 
     </div>
@@ -347,11 +344,11 @@ X_oneside = abs(X_oneside)
     <div class="jv-assignment-headline"> Assignment (<a href="https://drive.google.com/drive/folders/1BofjJBZWXCiRtII1ycFnaigiDjTWXTNB?usp=sharing" class="jv-solution-link">Solution</a>)</div>
     <div class="jv-assignment-emphasis">
         <ol class="jv-secondary-list">
-            <li>Generate the two gratings like before by tweaking <span class="inline-code">L</span> 
-                and <span class="inline-code">theta</span>.</li>
+            <li>Generate the two gratings like before by tweaking <span class="jv-inline-code">L</span> 
+                and <span class="jv-inline-code">theta</span>.</li>
             <li>Superimpose the images by just simply adding them up like the one-dimensional case.</li>
             <li>Compute DFT of the resultant image Fig. 9(a).</li>
-            <li>Compute absolute value and apply log of the DFT image, both elemenwise. Center it with <span class="inline-code">np.fftshift</span>.</li>
+            <li>Compute absolute value and apply log of the DFT image, both elemenwise. Center it with <span class="jv-inline-code">np.fftshift</span>.</li>
             <li>Display and reproduce Fig. 9(b)</li>
         </ol>
     </div>
@@ -497,7 +494,7 @@ in the spectral pattern. The following assignment illustrates this fact.
     <ol class="jv-secondary-list">
         <ol class="jv-secondary-list">
             <li>Create a binary square image like Fig. 13(a).</li>
-            <li>Smooth the image with <code class="inline-code">ndimage.gaussian_filter()</code> to create Fig. 15(a).</li>
+            <li>Smooth the image with <code class="jv-inline-code">ndimage.gaussian_filter()</code> to create Fig. 15(a).</li>
             <li>Compute the 2D DFT, center it, compute modulus elementwise, 
                 apply log, and finally, display the DFT coefficients like Fig. 15(b). 
             </li>
@@ -534,7 +531,7 @@ in the spectral pattern. The following assignment illustrates this fact.
             <li>Compute the 2D DFT, center it, compute modulus elementwise, 
                 apply log, and finally, display the DFT coefficients like Fig. 17(b). 
             </li>
-            <li>Smooth the image Fig. 17(a) with <code class="inline-code">ndimage.gaussian_filter()</code> to create Fig. 18(a).</li>
+            <li>Smooth the image Fig. 17(a) with <code class="jv-inline-code">ndimage.gaussian_filter()</code> to create Fig. 18(a).</li>
             <li> Compute the DFT image of Fig. 18(a). Make sure you notice a similar change in spectral pattern as illustrated in Fig. 18(b).
             </li>
         </ol>
@@ -672,7 +669,7 @@ to the masked DFT.
                 <li>Compute the 2D DFT, center it, compute modulus elementwise, 
                     apply log, and finally, display the DFT coefficients like Fig. 17(b). 
                 </li>
-                <li>Smooth the image Fig. 17(a) with <span class="inline-code">ndimage.gaussian_filter()</span> to create Fig. 18(a).</li>
+                <li>Smooth the image Fig. 17(a) with <span class="jv-inline-code">ndimage.gaussian_filter()</span> to create Fig. 18(a).</li>
                 <li> Compute the DFT image of Fig. 18(a). Make sure you notice a similar change in spectral pattern as illustrated in Fig. 18(b).
                 </li>
             </ol>
@@ -735,21 +732,21 @@ to the masked DFT.
     <div class="jv-footer-container">
         <ul class="jv-footer-container-left">
             <li>
-                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+                <a href="https://github.com/aimplabs"><i class="fa-brands fa-github jv-icon-github"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
             </li>
             <li>
-                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+                <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter jv-icon-twitter"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
             </li>
             <li>
-                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+                <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube jv-icon-youtube"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
             </li>
             <li>
-                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+                <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook jv-icon-facebook"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
             </li>             
         </ul>
         <div class="jv-footer-container-middle">
             <div class="jv-footer-brand-statements">
-                <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                <div class="jv-footer-brand-name">AIMP LABS</div>
                 <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
                 <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing </div>
                 <div class="jv-footer-brand-desc">Copyright 2019 - <script>document.write(new Date().getFullYear());</script></div>
@@ -779,8 +776,6 @@ function setsidenav() {
     }
 
 }
-  var x = window.matchMedia("(max-width: 500px)")
-  removeNavRt(x) // Call listener function at run time
 
 
 </script>

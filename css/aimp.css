@@ -1,0 +1,1634 @@
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* ==========================================================================
+   AIMP Labs — single stylesheet
+   Replaces: aimp_navfoot.css, aimp_mainpgs.css, aimp_blogs.css,
+             aimp_course_progs.css, aimp_gallery.css
+   (css/default.min.css is a vendor highlight.js theme and stays separate.)
+
+   Contents
+     1.  Design tokens
+     2.  Reset & base
+     3.  Navbar
+     4.  Breadcrumbs
+     5.  Footer
+     6.  Layout primitives
+     7.  Typography
+     8.  Brand marks
+     9.  Components
+     10. Page sections
+     11. Chatbot demo (innovations.html)
+     12. Media queries
+
+   Breakpoints: --jv-bp-sm 600px, --jv-bp-md 900px. All media queries live
+   in section 12. Custom properties cannot be used in media conditions, so
+   the pixel values are written literally there.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Design tokens
+   ========================================================================== */
+
+:root {
+    /* Brand */
+    --jv-red:          #CF494B;
+    --jv-red-soft:     #cf494bd0;
+    --jv-red-tag:      rgba(207, 75, 75, 0.8);
+    --jv-red-dark:     #b03a3d;
+
+    /* Text */
+    --jv-ink:          #4E4E4E;   /* headings, nav */
+    --jv-body:         #515151;   /* body copy */
+    --jv-muted:        #5B5B66;   /* secondary text */
+    --jv-heading:      #444444;   /* section titles, captions */
+    --jv-grey-1:       #999999;
+    --jv-grey-2:       #848484;
+    --jv-grey-3:       #888888;
+
+    /* Surfaces */
+    --jv-surface:      #f5f5f5;
+    --jv-surface-2:    #e5e5e5;
+    --jv-surface-3:    #e3e3e3;
+    --jv-footer-bg:    #f4f4f4f4;
+    --jv-page-bg:      #fafafa;
+    --jv-border:       #e4e4e4;
+    --jv-border-2:     #e0e0e0;
+    --jv-wash:         rgba(150, 150, 150, 0.1);
+
+    /* Type */
+    --jv-font-head:    'Spectral', serif;
+    --jv-font-body:    'Rubik', sans-serif;
+
+    /* Elevation */
+    --jv-shadow-sm:    0px 2px 8px #0000000D;
+    --jv-shadow-md:    rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    --jv-shadow-lg:    rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --jv-shadow-foot:  0px -4px 4px #e4e3e3f4;
+
+    /* Geometry */
+    --jv-radius:       10px;
+    --jv-radius-sm:    5px;
+    --jv-radius-pill:  20px;
+    --jv-max-width:    1200px;
+
+    /* Social */
+    --jv-github:       #808080;
+    --jv-twitter:      #1DA1F2;
+    --jv-youtube:      #FF0000;
+    --jv-facebook:     #1877F2;
+}
+
+/* ==========================================================================
+   2. Reset & base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--jv-font-body);
+}
+
+p {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+pre,
+code {
+    font-size: 12px;
+    line-height: 21px;
+    white-space: pre-wrap;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ==========================================================================
+   3. Navbar
+   ========================================================================== */
+
+.jv-navbar-container {
+    box-shadow: var(--jv-shadow-sm);
+}
+
+.jv-navbar-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+.jv-logo-container {
+    display: flex;
+}
+
+.jv-brand-logo {
+    object-fit: contain;
+    width: 16%;
+    padding-top: 10px;
+}
+
+.jv-brand-statements {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.jv-brand-statements a {
+    text-decoration: none;
+}
+
+.jv-brand-name a {
+    text-decoration: none;
+    color: var(--jv-ink);
+    font-family: var(--jv-font-head);
+    letter-spacing: 13px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.jv-brand-desc a {
+    text-decoration: none;
+    color: var(--jv-ink);
+    font-family: var(--jv-font-head);
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.jv-navlinks {
+    display: flex;
+}
+
+.jv-navlinks li {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.jv-navlinks li a {
+    font-family: var(--jv-font-head);
+    color: var(--jv-ink);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.jv-navlinks li a.jv-active,
+.jv-footer-brand-desc .jv-active {
+    text-decoration: underline;
+    text-decoration-color: var(--jv-red);
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+}
+
+/* Hidden above --jv-bp-md. Uses display, not opacity, so it is neither
+   clickable nor space-occupying while the full link row is showing. */
+.menu-icon {
+    display: none;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   4. Breadcrumbs
+   ========================================================================== */
+
+.jv-breadcrumb-container {
+    padding: 5px 10px;
+    background-color: var(--jv-surface);
+    border-radius: var(--jv-radius);
+    max-width: var(--jv-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.jv-breadcrumb-container span {
+    font-size: 13px;
+}
+
+.jv-breadcrumb {
+    color: var(--jv-red);
+}
+
+.jv-breadcrumb-active a {
+    text-decoration: none;
+    color: var(--jv-red);
+}
+
+.jv-breadcrumb-active a:hover {
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   5. Footer
+   ========================================================================== */
+
+.jv-footer-container-align {
+    background-color: var(--jv-footer-bg);
+    box-shadow: var(--jv-shadow-foot);
+}
+
+.jv-footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+.jv-footer-container-left li {
+    list-style: none;
+}
+
+.jv-footer-container-left li a {
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 24px;
+    color: var(--jv-ink);
+}
+
+.jv-ftnotes-icontxt {
+    padding-left: 5px;
+}
+
+.jv-footer-container-middle .jv-footer-brand-statements {
+    text-align: center;
+    font-size: 13px;
+    line-height: 24px;
+    color: var(--jv-ink);
+}
+
+.jv-footer-container-right .jv-footer-brand-statements {
+    text-align: left;
+    font-size: 13px;
+    line-height: 24px;
+    text-decoration: none;
+    color: var(--jv-ink);
+}
+
+/* Was an inline style repeated on 15 pages. Scoped to the middle column:
+   the right column reuses .jv-footer-brand-name for the contact line, which
+   was never styled this way and must keep inheriting the column's type. */
+.jv-footer-container-middle .jv-footer-brand-name {
+    letter-spacing: 4px;
+    font-family: var(--jv-font-head);
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.jv-footer-brand-desc a {
+    text-decoration: none;
+    color: var(--jv-ink);
+}
+
+/* Social icon colours — were inline styles repeated 62 times. */
+.jv-icon-github   { color: var(--jv-github); }
+.jv-icon-twitter  { color: var(--jv-twitter); }
+.jv-icon-youtube  { color: var(--jv-youtube); }
+.jv-icon-facebook { color: var(--jv-facebook); }
+
+/* ==========================================================================
+   6. Layout primitives
+   ========================================================================== */
+
+.jv-general-container {
+    margin: 20px auto;
+    max-width: var(--jv-max-width);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.jv-container-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+.jv-text-container,
+.jv-general-vw-align {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+.jv-section-container {
+    margin-top: 20px;
+    padding: 5px;
+}
+
+.jv-gallery-text-container {
+    padding: 20px 10px;
+}
+
+.jv-two-column-equal {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.jv-four-column-equal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.jv-left-container {
+    flex-basis: 50%;
+    margin: 20px;
+    padding: 20px;
+}
+
+.jv-right-container {
+    opacity: 80%;
+    margin: 20px;
+    padding: 20px;
+    flex-basis: 50%;
+}
+
+.jv-right-container img {
+    width: 100%;
+    height: auto;
+}
+
+.jv-top-container {
+    margin-top: 30px;
+}
+
+/* Spacing utilities */
+.jv-general-top-gap       { margin-top: 20px; }
+.jv-general-top-gap-large { margin-top: 30px; }
+.jv-general-bottom-gap    { margin-bottom: 20px; }
+.jv-text-vertical-gap     { margin-top: 20px; }
+
+.jv-align-center,
+.jv-text-align-center { text-align: center; }
+.jv-text-align-left   { text-align: left; }
+
+/* ==========================================================================
+   7. Typography
+   ========================================================================== */
+
+.jv-section-title {
+    font-family: var(--jv-font-head);
+    color: var(--jv-heading);
+}
+
+.jv-section-title.sz-h1 {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.jv-section-title.sz-h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.jv-section-title.sz-h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.jv-section-title.medium-headline {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.jv-article-headline {
+    font-family: var(--jv-font-head);
+    color: var(--jv-ink);
+    font-size: 28px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.jv-section-headline {
+    color: var(--jv-red);
+    font-family: var(--jv-font-head);
+    font-size: 18px;
+    text-align: center;
+}
+
+.jv-mission-statement {
+    font-family: var(--jv-font-head);
+    font-size: 32px;
+    text-align: center;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.jv-section-body {
+    margin: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.jv-section-text {
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.jv-general-text {
+    font-family: var(--jv-font-body);
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--jv-body);
+}
+
+.jv-container-free-text {
+    padding: 10px 0;
+    color: var(--jv-ink);
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.jv-text {
+    font-family: var(--jv-font-body);
+    color: var(--jv-ink);
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.hero-brand-img-text {
+    font-family: var(--jv-font-body);
+    text-align: justify;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    color: var(--jv-body);
+    font-size: 16px;
+}
+
+/* Author / date metadata — were used in HTML but never defined. */
+.jv-authors {
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    color: var(--jv-muted);
+    padding-left: 10px;
+}
+
+.jv-each-author {
+    font-family: var(--jv-font-body);
+    font-size: 18px;
+    color: var(--jv-muted);
+    padding-left: 10px;
+}
+
+.jv-publishing-date {
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    color: var(--jv-muted);
+    margin-top: 10px;
+}
+
+/* Subsequent date lines sit tight under the first. */
+.jv-publishing-date + .jv-publishing-date {
+    margin-top: 2px;
+}
+
+/* Inline emphasis */
+.jv-bold-emphasis {
+    font-weight: 600;
+    padding-right: 1px;
+    text-align: left;
+}
+
+.jv-text-emphasis {
+    font-weight: 450;
+    line-height: 28px;
+}
+
+.jv-text-emphasis-add {
+    font-family: var(--jv-font-body);
+    font-size: 15px;
+    line-height: 28px;
+    font-weight: 500;
+}
+
+.jv-text-color-emphasis {
+    color: var(--jv-red);
+}
+
+.jv-inline-emphasis {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.jv-inline-link {
+    color: var(--jv-red);
+    text-decoration: none;
+}
+
+.jv-inline-link:hover {
+    color: var(--jv-red);
+    font-weight: 600;
+}
+
+.jv-link-active a {
+    text-decoration: none;
+    color: var(--jv-red);
+}
+
+.jv-link-active a:hover {
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   8. Brand marks
+   ========================================================================== */
+
+.jv-brand-emphasis {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.jv-bar-upper {
+    display: block;
+    width: 60px;
+    height: 6px;
+    margin: 5px 0;
+    background-color: var(--jv-red);
+    border-radius: var(--jv-radius-sm);
+}
+
+.jv-bar-lower {
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: var(--jv-grey-1);
+    border-radius: 3px;
+}
+
+.jv-divider-line {
+    border-top: 1px solid var(--jv-border-2);
+    margin: 25px 0;
+}
+
+/* ==========================================================================
+   9. Components
+   ========================================================================== */
+
+/* --- Buttons --- */
+
+.jv-button-red-over-white {
+    padding: 8px 18px;
+    background-color: var(--jv-red-soft);
+    color: #FFFEFE;
+    border: 0px;
+    border-radius: 8px;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+}
+
+.jv-button-red-over-white:hover {
+    cursor: pointer;
+}
+
+/* --- Tags ---
+   display:inline-block is load-bearing: as inline elements these spans'
+   vertical padding overflowed the line box and overlapped adjacent lines
+   once they wrapped. Replaces the no-op height:100% / vertical-align:auto. */
+
+.jv-blog-tag,
+.jv-venture-tag {
+    display: inline-block;
+    font-family: var(--jv-font-head);
+    font-size: 11px;
+    font-weight: 400;
+    color: #fff;
+    border-radius: var(--jv-radius-pill);
+    text-align: center;
+    max-width: fit-content;
+    padding: 2px 10px;
+    margin: 2px 4px 2px 0;
+}
+
+.jv-blog-tag    { background-color: var(--jv-red-tag); }
+.jv-venture-tag { background-color: var(--jv-red); }
+
+/* --- Highlights & code --- */
+
+.jv-rudev-custom-highlight {
+    background-color: var(--jv-wash);
+    padding: 20px;
+    border-radius: var(--jv-radius);
+    margin: 25px auto;
+}
+
+.jv-text-content {
+    background-color: var(--jv-surface-2);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.jv-inline-code {
+    font-style: italic;
+    font-size: 12px;
+    background-color: var(--jv-surface-3);
+    padding: 2px;
+    border-radius: 2.5px;
+}
+
+.jv-incell-code {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: var(--jv-surface);
+    border-radius: var(--jv-radius);
+    box-shadow: var(--jv-shadow-lg);
+    width: 98%;
+}
+
+.jv-incell-code-card {
+    background-color: var(--jv-surface);
+    border-radius: var(--jv-radius);
+    box-shadow: var(--jv-shadow-lg);
+    width: calc(33.33% - 20px);
+}
+
+.jv-tree-cards-one-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    width: calc(33.33% - 20px);
+}
+
+.jv-tree-cards-leaf {
+    background-color: var(--jv-surface);
+    border-radius: var(--jv-radius);
+    box-shadow: var(--jv-shadow-lg);
+    width: 100%;
+}
+
+.three-col-code-display {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    margin: 5px;
+    max-width: var(--jv-max-width);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: space-between;
+    gap: 30px;
+}
+
+/* --- In-cell columns --- */
+
+.in-cell-two-col {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.in-cell-three-col {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.jv-cell-left-text,
+.jv-cell-text {
+    flex-basis: 55%;
+    text-align: justify;
+}
+
+.jv-cell-right-fig {
+    flex-basis: 42%;
+}
+
+.jv-cell-each-fig-two-cols {
+    flex-basis: 48%;
+}
+
+/* --- Figures --- */
+
+figure {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+    text-indent: 0;
+    border: 1px solid var(--jv-border);
+    border-radius: var(--jv-radius);
+    margin: 20px;
+    padding: 20px;
+    box-shadow: var(--jv-shadow-lg);
+}
+
+figcaption {
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--jv-heading);
+    text-align: justify;
+    padding: 10px;
+    line-height: 24px;
+}
+
+.jv-full-width-figure {
+    display: block;
+    width: 98%;
+    border: 1px solid var(--jv-border);
+    border-radius: var(--jv-radius);
+    padding: 0.5em;
+    box-shadow: var(--jv-shadow-lg);
+    margin: 10px auto;
+}
+
+.jv-fig {
+    display: block;
+    width: 80%;
+    border-radius: var(--jv-radius-sm);
+    margin: 10px auto;
+}
+
+/* --- Lists --- */
+
+.jv-list {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+.jv-list-container {
+    margin-bottom: 8px;
+}
+
+.jv-list-item {
+    padding: 5px 0;
+}
+
+.jv-list-item i {
+    color: var(--jv-red);
+}
+
+.jv-list-item a {
+    text-decoration: none;
+    font-family: var(--jv-font-body);
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--jv-body);
+}
+
+.jv-list-item a:hover {
+    font-weight: 500;
+}
+
+/* Blog listing entries need more room than the icon bullets on index.html,
+   which share .jv-list-item. .jv-list is used only by the blog listing. */
+.jv-list .jv-list-item {
+    padding: 10px 0;
+    line-height: 24px;
+}
+
+.jv-passage-list {
+    margin: 10px 4px;
+    padding: 5px 0px;
+    font-family: var(--jv-font-body);
+    color: var(--jv-body);
+    font-size: 16px;
+    line-height: 30px;
+    text-align: justify;
+}
+
+.jv-passage-list li {
+    list-style: none;
+}
+
+.jv-passage-list li i {
+    padding: 0 4px;
+}
+
+.jv-secondary-list {
+    padding-left: 15px;
+}
+
+.jv-secondary-list li {
+    line-height: 24px;
+    padding-left: 5px;
+}
+
+/* --- Assignments --- */
+
+.jv-assignment-container {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.jv-assignment-emphasis {
+    font-size: 12px;
+}
+
+.jv-assignment-headline {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--jv-red);
+}
+
+.jv-assignment-headline .jv-solution-link {
+    text-decoration: none;
+    color: var(--jv-red);
+}
+
+.jv-assignment-headline .jv-solution-link:hover {
+    font-weight: 600;
+}
+
+/* --- Forms --- */
+
+.jv-form-container {
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+.jv-form-container iframe {
+    display: block;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   10. Page sections
+   ========================================================================== */
+
+/* --- Hero / landing --- */
+
+.jv-hero-container-landing-pg {
+    margin: 60px auto;
+}
+
+.jv-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-basis: 70%;
+    padding-right: 20px;
+}
+
+.jv-carousel {
+    margin: 30px 0;
+    width: 95%;
+}
+
+.jv-carousel img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--jv-radius-sm);
+}
+
+.jv-news-container {
+    flex-basis: 30%;
+}
+
+.jv-news-box {
+    background-color: #fff;
+    margin: 30px 2px;
+    max-width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: auto;
+    border-radius: var(--jv-radius);
+    padding: 10px;
+    box-shadow: var(--jv-shadow-md);
+}
+
+.jv-news-box .jv-news-item {
+    font-family: var(--jv-font-body);
+    color: var(--jv-body);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.jv-news-item {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* --- Brand story --- */
+
+.jv-brand-story {
+    margin: 20px auto;
+}
+
+.jv-acad-industry-story {
+    margin: 10px auto;
+}
+
+.jv-brand-story .jv-container,
+.jv-acad-industry-story .jv-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+}
+
+/* --- Brand cards --- */
+
+.jv-card-container-brand {
+    flex-basis: 24%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.jv-card-container-brand img {
+    width: 90%;
+    height: auto;
+    padding: 10px;
+}
+
+.jv-card-headline-brand {
+    font-family: var(--jv-font-head);
+    font-size: 22px;
+    color: var(--jv-ink);
+    padding-top: 10px;
+    font-weight: 600;
+}
+
+.jv-card-taglines-brand {
+    font-family: var(--jv-font-body);
+    font-size: 16px;
+    color: var(--jv-grey-2);
+    padding-top: 5px;
+}
+
+.jv-upper-tagline {
+    padding-top: 15px;
+}
+
+.jv-card-text-brand {
+    font-family: var(--jv-font-body);
+    font-size: 14px;
+    color: var(--jv-body);
+    line-height: 24px;
+    padding: 20px 0;
+    width: 80%;
+    text-align: justify;
+}
+
+/* --- Gallery / ventures --- */
+
+.jv-gallery {
+    padding-left: 10px;
+    padding-right: 10px;
+    max-width: var(--jv-max-width);
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.jv-gallery-card-container {
+    width: calc(33.33% - 20px);
+    box-shadow: var(--jv-shadow-md);
+    margin-top: 10px;
+}
+
+.jv-gallery-card-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0px 0px;
+    margin-bottom: 5px;
+}
+
+.jv-venture-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.jv-venture-title {
+    font-family: var(--jv-font-head);
+    font-size: 18px;
+    line-height: 30px;
+    color: var(--jv-body);
+    font-weight: bold;
+}
+
+.jv-venture-desc {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--jv-body);
+    text-align: justify;
+}
+
+/* --- Course pages --- */
+
+.jv-vw-image-container a img {
+    width: 100%;
+    height: auto;
+}
+
+.jv-module-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.jv-course-content-left {
+    max-width: 30%;
+    background-color: var(--jv-surface-2);
+    border-radius: 8px;
+    margin-right: 10px;
+    padding: 10px;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+}
+
+.jv-course-content-right {
+    max-width: 70%;
+    background-color: var(--jv-surface-2);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+}
+
+.jv-course-content {
+    max-width: 100%;
+    background-color: var(--jv-surface-2);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    line-height: 30px;
+}
+
+.jv-course-content-title {
+    text-align: center;
+    font-family: var(--jv-font-head);
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--jv-body);
+}
+
+.jv-course-content-desc {
+    text-align: justify;
+    font-family: var(--jv-font-body);
+    font-size: 13px;
+    line-height: 24px;
+    color: var(--jv-body);
+}
+
+.ack-text {
+    margin-top: 20px;
+    line-height: 24px;
+}
+
+/* ==========================================================================
+   11. Chatbot demo (innovations.html)
+   Was a 329-line inline <style> block. Class names carry the .jv- prefix
+   per the project convention; the page background is scoped to the page
+   body class so it does not leak to every other page.
+   ========================================================================== */
+
+body.jv-chatbot-page {
+    background-color: var(--jv-page-bg);
+}
+
+.jv-chatbot-page-heading {
+    font-family: var(--jv-font-head);
+    color: var(--jv-ink);
+    font-size: 28px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.jv-chatbot-intro-section {
+    color: var(--jv-ink);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.jv-chatbot-intro-section p {
+    font-family: var(--jv-font-body);
+    font-size: 15px;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+.jv-chatbot-intro-section ul {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.jv-chatbot-intro-section li {
+    font-family: var(--jv-font-body);
+    margin: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: justify;
+    color: var(--jv-ink);
+}
+
+.jv-chatbot-intro-section li::before {
+    content: "\2022";
+    position: absolute;
+    left: 0;
+    color: var(--jv-red);
+    font-weight: bold;
+}
+
+.jv-chatbot-intro-section strong {
+    color: var(--jv-red);
+    font-weight: 600;
+}
+
+.jv-disclaimer-box {
+    background-color: var(--jv-surface);
+    border-left: 4px solid var(--jv-red);
+    padding: 12px 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: var(--jv-grey-3);
+    font-family: var(--jv-font-body);
+    line-height: 1.5;
+}
+
+.jv-sample-queries-section {
+    margin: 25px 0;
+}
+
+.jv-sample-queries-label {
+    font-size: 0.85rem;
+    color: var(--jv-grey-3);
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: var(--jv-font-body);
+}
+
+.jv-sample-queries-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.jv-sample-query-btn {
+    background-color: white;
+    border: 1px solid var(--jv-border-2);
+    color: var(--jv-ink);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    line-height: 1.4;
+    overflow: hidden;
+    font-family: var(--jv-font-body);
+    min-height: 55px;
+}
+
+.jv-sample-query-btn:hover {
+    background-color: var(--jv-surface);
+    border-color: var(--jv-red);
+    box-shadow: 0 2px 8px rgba(207, 73, 75, 0.1);
+}
+
+.jv-chat-container {
+    background-color: white;
+    border: 1px solid var(--jv-border-2);
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: 500px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: var(--jv-shadow-md);
+}
+
+.jv-chat-message {
+    display: flex;
+    margin-bottom: 15px;
+    animation: jv-slide-in 0.3s ease-out;
+}
+
+@keyframes jv-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.jv-chat-message.jv-from-user      { justify-content: flex-end; }
+.jv-chat-message.jv-from-assistant { justify-content: flex-start; }
+
+.jv-chat-bubble {
+    max-width: 90%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    font-family: var(--jv-font-body);
+    font-size: 0.95rem;
+}
+
+.jv-chat-message.jv-from-user .jv-chat-bubble {
+    background-color: var(--jv-red);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.jv-chat-message.jv-from-assistant .jv-chat-bubble {
+    background-color: var(--jv-surface);
+    color: var(--jv-ink);
+    border-bottom-left-radius: 4px;
+}
+
+.jv-chat-message.jv-from-assistant .jv-chat-bubble a {
+    color: var(--jv-red);
+    text-decoration: none;
+}
+
+.jv-chat-message.jv-from-assistant .jv-chat-bubble a:hover {
+    text-decoration: underline;
+}
+
+.jv-chat-bubble code {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.jv-chat-bubble pre {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.jv-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.jv-chat-input {
+    flex: 1;
+    border: 1px solid var(--jv-border-2);
+    border-radius: 6px;
+    padding: 12px 15px;
+    font-family: var(--jv-font-body);
+    font-size: 0.95rem;
+    resize: none;
+    max-height: 100px;
+}
+
+.jv-chat-input:focus {
+    outline: none;
+    border-color: var(--jv-red);
+    box-shadow: 0 0 0 2px rgba(207, 73, 75, 0.1);
+}
+
+.jv-send-btn {
+    background-color: var(--jv-red);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    align-self: flex-end;
+    font-family: var(--jv-font-body);
+}
+
+.jv-send-btn:hover {
+    background-color: var(--jv-red-dark);
+}
+
+.jv-send-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.jv-reset-btn {
+    background-color: transparent;
+    color: var(--jv-red);
+    border: 1px solid var(--jv-red);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: var(--jv-font-body);
+}
+
+.jv-reset-btn:hover {
+    background-color: var(--jv-red);
+    color: white;
+}
+
+.jv-loading-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(207, 73, 75, 0.3);
+    border-top: 2px solid var(--jv-red);
+    border-radius: 50%;
+    animation: jv-spin 0.8s linear infinite;
+}
+
+@keyframes jv-spin {
+    to { transform: rotate(360deg); }
+}
+
+.jv-controls-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.jv-status-message {
+    font-size: 0.85rem;
+    color: var(--jv-grey-3);
+    font-family: var(--jv-font-body);
+}
+
+/* ==========================================================================
+   12. Media queries
+   Two tiers, replacing the previous six (500/550/600/700/768/800/900).
+     --jv-bp-md  900px  — tablet & below
+     --jv-bp-sm  600px  — phone
+   ========================================================================== */
+
+/* --------------------------- 900px and below --------------------------- */
+@media screen and (max-width: 900px) {
+
+    /* Nav collapses to the drawer at the same width the bar stacks, so the
+       menu icon and the link row are never both live. */
+    .jv-navbar-flex {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .jv-brand-logo {
+        width: 15%;
+    }
+
+    .jv-logo-container {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .jv-brand-statements {
+        text-align: center;
+    }
+
+    .jv-brand-name a {
+        letter-spacing: 5px;
+        font-size: 28px;
+    }
+
+    .jv-brand-desc a {
+        font-size: 14px;
+    }
+
+    .jv-navlinks {
+        display: none;
+        flex-direction: column;
+        background-color: #0000000D;
+        width: 100%;
+        align-items: center;
+        border-radius: var(--jv-radius-sm);
+    }
+
+    .jv-navlinks li {
+        padding-top: 40px;
+    }
+
+    .menu-icon {
+        display: block;
+        margin-top: 20px;
+    }
+
+    /* Layout */
+    .jv-container-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .jv-card-container-brand {
+        flex-basis: calc(50% - 10px);
+    }
+
+    .jv-gallery-card-container {
+        width: calc(50% - 20px);
+    }
+
+    .jv-incell-code-card,
+    .jv-tree-cards-one-col {
+        width: calc(50% - 20px);
+    }
+
+    /* Two-column cells narrow before they stack at 600px */
+    .jv-cell-left-text,
+    .jv-cell-text {
+        flex-basis: 45%;
+    }
+
+    .jv-cell-right-fig {
+        flex-basis: 50%;
+    }
+
+    /* Course modules */
+    .jv-module-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .jv-course-content-left,
+    .jv-course-content-right {
+        max-width: 100%;
+    }
+
+    /* Footer */
+    .jv-footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .jv-footer-container-middle { order: 0; }
+    .jv-footer-container-left   { order: 1; }
+
+    .jv-footer-container-right .jv-footer-brand-statements {
+        text-align: center;
+    }
+
+    /* Chatbot */
+    .jv-sample-queries-container {
+        grid-template-columns: 1fr;
+    }
+
+    .jv-chat-bubble {
+        max-width: 85%;
+    }
+
+    .jv-input-area {
+        flex-direction: column;
+    }
+
+    .jv-send-btn {
+        align-self: auto;
+        width: 100%;
+    }
+
+    .jv-controls-section {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .jv-reset-btn {
+        width: 100%;
+    }
+}
+
+/* --------------------------- 600px and below --------------------------- */
+@media screen and (max-width: 600px) {
+
+    .jv-brand-name a {
+        font-size: 24px;
+    }
+
+    .jv-container-flex {
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    /* Stack the two-column blocks */
+    .jv-two-column-equal {
+        flex-direction: column;
+    }
+
+    .jv-right-container img { order: 0; }
+    .jv-left-container      { order: 1; }
+
+    .in-cell-two-col {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .jv-cell-left-text,
+    .jv-cell-text,
+    .jv-cell-right-fig,
+    .jv-cell-each-fig-two-cols {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    /* Cards go full width */
+    .jv-card-container-brand {
+        flex-basis: 90%;
+    }
+
+    .jv-gallery-card-container,
+    .jv-incell-code-card,
+    .jv-tree-cards-one-col {
+        width: calc(100% - 20px);
+    }
+
+    /* Figures and code blocks need the horizontal room */
+    .jv-fig {
+        width: 100%;
+    }
+
+    figure {
+        margin: 20px 0;
+        padding: 10px;
+    }
+
+    .three-col-code-display {
+        gap: 15px;
+    }
+}

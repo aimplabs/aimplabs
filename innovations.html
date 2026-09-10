@@ -14,8 +14,7 @@
     <script src="https://kit.fontawesome.com/2b92be31d1.js" crossorigin="anonymous"></script>
     
     <!-- AIMP LABS Custom CSS Theme -->
-    <link rel="stylesheet" href="css/aimp_navfoot.css">
-    <link rel="stylesheet" href="css/aimp_mainpgs.css">
+    <link rel="stylesheet" href="css/aimp.css">
     <link rel="stylesheet" href="css/default.min.css">
     
     <!-- Markdown & Sanitization -->
@@ -24,339 +23,10 @@
     <!-- Syntax Highlighting -->
     <script src="js/highlight.min.js"></script>
     
-    <style>
-        :root {
-            --primary-color: #CF494B;
-            --light-bg: #f5f5f5;
-            --border-color: #e0e0e0;
-            --text-dark: #4E4E4E;
-            --text-light: #888;
-        }
-
-        body {
-            background-color: #fafafa;
-        }
-
-        /* Chatbot-specific styles */
-        .chatbot-page-heading {
-            font-family: 'Spectral', serif;
-            color: var(--text-dark);
-            font-size: 28px;
-            letter-spacing: 2px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .chatbot-intro-section {
-            color: var(--text-dark);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .chatbot-intro-section p {
-            font-family: 'Rubik', sans-serif;
-            font-size: 15px;
-            margin-bottom: 12px;
-            text-align: justify;
-        }
-
-        .chatbot-intro-section ul {
-            list-style: none;
-            padding: 10px 0;
-            margin: 0;
-        }
-
-        .chatbot-intro-section li {
-            font-family: 'Rubik', sans-serif;
-            margin: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 15px;
-            line-height: 24px;
-            text-align: justify;
-            color: var(--text-dark);
-        }
-
-        .chatbot-intro-section li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .chatbot-intro-section strong {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .disclaimer-box {
-            background-color: var(--light-bg);
-            border-left: 4px solid var(--primary-color);
-            padding: 12px 15px;
-            margin: 20px 0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-family: 'Rubik', sans-serif;
-            line-height: 1.5;
-        }
-
-        .divider-line {
-            border-top: 1px solid var(--border-color);
-            margin: 25px 0;
-        }
-
-        .sample-queries-section {
-            margin: 25px 0;
-        }
-
-        .sample-queries-label {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Rubik', sans-serif;
-        }
-
-        .sample-queries-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .sample-query-btn {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            line-height: 1.4;
-            display: -webkit-box;
-            /* -webkit-line-clamp: 2; */
-            /* -webkit-box-orient: vertical; */
-            overflow: hidden;
-            font-family: 'Rubik', sans-serif;
-            min-height: 55px;
-        }
-
-        .sample-query-btn:hover {
-            background-color: var(--light-bg);
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 8px rgba(207, 73, 75, 0.1);
-        }
-
-        .chat-container {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow-y: auto;
-            max-height: 500px;
-            margin-bottom: 20px;
-            padding: 15px;
-            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        }
-
-        .chat-message {
-            display: flex;
-            margin-bottom: 15px;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .chat-message.user {
-            justify-content: flex-end;
-        }
-
-        .chat-message.assistant {
-            justify-content: flex-start;
-        }
-
-        .chat-bubble {
-            max-width: 90%;
-            padding: 12px 15px;
-            border-radius: 12px;
-            line-height: 1.5;
-            word-wrap: break-word;
-            font-family: 'Rubik', sans-serif;
-            font-size: 0.95rem;
-        }
-
-        .chat-message.user .chat-bubble {
-            background-color: var(--primary-color);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-message.assistant .chat-bubble {
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-            border-bottom-left-radius: 4px;
-        }
-
-        .chat-message.assistant .chat-bubble a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .chat-message.assistant .chat-bubble a:hover {
-            text-decoration: underline;
-        }
-
-        .chat-bubble code {
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.85em;
-        }
-
-        .chat-bubble pre {
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 10px;
-            border-radius: 4px;
-            overflow-x: auto;
-            margin: 8px 0;
-        }
-
-        .input-area {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .chat-input {
-            flex: 1;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px 15px;
-            font-family: 'Rubik', sans-serif;
-            font-size: 0.95rem;
-            resize: none;
-            max-height: 100px;
-        }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(207, 73, 75, 0.1);
-        }
-
-        .send-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            align-self: flex-end;
-            font-family: 'Rubik', sans-serif;
-        }
-
-        .send-btn:hover {
-            background-color: #b03a3d;
-        }
-
-        .send-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .reset-btn {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-family: 'Rubik', sans-serif;
-        }
-
-        .reset-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid rgba(207, 73, 75, 0.3);
-            border-top: 2px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .controls-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .status-message {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            font-family: 'Rubik', sans-serif;
-        }
-
-        @media (max-width: 768px) {
-            .sample-queries-container {
-                grid-template-columns: 1fr;
-            }
-
-            .chat-bubble {
-                max-width: 85%;
-            }
-
-            .input-area {
-                flex-direction: column;
-            }
-
-            .send-btn {
-                align-self: auto;
-                width: 100%;
-            }
-
-            .controls-section {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-            }
-
-            .reset-btn {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="jv-chatbot-page">
     <!-- Header with AIMP LABS navigation -->
-    <header class="jv-brand-container-center">
+    <header class="jv-navbar-container">
         <nav class="jv-navbar-flex">
             <div class="jv-logo-container">
                 <img class="jv-brand-logo" src="assets/brand_imgs/aimplogo_small.png" alt="AIMP Logo">
@@ -381,14 +51,14 @@
     <section class="jv-general-container">
         <div class="jv-text-container">
             <!-- Page Heading -->
-            <div class="chatbot-page-heading">Legal AI Chatbot by AIMP LABS</div>
+            <div class="jv-chatbot-page-heading">Legal AI Chatbot by AIMP LABS</div>
             <div class="jv-brand-emphasis">
                 <div class="jv-bar-upper"></div>
                 <div class="jv-bar-lower"></div>
             </div>
 
             <!-- Intro Section -->
-            <!-- <div class="chatbot-intro-section">
+            <!-- <div class="jv-chatbot-intro-section">
                 <p>
                     At AIMP LABS, innovation is at the heart of everything we do.
                     This chatbot is designed to interact with and interpret three recently enacted Indian laws:
@@ -423,39 +93,39 @@
                 </div> -->
             </div>
 
-            <div class="divider-line"></div>
+            <div class="jv-divider-line"></div>
 
             <!-- Sample Queries Section -->
-            <div class="sample-queries-section">
-                <div class="sample-queries-label">Sample Queries</div>
-                <div class="sample-queries-container" id="sampleQueriesContainer"></div>
+            <div class="jv-sample-queries-section">
+                <div class="jv-sample-queries-label">Sample Queries</div>
+                <div class="jv-sample-queries-container" id="sampleQueriesContainer"></div>
             </div>
 
             <!-- Chat Section -->
-            <div class="sample-queries-label" style="margin-top: 30px;">Live Chat Assistant</div>
+            <div class="jv-sample-queries-label" style="margin-top: 30px;">Live Chat Assistant</div>
 
             <!-- Chat Container -->
-            <div class="chat-container" id="chatContainer"></div>
+            <div class="jv-chat-container" id="chatContainer"></div>
 
             <!-- Input Area -->
-            <div class="input-area">
-                <textarea id="userInput" class="chat-input" placeholder="Ask your legal question..." rows="2"></textarea>
-                <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+            <div class="jv-input-area">
+                <textarea id="userInput" class="jv-chat-input" placeholder="Ask your legal question..." rows="2"></textarea>
+                <button class="jv-send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
             </div>
 
             <!-- Controls Section -->
-            <div class="controls-section">
-                <button class="reset-btn" onclick="resetChat()">Reset Chat</button>
-                <span id="statusMessage" class="status-message"></span>
+            <div class="jv-controls-section">
+                <button class="jv-reset-btn" onclick="resetChat()">Reset Chat</button>
+                <span id="statusMessage" class="jv-status-message"></span>
             </div>
 
             <!-- Disclaimer -->
-            <div class="disclaimer-box">
+            <div class="jv-disclaimer-box">
                 <strong>Disclaimer:</strong> This chatbot provides general information and is not a substitute for professional legal advice. 
                 For specific legal issues, please consult a qualified attorney.
             </div>
 
-            <div class="divider-line"></div>
+            <div class="jv-divider-line"></div>
         </div>
     </section>
 
@@ -464,21 +134,21 @@
         <div class="jv-footer-container">
             <ul class="jv-footer-container-left">
                 <li>
-                    <a href="https://github.com/aimplabs"><i class="fa-brands fa-github" style="color: gray;"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
+                    <a href="https://github.com/aimplabs"><i class="fa-brands fa-github jv-icon-github"></i> <span class="jv-ftnotes-icontxt">Codes/Data</span></a>
                 </li>
                 <li>
-                    <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter" style="color: #1DA1F2 ;"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
+                    <a href="https://twitter.com/aimplabs"><i class="fa-brands fa-twitter jv-icon-twitter"></i> <span class="jv-ftnotes-icontxt">Get updates/news</span></a>
                 </li>
                 <li>
-                    <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube" style="color: red;"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
+                    <a href="https://youtube.com/@aimplabs"> <i class="fa-brands fa-youtube jv-icon-youtube"></i> <span class="jv-ftnotes-icontxt">Video tutorials</span></a>
                 </li>
                 <li>
-                    <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook" style="color: #1877F2;"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
+                    <a href="https://www.facebook.com/aimplabs"> <i class="fa-brands fa-facebook jv-icon-facebook"></i> <span class="jv-ftnotes-icontxt">Trends & News</span></a>
                 </li>             
             </ul>
             <div class="jv-footer-container-middle">
                 <div class="jv-footer-brand-statements">
-                    <div class="jv-footer-brand-name" style="letter-spacing: 4px; font-family:'Spectral', serif; font-size: 18px; line-height: 30px;">AIMP LABS</div>
+                    <div class="jv-footer-brand-name">AIMP LABS</div>
                     <div class="jv-footer-brand-desc">A Private AI Research & Training Center</div>
                     <div class="jv-footer-brand-desc">Computer Vision | Machine Learning | Cloud & Edge Computing</div>
                     <div class="jv-footer-brand-desc">Copyright 2019 - <span id="footerYear"></span></div>
@@ -688,7 +358,7 @@ In summary, while the **Bharatiya Nyaya Sanhita 2023 (BNS)**, **Bharatiya Sakshy
             const container = document.getElementById('sampleQueriesContainer');
             SAMPLE_QUERIES.forEach((query, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'sample-query-btn';
+                btn.className = 'jv-sample-query-btn';
                 btn.textContent = query.text;
                 btn.onclick = () => setInputAndFocus(query.text, index);
                 container.appendChild(btn);
@@ -805,15 +475,15 @@ In summary, while the **Bharatiya Nyaya Sanhita 2023 (BNS)**, **Bharatiya Sakshy
 
             chatHistory.forEach(msg => {
                 const msgDiv = document.createElement('div');
-                msgDiv.className = `chat-message ${msg.role}`;
+                msgDiv.className = `jv-chat-message jv-from-${msg.role}`;
 
                 const bubble = document.createElement('div');
-                bubble.className = 'chat-bubble';
+                bubble.className = 'jv-chat-bubble';
                 
                 if (msg.role === 'assistant') {
                     // Special handling for thinking message
                     if (msg.content === 'Thinking...') {
-                        bubble.innerHTML = '<span class="loading-spinner"></span> Thinking';
+                        bubble.innerHTML = '<span class="jv-loading-spinner"></span> Thinking';
                     } else {
                         // Parse markdown and sanitize
                         const htmlContent = marked.parse(msg.content);

@@ -26,10 +26,8 @@ This is the official website for **AIMP Labs** (Artificial Intelligence & Machin
 aimplabs/
 ├── index.html, about.html, innovations.html, ...    # Root-level pages
 ├── css/
-│   ├── aimp_navfoot.css          # Global nav, footer, breadcrumbs (imported everywhere)
-│   ├── aimp_mainpgs.css          # Main page layouts
-│   ├── aimp_blogs.css            # Blog-specific styling
-│   ├── aimp_course_progs.css, aimp_gallery.css, default.min.css
+│   ├── aimp.css                  # THE stylesheet - every page loads this one file
+│   └── default.min.css           # Vendor highlight.js theme (do not hand-edit)
 ├── js/
 │   └── highlight.min.js          # Code syntax highlighting
 ├── assets/
@@ -69,37 +67,54 @@ All custom CSS classes use a `.jv-*` prefix:
 
 ### Color Scheme (Brand Identity)
 
-```
-Primary Red:        #CF494B   (buttons, accents, active states)
-Dark Gray:          #4E4E4E   (headings, main text)
-Light Gray:         #f5f5f5   (backgrounds)
-Neutral Gray:       #5B5B66   (secondary text, descriptions)
-Secondary Grays:    #999999, #888
+Colours are **design tokens** declared once in the `:root` block at the top of
+`css/aimp.css`. Reference the token, never the literal:
+
+```css
+color: var(--jv-red);        /* NOT  color: #CF494B; */
 ```
 
-These colors appear in:
-- `css/aimp_navfoot.css` (navigation highlights)
-- `css/aimp_mainpgs.css` (buttons and accents)
-- All page-specific stylesheets
+| Token | Value | Use |
+|---|---|---|
+| `--jv-red` | `#CF494B` | buttons, accents, active states |
+| `--jv-ink` | `#4E4E4E` | headings, nav |
+| `--jv-body` | `#515151` | body copy |
+| `--jv-muted` | `#5B5B66` | secondary text |
+| `--jv-heading` | `#444444` | section titles, captions |
+| `--jv-surface` | `#f5f5f5` | backgrounds |
+
+There are also tokens for fonts (`--jv-font-head`, `--jv-font-body`),
+elevation (`--jv-shadow-sm/md/lg`) and geometry (`--jv-radius`,
+`--jv-max-width`). Add a new token rather than a new literal.
 
 ### Typography
 
 - **Headers**: Spectral (serif), uppercase transforms, generous letter-spacing
 - **Body Text**: Rubik (sans-serif), 14-18px
-- **Secondary Text**: Smaller font-sizes with `#5B5B66` color
+- **Secondary Text**: Smaller font-sizes with `var(--jv-muted)` color
 
 ### Layout Patterns
 
-- **Container Max-Width**: 1200px with `margin: 0 auto`
+- **Container Max-Width**: `var(--jv-max-width)` (1200px) with `margin: 0 auto`
 - **Flexbox**: Used extensively (`.jv-container-flex`, `.jv-navbar-flex`)
-- **Responsive Breakpoint**: `@media (max-width: 800px)` for mobile adjustments
-- **Navigation**: Sidebar menu that toggles on mobile
+- **Responsive Breakpoints**: exactly **two** — `900px` (tablet & below) and
+  `600px` (phone). Do not introduce a third.
+- **Navigation**: link row above 900px; hamburger drawer at 900px and below.
+  The handoff is exact — the icon and the link row are never both live.
 
 ### CSS File Organization
 
-- **aimp_navfoot.css**: Imported on EVERY page (global styles)
-- **Page-specific**: `aimp_mainpgs.css` (home), `aimp_blogs.css` (blog posts), `aimp_course_progs.css`, `aimp_gallery.css`
-- **Pattern**: Modular approach with separate files per content type
+`css/aimp.css` is the only hand-written stylesheet, organised in 12 numbered
+sections (tokens → reset → navbar → breadcrumbs → footer → layout → typography
+→ brand marks → components → page sections → chatbot → media queries). Its
+header comment lists them.
+
+**Rules:**
+- Add new rules to the section they belong to, not the end of the file.
+- **All** `@media` blocks live in section 12. Never scatter them.
+- Never re-declare a selector that already exists — find it and edit it.
+- Page-specific CSS goes in a labelled subsection here, not in an inline
+  `<style>` block in the HTML.
 
 ## Common Development Tasks
 
@@ -108,8 +123,7 @@ These colors appear in:
 1. Create `your-page-name.html` in root directory
 2. Import the standard stylesheets:
    ```html
-   <link rel="stylesheet" href="css/aimp_navfoot.css">
-   <link rel="stylesheet" href="css/aimp_mainpgs.css">  <!-- or appropriate page-specific CSS -->
+   <link rel="stylesheet" href="css/aimp.css">
    ```
 3. Copy the navbar structure from an existing page (e.g., `index.html`)
 4. Use `.jv-*` classes for layout and styling
@@ -123,14 +137,14 @@ These colors appear in:
    Breadcrumbs → Author metadata → Publication date → Content sections
    ```
 3. Create `blogs/your-topic/assets/` for images and related files
-4. Use relative paths: `../../css/aimp_blogs.css` (adjust for nesting depth)
+4. Use relative paths: `../../css/aimp.css` (adjust for nesting depth)
 5. Import Highlight.js for code blocks, MathJax for equations
 
 **Example Structure**: See [blogs/chatbot-budget2024/index.html](blogs/chatbot-budget2024/index.html)
 
 ### Modifying Navigation/Footer
 
-- Edit [css/aimp_navfoot.css](css/aimp_navfoot.css) (affects all pages globally)
+- Edit section 3 (Navbar) or 5 (Footer) of [css/aimp.css](css/aimp.css) — affects all pages
 - Also update the `.jv-navbar-flex` HTML structure in root pages if needed
 - Test on mobile (sidebar menu toggle)
 
@@ -138,11 +152,11 @@ These colors appear in:
 
 1. Use `.jv-*` prefix for all new classes
 2. Add to appropriate file:
-   - Global styles → `css/aimp_navfoot.css` or `css/aimp_mainpgs.css`
-   - Blog-specific → `css/aimp_blogs.css`
-   - Feature-specific → Create new CSS file and import in relevant pages
-3. Match existing color scheme (`#CF494B`, `#4E4E4E`, etc.)
-4. Test responsive design at 800px breakpoint
+   - Put it in the matching numbered section of `css/aimp.css`
+   - Media queries go in section 12, under the 900px or 600px block
+   - Never create a second stylesheet, and never add an inline `<style>` block
+3. Use the `var(--jv-*)` tokens for colour, font and shadow — never a raw literal
+4. Test responsive design at both breakpoints (900px and 600px)
 
 ## Important Notes for Agents
 
@@ -158,7 +172,7 @@ These colors appear in:
 - When updating navigation, update the `.jv-navbar-flex` HTML in each root page
 
 ### Responsive Design Requirement
-- Test changes on mobile (max-width: 800px breakpoint)
+- Test changes at both breakpoints (max-width 900px and 600px)
 - Sidebar navigation should toggle visibility on mobile
 - Use flexbox for flexible layouts
 
@@ -177,9 +191,11 @@ These colors appear in:
 ## Quick Checklist for PRs/Changes
 
 - [ ] CSS uses `.jv-*` prefix for new classes
-- [ ] Colors match brand scheme (#CF494B, #4E4E4E, etc.)
+- [ ] Colours use brand tokens (`var(--jv-red)`, `var(--jv-ink)`, …)
 - [ ] Relative paths work correctly (especially in nested blog directories)
-- [ ] Responsive design tested at 800px breakpoint
+- [ ] Responsive design tested at 900px and 600px breakpoints
+- [ ] New colours/fonts use `var(--jv-*)` tokens, not literals
+- [ ] No selector declared twice; no new stylesheet or inline `<style>` block
 - [ ] If modifying navigation, check all root pages and blogs
 - [ ] No build tools required or introduced
 - [ ] Changes are production-ready before push to main
